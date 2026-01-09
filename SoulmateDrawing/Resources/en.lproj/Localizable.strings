@@ -1,0 +1,76 @@
+/* 
+  Localizable.strings
+  SoulmateDrawing
+
+  Created by Vitaliy Zagorodnov on 18.12.2025.
+  
+*/
+// MARK: Other
+"House" = "House";
+
+
+// MARK: Onboarding
+"Onboarding.Welcom.Title" = "Discover the connections written in your stars";
+"Onboarding.Welcom.Subtitle" = "Meet your soulmate, explore your dreams, and get guidance for your heart and relationships.";
+"Onboarding.Name.Title" = "Tell us what is your  name?";
+"Onboarding.Name.Placeholder" = "My name is...";
+"Onboarding.Born.Title" = "When were you born?";
+"Onboarding.Date.Subtitle" = "This helps us align your energy and zodiac path";
+"Onboarding.Time.Subtitle" = "If you don’t know all their information, don’t worry, you can update it later";
+"Onboarding.City.Placeholder" = "City";
+
+// MARK: Zodiac
+"Zodiac.Aquarius" = "Aquarius";
+"Zodiac.Aries" = "Aries";
+"Zodiac.Cancer" = "Cancer";
+"Zodiac.Carpicorn" = "Carpicorn";
+"Zodiac.Gemini" = "Gemini";
+"Zodiac.Leo" = "Leo";
+"Zodiac.Libra" = "Libra";
+"Zodiac.Pisces" = "Pisces";
+"Zodiac.Sagittarius" = "Sagittarius";
+"Zodiac.Scorpio" = "Scorpio";
+"Zodiac.Taurus" = "Taurus";
+"Zodiac.Virgo" = "Virgo";
+
+// MARK: Home
+"Home.Explore.Soulmate" = "Meet your soulmate";
+"Home.Explore.Dream" = "Understand your dream";
+"Home.Explore.Relationship" = "Get relationship advice";
+"Home.Explore.Title" = "What do you feel like exploring today?";
+"Home.Explore.Subtitle" = "Pick what calls to you right now";
+"Home.Segment.Explore" = "Explore";
+"Home.Segment.Chart" = "Chart";
+
+// MARK: Paygate
+"Paygate.Title" = "Upgrade Premium";
+"Paygate.Subtitle1" = "Reveal your soulmate drawing";
+"Paygate.Subtitle2" = "Unlock deeper dream insights";
+"Paygate.Subtitle3" = "Get personalized love guidance";
+"Paygate.Trial.Toggle" = "Free Trial Enabled";
+"Paygate.Trial.Action" = "Try free & subscribe";
+"Paygate.Trial.Security" = "No payment now";
+"Paygate.Yearly" = "Yearly";
+"Paygate.Yearly.Toggle" = "Free Trial Enabled";
+"Paygate.Yearly.Action" = "Continue";
+"Paygate.Yearly.Security" = "Cancel anytime";
+"Paygate.BestOffer" = "⭐ Best Offer";
+"Paygate.TermsOfUse" = "Terms of Use";
+"Paygate.PrivacyPolicy" = "Privacy Policy";
+"Paygate.RestorePurchases" = "Restore Purchases";
+"Paygate.PerWeek" = "per week";
+"Paygate.Yearly.Bottom" = "%@/year";
+"Paygate.FreeTrialDays" = "3-day free trial";
+"Paygate.Error.Title" = "Error";
+"Paygate.Error.Text" = "An error occurred during execution. Try later.";
+"Paygate.Error.Button" = "OK";
+
+// MARK: Error
+"Error.Internet.Title" = "No internet connection available";
+"Error.Internet.Subtitle" = "Error when receiving data, check your internet connection";
+"Error.Request.Title" = "The app failed to perform a request";
+"Error.Request.Subtitle" = "If there’s a connection issue on your side try one more time. If the connection is fine and the error keeps on repeating please get in touch with the support.";
+"Error.Appstore.Title" = "Appstore isn’t available";
+"Error.Appstore.Subtitle" = "Something went wrong. Please, try one more time.";
+"Error.TryAgain" = "Try again";
+"Error.Support" = "Contact the support";
