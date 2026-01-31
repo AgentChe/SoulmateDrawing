@@ -1,5 +1,5 @@
 //
-//  HomeChartView.swift
+//  ChartsView.swift
 //  SoulmateDrawing
 //
 //  Created by Vitaliy Zagorodnov on 05.01.2026.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct HomeChartView: View {
+struct ChartsView: View {
     let charts: [Chart]
     
     var body: some View {

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
+//    @Environment(Coordinator<HomeRoute>.self) private var coordinator
     @State private var viewModel = HomeViewModel()
     @State private var selection: HomeSegmentItem = .explore
     
@@ -15,7 +16,7 @@ struct HomeView: View {
         ScrollView(.vertical) {
             LazyVStack(spacing: 0) {
                 ProfileView(
-                    name: "Magan",
+                    name: viewModel.profileName,
                     zodiac: .aries,
                     mainPoints: viewModel.mainPoints
                 )
@@ -32,10 +33,12 @@ struct HomeView: View {
                 
                 switch selection {
                 case .explore:
-                    HomeExploreView()
-                        .padding(.top, 16)
+                    HomeExploreView { selected in
+                        
+                    }
+                    .padding(.top, 16)
                 case .chart:
-                    HomeChartView(charts: viewModel.charts)
+                    ChartsView(charts: viewModel.charts)
                         .padding(.horizontal, 24)
                         .padding(.top, 32)
                 }
@@ -45,47 +48,23 @@ struct HomeView: View {
 //        .navigationBarHidden(true)
         .toolbarBackground(.hidden, for: .navigationBar)
         .toolbar {
-            if #available(iOS 26, *) {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(
-                        action: {},
-                        label: {
-                            Image("settings")
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                        }
-                    )
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    ProButton {}
-                }
-                .sharedBackgroundVisibility(.hidden)
-            } else {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(
-                        action: {},
-                        label: {
-                            Image("settings")
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .padding(8)
-                                .background(.bgMain300)
-                                .clipShape(Circle())
-                        }
-                    )
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    ProButton {
-                        
-                    }
-                }
+            ToolbarButton(placement: .topBarLeading) {
+                Button(
+                    action: {
+//                            coordinator.sheet(.settings)
+                    },
+                    label: { Image("settings") }
+                )
+                .buttonStyle(.navigation)
+            }
+            
+            ToolbarButton(placement: .topBarTrailing) {
+                ProButton {}
             }
         }
         .appBackground()
-        .task {
-            await viewModel.load()
+        .screenState(viewModel.screenState) {
+            viewModel.load()
         }
     }
 }

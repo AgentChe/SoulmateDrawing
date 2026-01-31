@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Planet: String, Decodable {
+enum Planet: String, Codable {
     case jupiter = "Jupiter"
     case mars = "Mars"
     case mercury = "Mercury"

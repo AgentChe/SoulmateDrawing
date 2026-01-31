@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Zodiac: String, Decodable {
+enum Zodiac: String, Codable {
     case aquarius = "Aquarius"
     case aries = "Aries"
     case cancer = "Cancer"

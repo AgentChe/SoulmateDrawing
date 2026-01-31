@@ -7,6 +7,7 @@
 */
 // MARK: Other
 "House" = "House";
+"Save" = "Save";
 
 
 // MARK: Onboarding
@@ -42,6 +43,46 @@
 "Home.Segment.Explore" = "Explore";
 "Home.Segment.Chart" = "Chart";
 
+// MARK: Bonds
+"Bonds.Title" = "Bonds";
+"Bonds.Subtitle" = "Select someone from your connections to take your bonds and insights deeper";
+"Bonds.Button" = "Discover insight";
+"Bonds.ConnectionType.Friend" = "Friend";
+"Bonds.ConnectionType.Partner" = "Partner";
+"Bonds.Person" = "Person";
+"Bonds.ConnectionType" = "Connection type";
+"Bonds.You" = "You";
+"Bonds.Insights" = "Insights";
+"Bonds.SeeAll" = "See all";
+
+"ChoosePerson.Title" = "Choose person";
+"ChoosePerson.Friend" = "Friend";
+"ChoosePerson.Partner" = "Partner";
+"ChoosePerson.Add" = "Add new person";
+
+// MARK: New person
+"NewPerson.Title" = "Add new person for analysis";
+"NewPerson.Female" = "Female";
+"NewPerson.Male" = "Male";
+"NewPerson.Placeholder.FirstName" = "First name";
+"NewPerson.Placeholder.PlaceOfBirth" = "Place of Birth";
+"NewPerson.Placeholder.DateOfBirth" = "Date of Birth";
+"NewPerson.Placeholder.TimeOfBirth" = "Time of Birth";
+"NewPerson.SwitchTitle" = "I don’t know exact time of birth";
+"NewPerson.PrivacyMessage" = "Your privacy is our priority. The connections you build here are yours alone and will remain confidential.";
+
+// MARK: Soulmate
+"Soulmate.Onboarding.Title" = "Ready to meet your soulmate?";
+"Soulmate.Onboarding.Subtitle" = "We’ll need a few details to connect the stars";
+"Soulmate.Onboarding.Button" = "Begin";
+"Soulmate.Profile.Title" = "Do these look right?";
+"Soulmate.Profile.Subtitle" = "Your birth information helps us connect you with the energies meant for you.";
+"Soulmate.Profile.Continue" = "Continue";
+"Soulmate.Profile.Edit" = "Edit data";
+"Soulmate.Profile.Date" = "Date of birth";
+"Soulmate.Profile.Place" = "Place of birth";
+"Soulmate.Profile.Time" = "Time of birth";
+
 // MARK: Paygate
 "Paygate.Title" = "Upgrade Premium";
 "Paygate.Subtitle1" = "Reveal your soulmate drawing";
@@ -64,6 +105,24 @@
 "Paygate.Error.Title" = "Error";
 "Paygate.Error.Text" = "An error occurred during execution. Try later.";
 "Paygate.Error.Button" = "OK";
+
+// MARK: Profile
+"Profile.Section.Personal" = "Personal details";
+"Profile.Section.Help" = "Help & support";
+"Profile.Date" = "Date of birth";
+"Profile.Place" = "Place of birth";
+"Profile.Time" = "Time of birth";
+"Profile.PrivacyPolicy" = "Privacy Policy";
+"Profile.TermsOfUse" = "Terms of use";
+"Profile.Contact" = "Contact us";
+
+// MARK: Soulmate
+"Soulmate.Title" = "Soulmate has been revealed";
+"Soulmate.Segment.Explore" = "Explore";
+"Soulmate.Segment.Chart" = "Chart";
+"Soulmate.Explore.Title" = "Between you";
+"Soulmate.Unfold" = "Unfold";
+"Soulmate.Start" = "Start over";
 
 // MARK: Error
 "Error.Internet.Title" = "No internet connection available";

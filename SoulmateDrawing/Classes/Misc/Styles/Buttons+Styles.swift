@@ -7,19 +7,35 @@
 
 import SwiftUI
 
+extension EnvironmentValues {
+    @Entry var isLoading = false
+}
+
+extension View {
+    func loading(_ isLoading: Bool) -> some View {
+        environment(\.isLoading, isLoading)
+    }
+}
+
 struct PrimaryButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var isEnabled: Bool
+    @Environment(\.isLoading) private var isLoading: Bool
     
     func makeBody(configuration: Configuration) -> some View {
         ZStack {
             Color.accentMain100
-            configuration.label
-                .foregroundStyle(.textMain100)
-                .font(Font.SFPro.font(size: 17, weight: .w510))
+            if isLoading {
+                SpinnerView()
+            } else {
+                configuration.label
+                    .foregroundStyle(.textMain100)
+                    .font(Font.SFPro.font(size: 17, weight: .w510))
+            }
         }
         .frame(height: 56)
         .clipShape(Capsule())
         .opacity(isEnabled ? 1 : 0.4)
+        .disabled(isLoading)
     }
 }
 
@@ -51,18 +67,6 @@ struct BackgroundImageModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .background {
-//                ZStack {
-//                    Color(red: 255/255, green: 240/255, blue: 223/255)
-//                    LinearGradient(
-//                        stops: [
-//                            .init(color: Color(red: 255/255, green: 240/255, blue: 223/255, opacity: 0), location: 0.52),
-//                            .init(color: Color(red: 255/255, green: 240/255, blue: 223/255), location: 1)
-//                        ],
-//                        startPoint: .top,
-//                        endPoint: .bottom
-//                    )
-//                    Image("background")
-//                }
                 Image("background")
                     .resizable()
                     .scaledToFill()
@@ -117,6 +121,12 @@ extension View {
             Text("Main")
         }
         .buttonStyle(.primary)
+        
+        Button(action: {}) {
+            Text("Main")
+        }
+        .buttonStyle(.primary)
+        .loading(true)
         
         Button(action: {}) {
             HStack(spacing: 0) {

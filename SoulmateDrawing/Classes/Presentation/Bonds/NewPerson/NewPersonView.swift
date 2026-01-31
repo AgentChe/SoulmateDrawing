@@ -1,0 +1,176 @@
+//
+//  NewPersonView.swift
+//  SoulmateDrawing
+//
+//  Created by Vitaliy Zagorodnov on 14.01.2026.
+//
+
+import SwiftUI
+
+struct NewPersonView: View {
+    @State private var viewModel: NewPersonViewModel
+    @State private var sheetType: NewPersonSheet?
+    
+    
+    init(createdPerson: @escaping (PersonModel) -> Void) {
+        self._viewModel = State(initialValue: .init(createdPerson: createdPerson))
+    }
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            Text("NewPerson.Title".localized)
+                .font(Font.Gambarino.font(size: 32, weight: .w400))
+                .foregroundStyle(.textMain200)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
+                .padding(.top, 60)
+            
+            ScrollView(.vertical) {
+                SegmentView(
+                    elements: GenderModel.allCases,
+                    selection: $viewModel.gender
+                ) { value in
+                    Text(value.name)
+                        .font(Font.SFPro.font(size: 16, weight: .w510))
+                        .foregroundStyle(.textMain200)
+                }
+                .padding(.vertical, 24)
+                
+                VStack(spacing: 12) {
+                    NewPersonTextField(
+                        placeholder: "NewPerson.Placeholder.FirstName".localized,
+                        text: $viewModel.name
+                    )
+                    
+                    Button(
+                        action: { sheetType = .city },
+                        label: {
+                            NewPersonInputView(
+                                text: viewModel.city,
+                                placeholder: "NewPerson.Placeholder.PlaceOfBirth".localized
+                            )
+                        }
+                    )
+                    
+                    Button(
+                        action: { sheetType = .bornDate },
+                        label: {
+                            NewPersonInputView(
+                                text: viewModel.dayOfBorn?.formatted(date: .long, time: .omitted) ?? "",
+                                placeholder: "NewPerson.Placeholder.DateOfBirth".localized
+                            )
+                        }
+                    )
+                    
+                    Button(
+                        action: { sheetType = .bornTime },
+                        label: {
+                            NewPersonInputView(
+                                text: viewModel.timeOfBorn?.formatted(date: .omitted, time: .shortened) ?? "",
+                                placeholder: "NewPerson.Placeholder.TimeOfBirth".localized
+                            )
+                        }
+                    )
+                    .disabled(viewModel.isKnownExtractTime)
+                    
+                    Toggle("NewPerson.SwitchTitle".localized, isOn: $viewModel.isKnownExtractTime)
+                        .toggleStyle(NewPersonToggleStyle())
+                        .foregroundStyle(.textMain200)
+                        .font(Font.SFPro.font(size: 17, weight: .w400))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.horizontal, 24)
+            }
+            .scrollDismissesKeyboard(.immediately)
+            
+            Spacer()
+            Button("Save".localized) {
+                viewModel.save()
+            }
+            .buttonStyle(.primary)
+            .padding(.horizontal, 24)
+            .disabled(!viewModel.isAvailableSave || viewModel.isSaving)
+            .loading(viewModel.isSaving)
+            
+            Text("NewPerson.PrivacyMessage".localized)
+                .font(Font.SFPro.font(size: 12, weight: .w510))
+                .foregroundStyle(.textMain200)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
+                .opacity(0.6)
+                .padding(.top, 16)
+        }
+        .frame(maxWidth: .infinity)
+        .appBackground()
+        .ignoresSafeArea(.keyboard)
+        .presentationDragIndicator(.visible)
+        .presentationCornerRadius(32)
+        .screenState(viewModel.screenState, tryAgain: viewModel.save)
+        .sheet(item: $sheetType) { type in
+            Group {
+                switch type {
+                case .bornDate:
+                    OnboardingBornDate(bornDate: viewModel.dayOfBorn) {
+                        viewModel.dayOfBorn = $0
+                        sheetType = nil
+                    }
+                case .bornTime:
+                    OnboardingBornTime(bornTime: viewModel.timeOfBorn) {
+                        viewModel.timeOfBorn = $0
+                        sheetType = nil
+                    }
+                case .city:
+                    OnboardingCityView(city: viewModel.city) {
+                        viewModel.city = $0
+                        sheetType = nil
+                    }
+                }
+            }
+            .appBackground()
+            .presentationDragIndicator(.visible)
+            .presentationCornerRadius(32)
+        }
+    }
+}
+
+struct NewPersonToggleStyle: ToggleStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(spacing: 8) {
+            Rectangle()
+                .fill(.bgMain300)
+                .overlay {
+                    if configuration.isOn {
+                        Image("bgpro")
+                    }
+                }
+                .overlay(alignment: .leading) {
+                    if configuration.isOn {
+                        Rectangle()
+                            .fill(.white)
+                            .frame(width: 1)
+                            .padding(.vertical, 9)
+                            .padding(.leading, 12)
+                    }
+                }
+                .overlay(alignment: configuration.isOn ? .trailing : .leading) {
+                    Capsule()
+                        .fill(.white)
+                        .frame(width: 39)
+                        .padding(2)
+                }
+                .frame(width: 64, height: 28)
+                .onTapGesture {
+                    withAnimation(.spring()) {
+                        configuration.isOn.toggle()
+                    }
+                }
+                .clipShape(Capsule())
+            
+            configuration.label
+        }
+    }
+}
+
+#Preview {
+    NewPersonView(createdPerson: { _ in })
+}

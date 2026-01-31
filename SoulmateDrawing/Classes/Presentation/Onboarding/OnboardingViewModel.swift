@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @Observable final class OnboardingViewModel {
-    var user: UserModel
+    var user: ProfileModel
     @ObservationIgnored
     let onboardings: [OnboardingElement]
     var currentOnboarding: OnboardingElement
@@ -30,7 +30,7 @@ import SwiftUI
     
     init() {
         onboardings = OnboardingElement.allCases
-        currentOnboarding = .welcome
+        currentOnboarding = .name
         user = .init(name: "", bornDate: .init(), city: "")
     }
     
@@ -53,6 +53,7 @@ import SwiftUI
             do {
                 guard Task.isCancelled else { return }
                 try await profileManager.saveAttributes(user: user)
+                _ = try? await profileManager.getProfile(forceUpdate: true)
                 isFinish = true
             } catch {
                 guard Task.isCancelled else { return }

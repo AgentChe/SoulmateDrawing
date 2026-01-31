@@ -7,8 +7,27 @@
 
 import SwiftUI
 
+struct MainPointsView: View {
+    let mainPoints: [MainPoint]
+    
+    var body: some View {
+        HStack(spacing: 16) {
+            ForEach(mainPoints, id: \.self) { model in
+                HStack(spacing: 4) {
+                    // TODO: Поправить иконку
+//                        Image(model.label.iconName)
+                    Text(model.label.name)
+                }
+            }
+        }
+        .font(Font.SFPro.font(size: 17, weight: .w400))
+        .foregroundStyle(.textMain200)
+    }
+}
+
 struct ProfileView: View {
     let name: String
+    // TODO: Что-то решить с этим, возможно не нужно и с бека будет приходить
     let zodiac: Zodiac
     let mainPoints: [MainPoint]
     
@@ -20,17 +39,7 @@ struct ProfileView: View {
                 .font(Font.Gambarino.font(size: 32, weight: .w400))
                 .foregroundStyle(.textMain200)
             
-            HStack(spacing: 16) {
-                ForEach(mainPoints, id: \.self) { model in
-                    HStack(spacing: 4) {
-                        // TODO: Поправить иконку
-//                        Image(model.label.iconName)
-                        Text(model.label.name)
-                    }
-                }
-            }
-            .font(Font.SFPro.font(size: 17, weight: .w400))
-            .foregroundStyle(.textMain200)
+            MainPointsView(mainPoints: mainPoints)
             .padding(.top, 12)
         }
     }

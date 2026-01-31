@@ -43,8 +43,6 @@ struct SpinnerView: View {
                 .trim(from: 0.35, to: 0.85)
                 .stroke(Color.textMain200, style: .init(lineWidth: 2, lineCap: .round))
                 .rotationEffect(Angle(degrees: isAnimating ? 360 : 0))
-//                .animation(Animation.linear.repeatForever(autoreverses: false), value: UUID())
-                
         }
         .frame(width: 30, height: 30)
         .onAppear {

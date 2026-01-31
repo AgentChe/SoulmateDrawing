@@ -11,39 +11,56 @@ struct OnboardingView: View {
     @Environment(RootViewModel.self) private var rootManager
     @State private var viewModel = OnboardingViewModel()
     
+    @State private var isStart = true
+    
     var body: some View {
-        TabView(selection: $viewModel.currentOnboarding) {
-            ForEach(viewModel.onboardings, id: \.self) { element in
-                switch element {
-                case .welcome:
-                    OnboardingWelcomeScreen()
-                case .name:
-                    OnboardingNameView(user: $viewModel.user)
-                case .bornDate:
-                    OnboardingBornDate(user: $viewModel.user)
-                case .bornTime:
-                    OnboardingBornTime(user: $viewModel.user)
-                case .bornCity:
-                    OnboardingCityView(user: $viewModel.user)
+        ZStack {
+            if !isStart {
+                TabView(selection: $viewModel.currentOnboarding) {
+                    ForEach(viewModel.onboardings, id: \.self) { element in
+                        switch element {
+                        case .name:
+                            OnboardingNameView(name: viewModel.user.name) { saved in
+                                viewModel.user.name = saved
+                                viewModel.didTapContinue()
+                            }
+                        case .bornDate:
+                            OnboardingBornDate(bornDate: viewModel.user.bornDate) {
+                                viewModel.user.bornDate = $0
+                                viewModel.didTapContinue()
+                            }
+                        case .bornTime:
+                            OnboardingBornTime(bornTime: viewModel.user.bornDate) {
+                                viewModel.user.bornDate = $0
+                                viewModel.didTapContinue()
+                            }
+                        case .bornCity:
+                            OnboardingCityView(city: viewModel.user.city) {
+                                viewModel.user.city = $0
+                                viewModel.didTapContinue()
+                            }
+                        }
+                    }
                 }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .transition(.move(edge: .trailing))
+                .ignoresSafeArea()
+            } else {
+                OnboardingWelcomeScreen(
+                    didTapContinue: {
+                        withAnimation {
+                            isStart = false
+                        }
+                    }
+                )
             }
-        }
-        .tabViewStyle(.page(indexDisplayMode: .never))
-        .ignoresSafeArea()
-        .overlay(alignment: .bottom) {
-            Button(
-                action: viewModel.didTapContinue,
-                label: { Text("Continue") }
-            )
-            .buttonStyle(.primary)
-            .padding(.horizontal, 24)
         }
         .overlay(alignment: .top, content: {
             ProgressView(value: viewModel.progress)
                 .progressViewStyle(.onboarding)
                 .padding(.top, 32)
                 .padding(.horizontal, 24)
-                .opacity(viewModel.currentOnboarding == .welcome ? 0 : 1)
+                .opacity(isStart ? 0 : 1)
         })
         .appBackground()
         .animation(.default, value: viewModel.currentOnboarding)
@@ -57,6 +74,8 @@ struct OnboardingView: View {
 }
 
 struct OnboardingWelcomeScreen: View {
+    var didTapContinue: () -> Void
+    
     var body: some View {
         VStack {
             VStack(spacing: 16) {
@@ -72,6 +91,12 @@ struct OnboardingWelcomeScreen: View {
             
             Spacer()
             
+            Button(
+                action: didTapContinue,
+                label: { Text("Continue") }
+            )
+            .buttonStyle(.primary)
+            .padding(.horizontal, 24)
         }
         .padding(.horizontal, 24)
         .frame(maxWidth: .infinity)
@@ -79,7 +104,13 @@ struct OnboardingWelcomeScreen: View {
 }
 
 struct OnboardingNameView: View {
-    @Binding var user: UserModel
+    var didTapContinue: (String) -> Void
+    @State private var name: String
+    
+    init(name: String, didTapContinue: @escaping (String) -> Void) {
+        self._name = State(initialValue: name)
+        self.didTapContinue = didTapContinue
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -89,7 +120,7 @@ struct OnboardingNameView: View {
                 .multilineTextAlignment(.center)
                 .padding(.top, 74)
             
-            TextField(text: $user.name) {
+            TextField(text: $name) {
                 Text("Onboarding.Name.Placeholder".localized)
                     .font(.system(size: 23, weight: .regular))
             }
@@ -97,6 +128,15 @@ struct OnboardingNameView: View {
             .multilineTextAlignment(.center)
             
             Spacer()
+            
+            Button(
+                action: {
+                    didTapContinue(name)
+                },
+                label: { Text("Continue") }
+            )
+            .buttonStyle(.primary)
+            .padding(.horizontal, 24)
         }
         .padding(.horizontal, 24)
         .frame(maxWidth: .infinity, alignment: .center)
@@ -104,7 +144,13 @@ struct OnboardingNameView: View {
 }
 
 struct OnboardingBornDate: View {
-    @Binding var user: UserModel
+    @State private var bornDate: Date
+    var didTapContinue: (Date) -> Void
+    
+    init(bornDate: Date?, didTapContinue: @escaping (Date) -> Void) {
+        self._bornDate = State(initialValue: bornDate ?? .init())
+        self.didTapContinue = didTapContinue
+    }
     
     var body: some View {
         VStack(alignment: .center) {
@@ -119,7 +165,7 @@ struct OnboardingBornDate: View {
             .multilineTextAlignment(.center)
             .padding(.top, 74)
             
-            DatePicker("", selection: $user.bornDate, displayedComponents: .date)
+            DatePicker("", selection: $bornDate, displayedComponents: .date)
                 .datePickerStyle(.wheel)
                 .padding(.top, 100)
                 .labelsHidden()
@@ -127,6 +173,14 @@ struct OnboardingBornDate: View {
             
             Spacer()
             
+            Button(
+                action: {
+                    didTapContinue(bornDate)
+                },
+                label: { Text("Continue") }
+            )
+            .buttonStyle(.primary)
+            .padding(.horizontal, 24)
         }
         .padding(.horizontal, 24)
         .frame(maxWidth: .infinity, alignment: .center)
@@ -134,7 +188,13 @@ struct OnboardingBornDate: View {
 }
 
 struct OnboardingBornTime: View {
-    @Binding var user: UserModel
+    @State private var bornTime: Date
+    var didTapContinue: (Date) -> Void
+    
+    init(bornTime: Date?, didTapContinue: @escaping (Date) -> Void) {
+        self._bornTime = .init(initialValue: bornTime ?? .init())
+        self.didTapContinue = didTapContinue
+    }
     
     var body: some View {
         VStack(alignment: .center) {
@@ -150,7 +210,7 @@ struct OnboardingBornTime: View {
             .padding(.top, 74)
             .padding(.horizontal, 24)
             
-            DatePicker("", selection: $user.bornDate, displayedComponents: .hourAndMinute)
+            DatePicker("", selection: $bornTime, displayedComponents: .hourAndMinute)
                 .datePickerStyle(.wheel)
                 .padding(.horizontal, 24)
                 .padding(.top, 100)
@@ -158,13 +218,27 @@ struct OnboardingBornTime: View {
             
             Spacer()
             
+            Button(
+                action: {
+                    didTapContinue(bornTime)
+                },
+                label: { Text("Continue") }
+            )
+            .buttonStyle(.primary)
+            .padding(.horizontal, 24)
         }
         .frame(maxWidth: .infinity, alignment: .center)
     }
 }
 
 struct OnboardingCityView: View {
-    @Binding var user: UserModel
+    @State private var city: String
+    var didTapContinue: (String) -> Void
+    
+    init(city: String, didTapContinue: @escaping (String) -> Void) {
+        self._city = State(initialValue: city)
+        self.didTapContinue = didTapContinue
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -174,7 +248,7 @@ struct OnboardingCityView: View {
                 .multilineTextAlignment(.center)
                 .padding(.top, 74)
             
-            TextField(text: $user.city) {
+            TextField(text: $city) {
                 Text("Onboarding.City.Placeholder".localized)
                     .font(.system(size: 23, weight: .regular))
             }
@@ -182,6 +256,15 @@ struct OnboardingCityView: View {
             .multilineTextAlignment(.center)
             
             Spacer()
+            
+            Button(
+                action: {
+                    didTapContinue(city)
+                },
+                label: { Text("Continue") }
+            )
+            .buttonStyle(.primary)
+            .padding(.horizontal, 24)
         }
         .padding(.horizontal, 24)
         .frame(maxWidth: .infinity, alignment: .center)
@@ -190,4 +273,5 @@ struct OnboardingCityView: View {
 
 #Preview {
     OnboardingView()
+        .environment(RootViewModel())
 }

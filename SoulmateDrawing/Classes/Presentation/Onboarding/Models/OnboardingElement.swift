@@ -8,7 +8,6 @@
 import Foundation
 
 enum OnboardingElement: Hashable, CaseIterable {
-    case welcome
     case name
     case bornDate
     case bornTime

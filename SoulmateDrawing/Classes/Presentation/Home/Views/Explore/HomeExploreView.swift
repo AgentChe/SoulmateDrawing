@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeExploreView: View {
+    let selected: (ExploreType) -> Void
     let exploreCards: [ExploreType] = [.soulmate, .dream, .relationship]
     
     var body: some View {
@@ -26,21 +27,12 @@ struct HomeExploreView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 16) {
                     ForEach(exploreCards, id: \.self) { card in
-                        ExploreCardView(card: card)
-                            .scrollTransition { view, transition in
-                                view
-//                                    .rotationEffect(.radians(transition.value))
+                        Button(
+                            action: { selected(card) },
+                            label: {
+                                ExploreCardView(card: card)
                             }
-//                            .visualEffect { content, proxy in
-//                                let angleStep = (Angle.degrees(360).radians / Double(3))
-//                                let index = exploreCards.firstIndex(of: card) ?? 0
-//
-//                                let angle = angleStep * Double(index) + Angle.degrees(90).radians
-//                                var point = CGPoint(x: 0, y: -50).applying(CGAffineTransform(rotationAngle: angle))
-//
-//                                return content
-//                                    .offset(x: point.x, y: point.y)
-//                            }
+                        )
                     }
                 }
                 .scrollTargetLayout()
@@ -55,5 +47,5 @@ struct HomeExploreView: View {
 }
 
 #Preview {
-    HomeExploreView()
+    HomeExploreView { _ in}
 }

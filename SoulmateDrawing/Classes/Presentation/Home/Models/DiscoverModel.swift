@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DiscoverModel: Decodable {
+struct DiscoverModel: Codable {
     let mainPoints: [MainPoint]
     let charts: [Chart]
 }
@@ -17,7 +17,7 @@ struct MainPoint: Hashable {
     let label: Zodiac
 }
 
-extension MainPoint: Decodable {
+extension MainPoint: Codable {
     enum CodingKeys: String, CodingKey {
         case iconURL = "icon_url"
         case label
@@ -38,7 +38,7 @@ struct Chart: Hashable {
     let description: String
 }
 
-extension Chart: Decodable {
+extension Chart: Codable {
     enum CodingKeys: CodingKey {
         case sign
         case label

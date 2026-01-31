@@ -39,10 +39,11 @@ struct ScreenStateModifier: ViewModifier {
     func body(content: Content) -> some View {
         switch state {
         case .loading:
-            VStack {
+            ZStack {
+                Color.clear
                 SpinnerView()
             }
-            .frame(maxHeight: .infinity)
+            .appBackground()
         case .loaded:
             content
         case .error:
@@ -53,8 +54,6 @@ struct ScreenStateModifier: ViewModifier {
 }
 
 private struct ErrorScreenView: View {
-    @Environment(\.dismiss) private var dismiss
-    
     private let errorType: ErrorScreenType
     private let tryAgain: () -> Void
     

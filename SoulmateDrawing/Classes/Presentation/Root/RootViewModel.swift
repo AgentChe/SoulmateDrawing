@@ -18,6 +18,10 @@ final class RootViewModel {
     private let profileManager = ProfileManager()
     @ObservationIgnored
     private let sessionManager = SessionManager()
+    @ObservationIgnored
+    private let discoverManager = DiscoverManager()
+    @ObservationIgnored
+    private let bondsManager = BondsManager()
     
     func makeInitialize() {
         sdkInitialize.observe { [weak self] in
@@ -26,23 +30,27 @@ final class RootViewModel {
     }
     
     func login() {
-        Task {
-            await MainActor.run {
-                screenState = .loaded
-            }
-        }
         
         let anonymousId = sessionManager.anonymousId
         let internalId = sessionManager.internalId
         
         Task {
+            await MainActor.run {
+                screenState = .loaded
+            }
             do {
-                if anonymousId == internalId {
-                    try await profileManager.create()
-                } else {
-                    try await profileManager.binding()
-                }
+                // TODO: Раскомментить
+//                if anonymousId == internalId {
+//                    try await profileManager.create()
+//                } else {
+//                    try await profileManager.binding()
+//                }
                 // TODO: Запросы нужных данных на старте
+                async let discoverRequest = discoverManager.discover(forceUpdate: true)
+                async let personListRequest = bondsManager.personList(forceUpdate: true)
+                async let profileRequest = profileManager.getProfile(forceUpdate: true)
+                
+                let (_, _, _) = try await (discoverRequest, personListRequest, profileRequest)
                 makeStartRoute()
             } catch {
                 await MainActor.run {
@@ -58,7 +66,8 @@ final class RootViewModel {
     }
     
     func makeStartRoute() {
-        if UserDefaults.standard.bool(forKey: Self.onboardingKey) {
+        // TODO: Избавиться
+        if !UserDefaults.standard.bool(forKey: Self.onboardingKey) {
             currentRoute = .main
         } else {
             currentRoute = .onboarding

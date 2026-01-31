@@ -15,10 +15,10 @@ struct LocationResponse: Codable {
         let id: UUID
         let name: String
     }
-    
-    struct Pagination: Codable {
-        let total: Int
-        let current: Int
-        let next: Int
-    }
+}
+
+struct Pagination: Codable {
+    let total: Int
+    let current: Int
+    let next: Int
 }

@@ -10,7 +10,7 @@ import Alamofire
 struct ProfileAttributesRequest: APIRequestBody {
     let anonymousId: String
     let internalId: String?
-    let model: UserModel
+    let model: ProfileModel
     
     var url: String {
         GlobalDefinitions.domain + "/api/v1//profile/attributes"
@@ -21,11 +21,12 @@ struct ProfileAttributesRequest: APIRequestBody {
     }
     
     var parameters: Parameters? {
-        let attrs: [String: Any] = [
+        var attrs: [String: Any] = [
             "name": model.name,
-            "birth_datetime": model.bornDate.timeIntervalSince1970,
             "birth_location": model.city
         ]
+        
+        attrs["birth_datetime"] = model.bornDate?.timeIntervalSince1970
         
         var params: Parameters = [
             "anonymous_id": anonymousId,

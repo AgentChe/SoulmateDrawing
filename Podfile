@@ -6,7 +6,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 target 'SoulmateDrawing' do
   pod 'Alamofire'
   pod 'SwiftyStoreKit'
-#  pod 'RiveRuntime'
+  pod 'RiveRuntime'
   
   pod 'OtterScaleiOS', :git => "https://github.com/AgentChe/OtterScaleiOS.git"
   

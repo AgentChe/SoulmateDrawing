@@ -27,16 +27,20 @@ struct ChartCardView: View {
             .shadow(color: Color.white.opacity(0.16), radius: 0, y: 1.34)
             
         }
-        .buttonStyle(CardButtonStyle())
+        .buttonStyle(.card)
     }
 }
 
-private struct CardButtonStyle: ButtonStyle {
+extension ButtonStyle where Self == CardButtonStyle {
+    static var card: Self { .init() }
+}
+
+struct CardButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .scaleEffect(configuration.isPressed ? 0.97 : 1)
             .opacity(configuration.isPressed ? 0.75 : 1)
-            .animation(.default, value: configuration.isPressed)
+            .animation(.spring(), value: configuration.isPressed)
     }
 }
 
