@@ -8,6 +8,7 @@
 // MARK: Other
 "House" = "House";
 "Save" = "Save";
+"Next" = "Next";
 
 
 // MARK: Onboarding
@@ -123,6 +124,15 @@
 "Soulmate.Explore.Title" = "Between you";
 "Soulmate.Unfold" = "Unfold";
 "Soulmate.Start" = "Start over";
+"Soulmate.Preferences.Region" = "What ethnicities are you interested in?";
+"Soulmate.Preferences.Gender" = "What gender are you interested in?";
+"Soulmate.Generate.Title" = "Connecting your energy to the stars…";
+"Soulmate.Generate.Subtitle" = "Finding your perfect match across time";
+
+// MARK: Dreamer
+"Dreamer.Title" = "Dreamer";
+"Dreamer.Interpret" = "Interpret";
+"Dreamer.Placeholder" = "Let your dream speak";
 
 // MARK: Error
 "Error.Internet.Title" = "No internet connection available";

@@ -68,5 +68,6 @@ struct SoulmateExploreCardView: View {
         }
         .padding(24)
         .background(.bgMain200, in: RoundedRectangle(cornerRadius: 32))
+        .compositingGroup()
     }
 }

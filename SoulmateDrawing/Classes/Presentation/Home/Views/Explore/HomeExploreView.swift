@@ -33,6 +33,7 @@ struct HomeExploreView: View {
                                 ExploreCardView(card: card)
                             }
                         )
+                        .buttonStyle(.card)
                     }
                 }
                 .scrollTargetLayout()

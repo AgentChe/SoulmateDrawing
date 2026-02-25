@@ -20,7 +20,9 @@ final class SettingsViewModel {
     @ObservationIgnored
     private let profileManager = ProfileManager()
     
-    init() { load() }
+    init() {
+        load()
+    }
     
     func load() {
         Task {
@@ -60,6 +62,29 @@ final class SettingsViewModel {
             await configureDataSource()
         }
     }
+    
+//    func open(item: ProfileSection.Model) {
+//        switch item {
+//        case .date:
+//            coordinator.sheet(.dateOfBird(current: bornDate ?? .init(), selected: { [weak self] in
+//                self?.bornDate = $0
+//            }))
+//        case .place:
+//            coordinator.sheet(.placeOfBird(current: city, selected: { [weak self] in
+//                self?.city = $0
+//            }))
+//        case .time:
+//            coordinator.sheet(.timeOfBird(current: bornDate ?? .init(), selected: { [weak self] in
+//                self?.bornDate = $0
+//            }))
+//        case .privacyPolicy:
+//            break
+//        case .termOfUse:
+//            break
+//        case .contactUs:
+//            break
+//        }
+//    }
 }
 
 private extension SettingsViewModel {

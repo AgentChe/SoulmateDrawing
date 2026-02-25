@@ -9,35 +9,23 @@ import Foundation
 
 @Observable
 final class SoulmateDrawingResultViewModel {
-    private(set) var screenState: ScreenState = .loading
-    private(set) var mainPoints: [MainPoint] = []
-    private(set) var imageURL: URL? = nil
-    private(set) var charts: [Chart] = []
-    private(set) var exploreItems: [ExploreItem] = []
-    private(set) var exploreTitle: String = ""
+    let mainPoints: [MainPoint]
+    let imageURL: URL?
+    let charts: [Chart]
+    let exploreItems: [ExploreItem]
+    let exploreTitle: String
+    
+    var selectedSegment = SoulmateSegmentItem.explore
     
     @ObservationIgnored
-    private let soulmateManager = SoulmateManager()
+    private let soulmate: SoulmateModel
     
-    init() { load() }
-    
-    func load() {
-        Task {
-            do {
-                let soulmate = try await soulmateManager.soulmate()
-                
-                await MainActor.run {
-                    mainPoints = soulmate.mainPoints
-                    imageURL = soulmate.image
-                    charts = soulmate.charts
-                    exploreTitle = soulmate.explore.tip
-                    exploreItems = soulmate.explore.items
-                }
-            } catch {
-                await MainActor.run {
-                    screenState = .error
-                }
-            }
-        }
+    init(soulmate: SoulmateModel) {
+        self.soulmate = soulmate
+        mainPoints = soulmate.mainPoints
+        imageURL = soulmate.image
+        charts = soulmate.charts
+        exploreTitle = soulmate.explore.tip
+        exploreItems = soulmate.explore.items
     }
 }

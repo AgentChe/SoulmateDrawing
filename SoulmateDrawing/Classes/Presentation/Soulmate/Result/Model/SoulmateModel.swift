@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct SoulmateModel {
+struct SoulmateModel: Hashable {
     let image: URL?
     let mainPoints: [MainPoint]
     let explore: Explore
     let charts: [Chart]
 }
 
-struct Explore {
+struct Explore: Hashable {
     let tip: String
     let items: [ExploreItem]
 }

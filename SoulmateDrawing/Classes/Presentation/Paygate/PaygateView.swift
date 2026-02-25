@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PaygateView: View {
+    @Environment(\.navigation) private var navigation
     @State private var viewModel = PaygateViewModel()
     
     var body: some View {
@@ -52,6 +53,16 @@ struct PaygateView: View {
         }
         .task {
             await viewModel.load()
+        }
+        .toolbar {
+            ToolbarButton(placement: .topBarTrailing) {
+                Button(
+                    action: { navigation.dismiss() },
+                    label: { Image(systemName: "xmark") }
+                )
+                .foregroundStyle(.textMain200)
+                .buttonStyle(.navigation)
+            }
         }
     }
 }

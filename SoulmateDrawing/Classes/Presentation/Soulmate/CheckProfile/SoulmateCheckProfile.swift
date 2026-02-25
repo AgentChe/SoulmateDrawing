@@ -7,20 +7,10 @@
 
 import SwiftUI
 
-private extension SoulmateCheckProfile {
-    enum SheetType: Identifiable {
-        case settings
-        
-        var id: Self { self }
-    }
-}
-
-struct SoulmateCheckProfile: View {
-    @Environment(\.dismiss) private var dismiss
-    @State private var viewModel = SoulmateCheckProfileViewModel()
-    @State private var sheetType: SheetType? = nil
-    @State var isShow = false
+struct SoulmateProfileView: View {
+    @Environment(\.navigation) private var navigation
     
+    @Bindable var viewModel: SoulmateCheckProfileViewModel
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 12) {
@@ -32,8 +22,6 @@ struct SoulmateCheckProfile: View {
             .foregroundStyle(.textMain200)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 16)
-            
-            Spacer()
             
             ProfileView(
                 name: viewModel.profileName,
@@ -51,7 +39,7 @@ struct SoulmateCheckProfile: View {
             Spacer()
             
             Button(
-                action: {},
+                action: viewModel.didTapContinue,
                 label: {
                     Text("Soulmate.Profile.Continue".localized)
                 }
@@ -59,13 +47,73 @@ struct SoulmateCheckProfile: View {
             .buttonStyle(.primary)
             
             Button(
-                action: { isShow = true },
+                action: viewModel.openSettings,
                 label: {
                     Text("Soulmate.Profile.Edit".localized)
                 }
             )
             .buttonStyle(.secondary)
             .padding(.top, 16)
+        }
+        .screenState(viewModel.screenState) {
+            viewModel.load()
+        }
+    }
+}
+
+struct SoulmateGenerateView: View {
+    @Bindable var viewModel: SoulmateCheckProfileViewModel
+    var body: some View {
+        VStack(spacing: 0) {
+            Text("Soulmate.Generate.Title".localized)
+                .font(Font.Gambarino.font(size: 32, weight: .w400))
+                .foregroundStyle(.textMain200)
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 12)
+            
+            Text("Soulmate.Generate.Subtitle".localized)
+                .font(Font.SFPro.font(size: 17, weight: .w400))
+                .foregroundStyle(.textMain200)
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 40)
+            
+            RoundedRectangle(cornerRadius: 32)
+                .fill(Color(red: 1, green: 251/255, blue: 245/255))
+                .aspectRatio(0.98, contentMode: .fit)
+                .overlay {
+                    ZStack {
+                        Image("SoulmatePlaceholder")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .blur(radius: 20)
+                        
+                        SpinnerView()
+                    }
+                    .padding(26)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 32))
+        }
+        .screenState(viewModel.screenState) {
+            viewModel.generateSoulmate()
+        }
+    }
+}
+
+struct SoulmateCheckProfile: View {
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.navigation) private var navigation
+    
+    @State private var viewModel = SoulmateCheckProfileViewModel()
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            if viewModel.isGenerateSoulmate {
+                SoulmateGenerateView(viewModel: viewModel)
+                    .transition(.move(edge: .leading))
+            } else {
+                SoulmateProfileView(viewModel: viewModel)
+                    .transition(.move(edge: .leading))
+            }
         }
         .padding(.horizontal, 24)
         .frame(maxWidth: .infinity)
@@ -80,37 +128,57 @@ struct SoulmateCheckProfile: View {
                 .buttonStyle(.navigation)
             }
         }
-        .screenState(viewModel.screenState) {
-            viewModel.load()
-        }
-        .sheet(item: $sheetType) { type in
+        .sheet(item: $viewModel.sheetType) { type in
             switch type {
+            case .ethnicity(let items):
+                SoulmatePreferencesView(elements: items) {
+                    viewModel.didSelect(ethnicity: $0)
+                }
+                .presentationDragIndicator(.visible)
+                .presentationCornerRadius(32)
+            case .gender(let items):
+                SoulmatePreferencesView(elements: items) {
+                    viewModel.didSelect(gender: $0)
+                }
+                .presentationDragIndicator(.visible)
+                .presentationCornerRadius(32)
+            }
+        }
+        .fullScreenCover(item: $viewModel.fullScreen) { item in
+            switch item {
             case .settings:
                 NavigationStack {
                     SettingsView()
                 }
             }
         }
-        .fullScreenCover(isPresented: $isShow) {
-            NavigationStack {
-                SettingsView()
+        .onChange(of: viewModel.push) { _, newValue in
+            guard let newValue else { return }
+            switch newValue {
+            case let .soulmateResult(model):
+                navigation.dismiss()
+                navigation.push(.soulmateResult(model))
             }
+            
         }
     }
 }
 
 #Preview {
-    @Previewable @State var isShow = false
     NavigationStack {
-        Color.red
-            .overlay {
-                Button(action: { isShow = true }, label: { Text("TAP ME ")})
-            }
-        
+        SoulmateCheckProfile()
     }
-    .fullScreenCover(isPresented: $isShow) {
-        NavigationStack {
-            SoulmateCheckProfile()
-        }
-    }
+//    @Previewable @State var isShow = false
+//    NavigationStack {
+//        Color.red
+//            .overlay {
+//                Button(action: { isShow = true }, label: { Text("TAP ME ")})
+//            }
+//        
+//    }
+//    .fullScreenCover(isPresented: $isShow) {
+//        NavigationStack {
+//            SoulmateCheckProfile()
+//        }
+//    }
 }

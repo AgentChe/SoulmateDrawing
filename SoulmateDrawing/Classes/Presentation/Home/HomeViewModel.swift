@@ -7,17 +7,38 @@
 
 import Foundation
 
+extension HomeViewModel {
+    enum Route: Identifiable {
+        case settings
+        case paygate
+        case soulmateOnboarding
+        case soulmateCheckProfile
+        
+        var id: Self { self }
+    }
+    
+}
+
 @Observable
 final class HomeViewModel {
     private(set) var screenState: ScreenState = .loaded
     private(set) var profileName: String = ""
     private(set) var mainPoints: [MainPoint] = []
     private(set) var charts: [Chart] = []
+    var selectionSegment: HomeSegmentItem = .explore
+    
+    var fullScreen: Route?
+    var push: MainRoute?
     
     @ObservationIgnored
     private let discoverManager = DiscoverManager()
     @ObservationIgnored
     private let profileManager = ProfileManager()
+    @ObservationIgnored
+    private let soulmateManager = SoulmateManager()
+    
+    @ObservationIgnored
+    private var soulmate: SoulmateModel?
     
     init() {
         load()
@@ -31,8 +52,11 @@ final class HomeViewModel {
                 }
                 async let discoveryRequest = discoverManager.discover(forceUpdate: false)
                 async let profileRequest = profileManager.getProfile(forceUpdate: false)
+                async let soulmateRequest = soulmateManager.soulmate()
                 
-                let (discovery, profile) = try await (discoveryRequest, profileRequest)
+                let (discovery, profile, soulmate) = try await (discoveryRequest, profileRequest, soulmateRequest)
+                
+                self.soulmate = soulmate
                 
                 await MainActor.run {
                     mainPoints = discovery.mainPoints
@@ -46,5 +70,30 @@ final class HomeViewModel {
                 }
             }
         }
+    }
+    
+    
+    
+    func selectedExplore(_ item: ExploreType) {
+        switch item {
+        case .soulmate:
+            if let soulmate {
+                push = .soulmateResult(soulmate)
+            } else {
+                fullScreen = .soulmateOnboarding
+            }
+        case .dream:
+            break
+        case .relationship:
+            break
+        }
+    }
+//    
+    func showPaygate() {
+        fullScreen = .paygate
+    }
+    
+    func showSettings() {
+        fullScreen = .settings
     }
 }

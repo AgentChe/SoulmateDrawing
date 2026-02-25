@@ -9,8 +9,11 @@ import SwiftUI
 import RiveRuntime
 
 struct SoulmateOnboarding: View {
+    @Environment(\.navigation) private var navigation
+    
     @State private var isAppear = false
-    let model = RiveViewModel(fileName: "drawing", autoPlay: false)
+    private let model = RiveViewModel(fileName: "drawing", autoPlay: false)
+    
     var body: some View {
         VStack {
             VStack(spacing: 12) {
@@ -31,6 +34,8 @@ struct SoulmateOnboarding: View {
             
             Button(
                 action: {
+                    navigation.dismiss()
+                    navigation.fullScreen(.soulmateCheckProfile)
                 },
                 label: {
                     Text("Soulmate.Onboarding.Button".localized)
@@ -61,7 +66,7 @@ struct SoulmateOnboarding: View {
         .toolbar {
             ToolbarButton(placement: .topBarTrailing) {
                 Button(
-                    action: {},
+                    action: { navigation.dismiss() },
                     label: { Image(systemName: "xmark") }
                 )
                 .foregroundStyle(.textMain200)

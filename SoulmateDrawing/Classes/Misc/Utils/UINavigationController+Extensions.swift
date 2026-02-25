@@ -66,7 +66,7 @@ struct ToolbarButton<Content>: ToolbarContent where Content: View {
     var body: some ToolbarContent {
         if #available(iOS 26, *) {
             ToolbarItem(placement: placement, content: content)
-                .sharedBackgroundVisibility(.hidden)
+//                .sharedBackgroundVisibility(.hidden)
         } else {
             ToolbarItem(placement: placement, content: content)
         }

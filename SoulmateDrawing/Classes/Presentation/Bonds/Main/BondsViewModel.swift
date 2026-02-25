@@ -85,6 +85,28 @@ final class BondsViewModel {
             }
         }
     }
+    
+//    func openInsightsList() {
+//        coordinator.push(.insightsList(models: insights))
+//    }
+//    
+//    func openConnectionType() {
+//        coordinator.sheet(.connectionType { [weak self] in
+//            self?.connectionType = $0
+//        })
+//    }
+//    
+//    func openSelectPerson() {
+//        if persons.isEmpty {
+//            coordinator.sheet(.newPerson { [weak self] in
+//                self?.selectPerson(person: $0)
+//            })
+//        } else {
+//            coordinator.sheet(.personList(persons: persons, selected: { [weak self] in
+//                self?.selectPerson(person: $0)
+//            }))
+//        }
+//    }
 }
 
 

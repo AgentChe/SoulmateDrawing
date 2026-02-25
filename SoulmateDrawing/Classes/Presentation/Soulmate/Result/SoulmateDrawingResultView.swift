@@ -22,8 +22,12 @@ enum SoulmateSegmentItem: Hashable, CaseIterable {
 }
 
 struct SoulmateDrawingResultView: View {
-    @State private var viewModel = SoulmateDrawingResultViewModel()
-    @State private var selectedSegment: SoulmateSegmentItem = .explore
+    @Environment(\.navigation) private var navigation
+    @State private var viewModel: SoulmateDrawingResultViewModel
+    
+    init(soulmate: SoulmateModel) {
+        _viewModel = State(initialValue: .init(soulmate: soulmate))
+    }
     
     var body: some View {
         ScrollView(.vertical) {
@@ -59,7 +63,7 @@ struct SoulmateDrawingResultView: View {
                 
                 SegmentView(
                     elements: SoulmateSegmentItem.allCases,
-                    selection: $selectedSegment
+                    selection: $viewModel.selectedSegment
                 ) { value in
                     Text(value.name)
                         .font(Font.SFPro.font(size: 16, weight: .w510))
@@ -67,11 +71,17 @@ struct SoulmateDrawingResultView: View {
                 }
                 .padding(.bottom, 16)
                 
-                switch selectedSegment {
+                switch viewModel.selectedSegment {
                 case .explore:
                     SoulmateExploreView(
                         title: viewModel.exploreTitle,
-                        items: viewModel.exploreItems
+                        items: viewModel.exploreItems,
+                        selected: {
+                            navigation.push(.exploreDetails($0))
+                        },
+                        unfoldAction: {
+                            navigation.fullScreen(.paygate)
+                        }
                     )
                 case .chart:
                     ChartsView(charts: viewModel.charts)
@@ -79,9 +89,13 @@ struct SoulmateDrawingResultView: View {
             }
             .padding(.horizontal, 24)
         }
+        .animation(.default, value: viewModel.selectedSegment)
         .safeAreaInset(edge: .bottom) {
             Button(
-                action: {},
+                action: {
+                    navigation.fullScreen(.soulmateCheckProfile)
+                    navigation.pop()
+                },
                 label: {
                     Text("Soulmate.Start".localized)
                 }
@@ -96,6 +110,8 @@ struct SoulmateDrawingResultView: View {
 struct SoulmateExploreView: View {
     let title: String
     let items: [ExploreItem]
+    let selected: (ExploreItem) -> Void
+    let unfoldAction: () -> Void
     
     var body: some View {
         LazyVStack(alignment: .leading, spacing: 0) {
@@ -110,11 +126,9 @@ struct SoulmateExploreView: View {
             
             ForEach(items, id: \.self) { item in
                 Button(
-                    action: {},
+                    action: { selected(item) },
                     label: {
-                        SoulmateExploreCardView(item: item) {
-                            
-                        }
+                        SoulmateExploreCardView(item: item, unfoldAction: unfoldAction)
                     }
                 )
                 .buttonStyle(.card)
@@ -131,11 +145,12 @@ struct SoulmateExploreView: View {
                 .buttonStyle(.navigation)
             }
         }
+        .customTabBarVisible(false)
     }
 }
 
 #Preview {
     NavigationStack {
-        SoulmateDrawingResultView()
+        SoulmateDrawingResultView(soulmate: .mock)
     }
 }

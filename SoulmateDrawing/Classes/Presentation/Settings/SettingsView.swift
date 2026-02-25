@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.navigation) private var navigation
     @State private var viewModel = SettingsViewModel()
     @State private var sheetType: SettingsSheet?
     
@@ -19,7 +19,21 @@ struct SettingsView: View {
                     Section {
                         ForEach(section.items) { item in
                             SettingsItemView(item: item) {
-                                
+//                                viewModel.open(item: item)
+                                switch item {
+                                case .date:
+                                    sheetType = .bornDate
+                                case .place:
+                                    sheetType = .city
+                                case .time:
+                                    sheetType = .bornTime
+                                case .privacyPolicy:
+                                    break
+                                case .termOfUse:
+                                    break
+                                case .contactUs:
+                                    break
+                                }
                             }
                             .padding(.vertical, 24)
                             .overlay(alignment: .bottom) {
@@ -45,12 +59,14 @@ struct SettingsView: View {
         .appBackground()
         .toolbar {
             ToolbarButton(placement: .topBarTrailing) {
-                ProButton {}
+                ProButton {
+                    navigation.fullScreen(.paygate)
+                }
             }
             
             ToolbarButton(placement: .topBarLeading) {
                 Button(
-                    action: {dismiss()},
+                    action: { navigation.dismiss() },
                     label: { Image(systemName: "xmark") }
                 )
                 .foregroundStyle(.textMain200)

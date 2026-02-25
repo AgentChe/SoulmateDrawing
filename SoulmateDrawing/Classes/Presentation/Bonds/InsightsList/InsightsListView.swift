@@ -35,6 +35,7 @@ struct InsightsListView: View {
                 .buttonStyle(.navigation)
             }
         }
+        .customTabBarVisible(false)
     }
 }
 

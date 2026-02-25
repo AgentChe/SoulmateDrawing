@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
-//    @Environment(Coordinator<HomeRoute>.self) private var coordinator
+    @Environment(\.navigation) private var navigation
     @State private var viewModel = HomeViewModel()
-    @State private var selection: HomeSegmentItem = .explore
     
     var body: some View {
         ScrollView(.vertical) {
@@ -23,7 +22,7 @@ struct HomeView: View {
                 
                 SegmentView(
                     elements: HomeSegmentItem.allCases,
-                    selection: $selection
+                    selection: $viewModel.selectionSegment
                 ) { value in
                     Text(value.name)
                         .font(Font.SFPro.font(size: 16, weight: .w510))
@@ -31,12 +30,10 @@ struct HomeView: View {
                 }
                 .padding(.top, 24)
                 
-                switch selection {
+                switch viewModel.selectionSegment {
                 case .explore:
-                    HomeExploreView { selected in
-                        
-                    }
-                    .padding(.top, 16)
+                    HomeExploreView(selected: viewModel.selectedExplore)
+                        .padding(.top, 16)
                 case .chart:
                     ChartsView(charts: viewModel.charts)
                         .padding(.horizontal, 24)
@@ -51,20 +48,51 @@ struct HomeView: View {
             ToolbarButton(placement: .topBarLeading) {
                 Button(
                     action: {
+                        viewModel.showSettings()
 //                            coordinator.sheet(.settings)
                     },
                     label: { Image("settings") }
                 )
                 .buttonStyle(.navigation)
             }
-            
-            ToolbarButton(placement: .topBarTrailing) {
-                ProButton {}
+            if #available(iOS 26, *) {
+                ToolbarButton(placement: .topBarTrailing) {
+                    ProButton {
+                        viewModel.showPaygate()
+                    }
+                }
+                .sharedBackgroundVisibility(.hidden)
+            } else {
+                ToolbarButton(placement: .topBarTrailing) {
+                    ProButton {
+                        viewModel.showPaygate()
+                    }
+                }
             }
         }
         .appBackground()
         .screenState(viewModel.screenState) {
             viewModel.load()
+        }
+        .onChange(of: viewModel.fullScreen) { oldValue, newValue in
+            guard let newValue else { return }
+            switch newValue {
+            case .settings:
+                navigation.fullScreen(.settings)
+            case .paygate:
+                navigation.fullScreen(.paygate)
+            case .soulmateOnboarding:
+                navigation.fullScreen(.soulmateOnboarding)
+            case .soulmateCheckProfile:
+                navigation.fullScreen(.soulmateCheckProfile)
+            }
+            viewModel.fullScreen = nil
+        }
+        .onChange(of: viewModel.push) { _, newValue in
+            if let newValue {
+                navigation.push(newValue)
+                viewModel.push = nil
+            }
         }
     }
 }
