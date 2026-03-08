@@ -7,9 +7,11 @@
 
 import Foundation
 
-enum HomeSegmentItem: CaseIterable, Hashable {
+enum HomeSegmentItem: CaseIterable, Hashable, Identifiable {
     case explore
     case chart
+    
+    var id: Self { self }
     
     var name: String {
         switch self {

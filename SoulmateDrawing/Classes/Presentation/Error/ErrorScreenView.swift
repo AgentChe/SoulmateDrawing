@@ -41,7 +41,8 @@ struct ScreenStateModifier: ViewModifier {
         case .loading:
             ZStack {
                 Color.clear
-                SpinnerView()
+                ProgressView()
+                    .progressViewStyle(.spinner)
             }
             .appBackground()
         case .loaded:

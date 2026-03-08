@@ -28,6 +28,7 @@ struct RootView: View {
         }
         .background(.black)
         .animation(.easeOut, value: viewModel.currentRoute)
+        .preferredColorScheme(.light)
     }
 }
 

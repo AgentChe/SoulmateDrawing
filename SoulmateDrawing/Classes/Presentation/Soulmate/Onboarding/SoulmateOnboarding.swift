@@ -34,7 +34,7 @@ struct SoulmateOnboarding: View {
             
             Button(
                 action: {
-                    navigation.dismiss()
+                    navigation.dismissFullScreen()
                     navigation.fullScreen(.soulmateCheckProfile)
                 },
                 label: {
@@ -63,16 +63,7 @@ struct SoulmateOnboarding: View {
                 }
             }
         }
-        .toolbar {
-            ToolbarButton(placement: .topBarTrailing) {
-                Button(
-                    action: { navigation.dismiss() },
-                    label: { Image(systemName: "xmark") }
-                )
-                .foregroundStyle(.textMain200)
-                .buttonStyle(.navigation)
-            }
-        }
+        .closeButton(action: navigation.dismissFullScreen)
     }
 }
 

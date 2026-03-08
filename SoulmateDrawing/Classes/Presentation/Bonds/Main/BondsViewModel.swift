@@ -24,15 +24,20 @@ final class BondsViewModel {
     private(set) var screenState: ScreenState = .loading
     private(set) var insights: [InsightModel] = []
     private(set) var isDescovering = false
+    private(set) var isAvailablePagination = true
     
     var actionIsEnabled: Bool {
         person != nil && connectionType != nil
     }
     
     @ObservationIgnored
+    private var pagination: Pagination?
+    @ObservationIgnored
     private let bondsManager = BondsManager()
     @ObservationIgnored
-    private let chatManager = AIChatManager()
+    private let chatManager = ChatManager()
+    @ObservationIgnored
+    private var paginationTask: Task<Void, Never>?
     
     init() {
         load()
@@ -45,6 +50,9 @@ final class BondsViewModel {
                 async let historyRequest = chatManager.getHistory(page: nil)
                 
                 let (personList, history) = try await (personListRequest, historyRequest)
+                pagination = history.pagination
+                isAvailablePagination = history.pagination.current <  history.pagination.total
+                
                 insights = history.items.map(InsightModel.init)
                 persons = personList.map(PersonModel.init)
                 screenState = .loaded
@@ -52,6 +60,23 @@ final class BondsViewModel {
                 await MainActor.run {
                     screenState = .error
                 }
+            }
+        }
+    }
+    
+    func getNextPage() {
+        guard (paginationTask?.isCancelled ?? true), let pagination, pagination.current < pagination.total else { return }
+        
+        paginationTask = Task {
+            do {
+                let history = try await chatManager.getHistory(page: pagination.next)
+                let newInsights = history.items.map(InsightModel.init)
+                
+                await MainActor.run {
+                    insights.append(contentsOf: newInsights)
+                }
+            } catch {
+                
             }
         }
     }
@@ -111,7 +136,7 @@ final class BondsViewModel {
 
 
 extension InsightModel {
-    init(response: AIChatHistoryResponse.Item) {
+    init(response: ChatHistoryResponse.Item) {
         self.id = response.threadId
         // TODO: Поправить форматирование
         self.formattedDate = ""

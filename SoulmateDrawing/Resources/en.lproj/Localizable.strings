@@ -133,6 +133,9 @@
 "Dreamer.Title" = "Dreamer";
 "Dreamer.Interpret" = "Interpret";
 "Dreamer.Placeholder" = "Let your dream speak";
+"Dreamer.Loading.Title" = "Uncovering your dream’s message…";
+"Dreamer.Loading.Subtitle" = "Stay with the silence — it’s almost here";
+"Dreamer.Details.Title" = "Dream has been revealed";
 
 // MARK: Error
 "Error.Internet.Title" = "No internet connection available";
@@ -143,3 +146,12 @@
 "Error.Appstore.Subtitle" = "Something went wrong. Please, try one more time.";
 "Error.TryAgain" = "Try again";
 "Error.Support" = "Contact the support";
+
+// MARK: Chat
+"Chat.Placeholder" = "Bring your question";
+"Chat.RetryMessage" = "There was an error generating a response";
+"Chat.RetryButton" = "Retry";
+"Chat.DeleteTitle" = "Delete chat";
+"Chat.Cancel" = "Cancel";
+"Chat.Delete" = "Delete";
+"Chat.DeleteMessage" = "Are you sure you want to delete this chat?";

@@ -12,7 +12,7 @@ struct ChartsView: View {
     let charts: [Chart]
     
     var body: some View {
-        LazyVStack(spacing: 16) {
+        VStack(spacing: 16) {
             Grid(alignment: .leading, horizontalSpacing: 0) {
                 ForEach(charts, id: \.self) { chart in
                     GridRow {

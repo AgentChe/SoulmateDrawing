@@ -132,6 +132,7 @@ struct SoulmateExploreView: View {
                     }
                 )
                 .buttonStyle(.card)
+                .itemShadow()
             }
             .padding(.top, 16)
         }

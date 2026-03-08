@@ -25,7 +25,8 @@ struct PrimaryButtonStyle: ButtonStyle {
         ZStack {
             Color.accentMain100
             if isLoading {
-                SpinnerView()
+                ProgressView()
+                    .progressViewStyle(.spinner)
             } else {
                 configuration.label
                     .foregroundStyle(.textMain100)
@@ -55,6 +56,22 @@ struct SecondaryButtonStyle: ButtonStyle {
     }
 }
 
+
+struct NavigationButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .frame(width: 24, height: 24)
+            .padding(8)
+            .background(.bgMain300)
+            .clipShape(Circle())
+            .scaleEffect(configuration.isPressed ? 1.2 : 1)
+            .opacity(configuration.isPressed ? 0.5 : 1)
+            .animation(.interpolatingSpring(), value: configuration.isPressed)
+            .foregroundStyle(.textMain200)
+    }
+}
+
+
 extension ButtonStyle where Self == PrimaryButtonStyle {
     static var primary: Self { PrimaryButtonStyle() }
 }
@@ -63,16 +80,8 @@ extension ButtonStyle where Self == SecondaryButtonStyle {
     static var secondary: Self { SecondaryButtonStyle() }
 }
 
-struct BackgroundImageModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .background {
-                Image("background")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-            }
-    }
+extension ButtonStyle where Self == NavigationButtonStyle {
+    static var navigation: Self { .init() }
 }
 
 struct ProButtonStyle: ButtonStyle {
@@ -107,12 +116,6 @@ struct ProButton: View {
 
 extension ButtonStyle where Self == ProButtonStyle {
     static var pro: Self { ProButtonStyle() }
-}
-
-extension View {
-    func appBackground() -> some View {
-        modifier(BackgroundImageModifier())
-    }
 }
 
 #Preview {

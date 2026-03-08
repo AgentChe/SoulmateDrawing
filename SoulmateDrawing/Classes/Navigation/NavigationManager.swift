@@ -15,7 +15,10 @@ enum MainRoute: Hashable {
     case insightsList([InsightModel])
     case exploreDetails(ExploreItem)
     case soulmateResult(SoulmateModel)
+    case chat(threadID: String)
     case soulmateOnboarding
+    case dreamerDetails(type: DreamerDetailsType)
+    case dreamerHistory
 }
 
 @Observable @MainActor
@@ -23,29 +26,51 @@ final class NavigationManager {
     static let shared = NavigationManager()
     var path: [MainRoute] = []
     var isPesentedFullscreen = false
+    var isPresentedSheet = false
+    var selectedTab: TabElement = .home
     
     @ObservationIgnored
     var fullScreenCover: MainRoute?
+    @ObservationIgnored
+    var sheet: MainRoute?
     
     func push(_ route: MainRoute) {
         path.append(route)
+    }
+    
+    func selectTab(_ tab: TabElement) {
+        selectedTab = tab
     }
     
     func pop() {
         path.removeLast()
     }
     
-    func dismiss() {
+    func dismissFullScreen() {
         isPesentedFullscreen = false
         fullScreenCover = nil
     }
     
     func fullScreen(_ route: MainRoute) {
         if isPesentedFullscreen {
-            dismiss()
+            dismissFullScreen()
         }
         fullScreenCover = route
         isPesentedFullscreen = true
+    }
+    
+    func dismissSheet() {
+        isPresentedSheet = false
+        sheet = nil
+    }
+    
+    func sheet(_ route: MainRoute) {
+        if isPresentedSheet {
+            dismissSheet()
+        }
+        
+        sheet = route
+        isPresentedSheet = true
     }
 }
 
@@ -65,54 +90,53 @@ struct RootNavigationStack<Content: View>: View {
         NavigationStack(path: $router.path) {
             content
                 .navigationDestination(for: MainRoute.self) { route in
-                    switch route {
-                    case .settings:
-                        SettingsView()
-                    case .paygate:
-                        PaygateView()
-                    case .soulmateCheckProfile:
-                        SoulmateCheckProfile()
-                    case let .insightsList(items):
-                        InsightsListView(models: items)
-                    case let .exploreDetails(item):
-                        ExploreCardDetailView(item: item)
-                    case let .soulmateResult(soulmate):
-                        SoulmateDrawingResultView(soulmate: soulmate)
-                    case .soulmateOnboarding:
-                        SoulmateOnboarding()
-                    }
+                    destination(for: route)
                 }
                 .fullScreenCover(
                     isPresented: $router.isPesentedFullscreen,
-                    onDismiss: {
-                        router.fullScreenCover = nil
-                    },
+                    onDismiss: router.dismissFullScreen,
                     content: {
                         NavigationStack {
-                            switch router.fullScreenCover {
-                            case .settings:
-                                SettingsView()
-                            case .paygate:
-                                PaygateView()
-                            case .soulmateCheckProfile:
-                                SoulmateCheckProfile()
-                            case let .insightsList(items):
-                                InsightsListView(models: items)
-                            case let .exploreDetails(item):
-                                ExploreCardDetailView(item: item)
-                            case let .soulmateResult(soulmate):
-                                SoulmateDrawingResultView(soulmate: soulmate)
-                            case .soulmateOnboarding:
-                                SoulmateOnboarding()
-                            case .none:
-                                Color.white
-                            }
+                            destination(for: router.fullScreenCover)
                         }
                     }
                 )
+                .sheet(isPresented: $router.isPresentedSheet, onDismiss: router.dismissSheet) {
+                    NavigationStack {
+                        destination(for: router.sheet)
+                    }
+                }
 
         }
         .environment(\.navigation, router)
+    }
+    
+    @ViewBuilder
+    private func destination(for route: MainRoute?) -> some View {
+        switch route {
+        case .settings:
+            SettingsView()
+        case .paygate:
+            PaygateView()
+        case .soulmateCheckProfile:
+            SoulmateCheckProfile()
+        case let .insightsList(items):
+            InsightsListView(models: items)
+        case let .exploreDetails(item):
+            ExploreCardDetailView(item: item)
+        case let .soulmateResult(soulmate):
+            SoulmateDrawingResultView(soulmate: soulmate)
+        case .soulmateOnboarding:
+            SoulmateOnboarding()
+        case let .chat(threadID):
+            ChatViewScreen(threadID: threadID)
+        case let .dreamerDetails(type):
+            DreamerDetailsScreenView(type: type)
+        case .dreamerHistory:
+            DreamerHistoryScreenView()
+        case .none:
+            Color.white
+        }
     }
 }
 

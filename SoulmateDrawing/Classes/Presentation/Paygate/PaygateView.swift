@@ -54,16 +54,7 @@ struct PaygateView: View {
         .task {
             await viewModel.load()
         }
-        .toolbar {
-            ToolbarButton(placement: .topBarTrailing) {
-                Button(
-                    action: { navigation.dismiss() },
-                    label: { Image(systemName: "xmark") }
-                )
-                .foregroundStyle(.textMain200)
-                .buttonStyle(.navigation)
-            }
-        }
+        .closeButton(action: navigation.dismissFullScreen)
     }
 }
 
@@ -127,7 +118,8 @@ private extension PaygateView {
             }
             .padding(.horizontal, 22)
         } else {
-            SpinnerView()
+            ProgressView()
+                .progressViewStyle(.spinner)
                 .frame(maxHeight: .infinity)
         }
     }

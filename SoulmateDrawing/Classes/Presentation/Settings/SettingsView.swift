@@ -66,7 +66,7 @@ struct SettingsView: View {
             
             ToolbarButton(placement: .topBarLeading) {
                 Button(
-                    action: { navigation.dismiss() },
+                    action: { navigation.dismissFullScreen() },
                     label: { Image(systemName: "xmark") }
                 )
                 .foregroundStyle(.textMain200)

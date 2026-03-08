@@ -57,13 +57,38 @@ final class RestAPITransport {
             headers: requestBody.headers
         )
         .validate(statusCode: [200, 201])
-        .serializingDecodable(ResponseContainer<String>.self)
+        .serializingDecodable(ResponseContainer<String?>.self)
         
         let result = await dataTask.result
         
         switch result {
         case .success:
             return
+        case let .failure(failure):
+            throw failure
+        }
+    }
+    
+    func callMultipartServerApi<T: Decodable>(requestBody: APIRequestBody) async throws -> T {
+        guard let url = URL(string: requestBody.url) else { throw NSError(domain: "RestAPITransport", code: -11) }
+        let dataTask = AF.upload(
+            multipartFormData: { multipartFormData in
+                requestBody.parameters?.forEach { key, value in
+                    guard let stringValue = value as? String, let data = stringValue.data(using: .utf8) else { return }
+                    multipartFormData.append(data, withName: key)
+                }
+            },
+            to: url,
+            headers: requestBody.headers
+        )
+            .validate(statusCode: [200, 201])
+            .serializingResponse(using: APIDecodableResponseSerializer<T>())
+        
+        let result = await dataTask.result
+        
+        switch result {
+        case let .success(success):
+            return success
         case let .failure(failure):
             throw failure
         }

@@ -87,7 +87,8 @@ struct SoulmateGenerateView: View {
                             .aspectRatio(contentMode: .fit)
                             .blur(radius: 20)
                         
-                        SpinnerView()
+                        ProgressView()
+                            .progressViewStyle(.spinner)
                     }
                     .padding(26)
                 }
@@ -118,16 +119,7 @@ struct SoulmateCheckProfile: View {
         .padding(.horizontal, 24)
         .frame(maxWidth: .infinity)
         .appBackground()
-        .toolbar {
-            ToolbarButton(placement: .topBarTrailing) {
-                Button(
-                    action: dismiss.callAsFunction,
-                    label: { Image(systemName: "xmark") }
-                )
-                .foregroundStyle(.textMain200)
-                .buttonStyle(.navigation)
-            }
-        }
+        .closeButton(action: dismiss.callAsFunction)
         .sheet(item: $viewModel.sheetType) { type in
             switch type {
             case .ethnicity(let items):
@@ -156,7 +148,7 @@ struct SoulmateCheckProfile: View {
             guard let newValue else { return }
             switch newValue {
             case let .soulmateResult(model):
-                navigation.dismiss()
+                navigation.dismissFullScreen()
                 navigation.push(.soulmateResult(model))
             }
             

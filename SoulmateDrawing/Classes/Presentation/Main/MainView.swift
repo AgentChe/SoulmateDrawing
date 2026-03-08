@@ -99,6 +99,7 @@ struct MainView: View {
                     .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
+        .ignoresSafeArea(.keyboard)
     }
     
     @ViewBuilder

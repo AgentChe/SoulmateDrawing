@@ -37,6 +37,9 @@ struct ConnectionTypeView: View {
         .presentationDetents([.height(height)])
         .presentationDragIndicator(.visible)
         .presentationCornerRadius(32)
+        .background {
+            Color.bgMain200.ignoresSafeArea()
+        }
     }
 }
 

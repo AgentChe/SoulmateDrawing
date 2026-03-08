@@ -12,7 +12,7 @@ struct HomeExploreView: View {
     let exploreCards: [ExploreType] = [.soulmate, .dream, .relationship]
     
     var body: some View {
-        LazyVStack(spacing: 0) {
+        VStack(spacing: 0) {
             VStack(spacing: 12) {
                 Text("Home.Explore.Title".localized)
                     .font(Font.Gambarino.font(size: 32, weight: .w400))

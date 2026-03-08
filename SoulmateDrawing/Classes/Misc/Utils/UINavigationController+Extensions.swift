@@ -36,26 +36,24 @@ struct CustomBackButtonModifier: ViewModifier {
     }
 }
 
-struct NavigationButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .frame(width: 24, height: 24)
-            .padding(8)
-            .background(.bgMain300)
-            .clipShape(Circle())
-            .scaleEffect(configuration.isPressed ? 1.2 : 1)
-            .opacity(configuration.isPressed ? 0.5 : 1)
-            .animation(.interpolatingSpring(), value: configuration.isPressed)
-    }
-}
-
-extension ButtonStyle where Self == NavigationButtonStyle {
-    static var navigation: Self { .init() }
-}
-
 extension View {
     func customBackButton() -> some View {
         modifier(CustomBackButtonModifier())
+    }
+}
+
+extension View {
+    func closeButton(action: @escaping () -> Void) -> some View {
+        toolbar {
+            ToolbarButton(placement: .topBarTrailing) {
+                Button(
+                    action: action,
+                    label: { Image(systemName: "xmark") }
+                )
+                .foregroundStyle(.textMain200)
+                .buttonStyle(.navigation)
+            }
+        }
     }
 }
 
@@ -66,7 +64,7 @@ struct ToolbarButton<Content>: ToolbarContent where Content: View {
     var body: some ToolbarContent {
         if #available(iOS 26, *) {
             ToolbarItem(placement: placement, content: content)
-//                .sharedBackgroundVisibility(.hidden)
+                .sharedBackgroundVisibility(.hidden)
         } else {
             ToolbarItem(placement: placement, content: content)
         }

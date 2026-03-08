@@ -1,5 +1,5 @@
 //
-//  AIChatHistoryRequest.swift
+//  ChatHistoryRequest.swift
 //  SoulmateDrawing
 //
 //  Created by Vitaliy Zagorodnov on 10.01.2026.
@@ -7,7 +7,7 @@
 
 import Alamofire
 
-struct AIChatHistoryRequest: APIRequestBody {
+struct ChatHistoryRequest: APIRequestBody {
     let anonymousId: String
     let internalId: String?
     let page: Int?

@@ -18,6 +18,7 @@ struct BondsView: View {
             VStack(spacing: 0) {
                 Text("Bonds.Title".localized)
                     .font(Font.Gambarino.font(size: 32, weight: .w400))
+                    .foregroundStyle(.textMain200)
                     .padding(.top, 22)
                     .padding(.horizontal, 40)
                 
@@ -27,6 +28,7 @@ struct BondsView: View {
                     .padding(.top, 12)
                     .padding(.bottom, 24)
                     .padding(.horizontal, 40)
+                    .foregroundStyle(.textMain200)
                 
                 HStack(spacing: 12) {
                     Button(
@@ -104,6 +106,7 @@ struct BondsView: View {
                     HStack {
                         Text("Bonds.Insights".localized)
                             .font(Font.Gambarino.font(size: 22, weight: .w400))
+                            .foregroundStyle(.textMain200)
                         Spacer()
                         
                         Button(
@@ -127,11 +130,24 @@ struct BondsView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHStack(spacing: 16) {
                             ForEach(viewModel.insights) { model in
-                                Button(action: {}) {
-                                    BondsInsightCard(model: model)
-                                }
+                                Button(
+                                    action: {
+                                        navigation.push(.chat(threadID: model.id))
+                                    },
+                                    label: {
+                                        BondsInsightCard(model: model)
+                                    }
+                                )
                                 .frame(width: 322)
                                 .buttonStyle(.card)
+                            }
+                            
+                            if viewModel.isAvailablePagination {
+                                ProgressView()
+                                    .progressViewStyle(.spinner)
+                                    .onAppear {
+                                        viewModel.getNextPage()
+                                    }
                             }
                         }
                     }

@@ -34,10 +34,12 @@ struct HomeView: View {
                 case .explore:
                     HomeExploreView(selected: viewModel.selectedExplore)
                         .padding(.top, 16)
+                        .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .trailing)))
                 case .chart:
                     ChartsView(charts: viewModel.charts)
                         .padding(.horizontal, 24)
                         .padding(.top, 32)
+                        .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                 }
             }
         }
