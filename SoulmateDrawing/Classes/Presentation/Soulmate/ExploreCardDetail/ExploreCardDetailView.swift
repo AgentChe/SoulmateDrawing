@@ -11,18 +11,18 @@ struct ExploreCardDetailView: View {
     let item: ExploreItem
     var body: some View {
         ScrollView(.vertical) {
-            VStack(spacing: 24) {
+            VStack(spacing: 24.scale) {
                 Text(item.title)
-                    .font(Font.Gambarino.font(size: 32, weight: .w400))
+                    .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                     .foregroundStyle(.textMain200)
-                    .padding(.top, 174)
+                    .padding(.top, 174.scale)
                 
                 Text(item.text)
-                    .font(Font.SFPro.font(size: 17, weight: .w400))
+                    .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                     .foregroundStyle(.textMain200)
                     .multilineTextAlignment(.leading)
             }
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scale)
             .frame(maxWidth: .infinity)
         }
         .background(alignment: .top) {

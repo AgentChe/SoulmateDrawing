@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct PaygateView: View {
-    @Environment(\.navigation) private var navigation
+    @Environment(\.dismiss) private var dismiss
     @State private var viewModel = PaygateViewModel()
     
     var body: some View {
-        VStack(spacing: ScreenSize.isIphoneXFamily ? 16 : 12) {
+        VStack(spacing: ScreenSize.isIphoneXFamily ? 16.scale : 12.scale) {
             Text("Paygate.Title")
-                .font(Font.Gambarino.font(size: 32, weight: .w400))
+                .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 .foregroundStyle(.mono100)
-                .padding(.top, ScreenSize.isIphoneXFamily ? 162 : 84)
-                .padding(.bottom, ScreenSize.isIphoneXFamily ? 16 : 12)
+                .padding(.top, ScreenSize.isIphoneXFamily ? 162.scale : 84.scale)
+                .padding(.bottom, ScreenSize.isIphoneXFamily ? 16.scale : 12.scale)
             
             advantagesView
             productView
@@ -32,7 +32,7 @@ struct PaygateView: View {
             .ignoresSafeArea()
         }
         .safeAreaInset(edge: .bottom) {
-            HStack(spacing: 12) {
+            HStack(spacing: 12.scale) {
                 Link(destination: GlobalDefinitions.termsOfUse) {
                     Text("Paygate.TermsOfUse".localized)
                 }
@@ -45,55 +45,55 @@ struct PaygateView: View {
                     Text("Paygate.RestorePurchases".localized)
                 }
             }
-            .padding(.horizontal, 22)
-            .padding(.bottom, 14)
-            .font(Font.SFPro.font(size: 12, weight: .w510))
+            .padding(.horizontal, 22.scale)
+            .padding(.bottom, 14.scale)
+            .font(Font.SFPro.font(size: 12.scale, weight: .w510))
             .foregroundStyle(.textMain200)
             .opacity(0.6)
         }
         .task {
             await viewModel.load()
         }
-        .closeButton(action: navigation.dismissFullScreen)
+        .closeButton(action: dismiss.callAsFunction)
     }
 }
 
 private extension PaygateView {
     @ViewBuilder
     var advantagesView: some View {
-        VStack(spacing: 16) {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack(spacing: 10) {
+        VStack(spacing: 16.scale) {
+            VStack(alignment: .leading, spacing: 8.scale) {
+                HStack(spacing: 10.scale) {
                     Image("Check")
                     Text("Paygate.Subtitle1".localized)
                 }
                 
-                HStack(spacing: 10) {
+                HStack(spacing: 10.scale) {
                     Image("Check")
                     Text("Paygate.Subtitle2".localized)
                 }
-                HStack(spacing: 10) {
+                HStack(spacing: 10.scale) {
                     Image("Check")
                     Text("Paygate.Subtitle3".localized)
                 }
             }
-            .font(Font.SFPro.font(size: 15, weight: .w400))
+            .font(Font.SFPro.font(size: 15.scale, weight: .w400))
             .foregroundStyle(.mono100)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 50)
+            .padding(.horizontal, 50.scale)
         }
     }
     
     @ViewBuilder
     var productView: some View {
         if let trial = viewModel.products?.weekly, let yearly = viewModel.products?.yearly, !viewModel.isLoading {
-            VStack(spacing: 16) {
+            VStack(spacing: 16.scale) {
                 Toggle(isOn: $viewModel.isOnTrial) {
                     Text("Paygate.Yearly.Toggle")
                 }
                 .toggleStyle(.paygate)
-                .padding(.horizontal, 20)
-                .padding(.vertical, 16)
+                .padding(.horizontal, 20.scale)
+                .padding(.vertical, 16.scale)
                 .background(.bgMain200, in: Capsule())
                 .overlay {
                     Capsule()
@@ -111,12 +111,12 @@ private extension PaygateView {
                 .buttonStyle(.primary)
                 
                 Label(viewModel.currentProduct.securityLabel, image: "Security")
-                    .font(Font.SFPro.font(size: 12, weight: .w510))
+                    .font(Font.SFPro.font(size: 12.scale, weight: .w510))
                     .foregroundStyle(.textMain200)
                 
                 Spacer()
             }
-            .padding(.horizontal, 22)
+            .padding(.horizontal, 22.scale)
         } else {
             ProgressView()
                 .progressViewStyle(.spinner)
@@ -142,28 +142,28 @@ private extension PaygateView {
                 HStack(spacing: 0) {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Paygate.Yearly".localized)
-                            .font(Font.SFPro.font(size: 12, weight: .w510))
+                            .font(Font.SFPro.font(size: 12.scale, weight: .w510))
                         Text(String(format: "Paygate.Yearly.Bottom".localized, priceLeft))
-                            .font(Font.SFPro.font(size: 15, weight: .w400))
+                            .font(Font.SFPro.font(size: 15.scale, weight: .w400))
                     }
                     
                     Spacer()
                     
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 4.scale) {
                         Text(priceRight)
-                            .font(Font.SFPro.font(size: 15, weight: .w400))
+                            .font(Font.SFPro.font(size: 15.scale, weight: .w400))
                         Text("Paygate.PerWeek".localized)
-                            .font(Font.SFPro.font(size: 12, weight: .w510))
+                            .font(Font.SFPro.font(size: 12.scale, weight: .w510))
                     }
-                    .padding(.trailing, 40)
+                    .padding(.trailing, 40.scale)
                     
                     Image(viewModel.currentProduct == .yearly ? "Radiobutton.Selected" : "Radiobutton.Default")
                 }
                 .foregroundStyle(.mono100)
             }
         )
-        .padding(.horizontal, 20)
-        .padding(.vertical, 12)
+        .padding(.horizontal, 20.scale)
+        .padding(.vertical, 12.scale)
         .background(.bgMain200, in: Capsule())
         .overlay {
             Capsule()
@@ -185,17 +185,17 @@ private extension PaygateView {
             label: {
                 HStack(spacing: 0) {
                     Text("Paygate.FreeTrialDays".localized.uppercased())
-                        .font(Font.SFPro.font(size: 15, weight: .w400))
+                        .font(Font.SFPro.font(size: 15.scale, weight: .w400))
                     
                     Spacer()
                     
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 4.scale) {
                         Text(price)
-                            .font(Font.SFPro.font(size: 15, weight: .w400))
+                            .font(Font.SFPro.font(size: 15.scale, weight: .w400))
                         Text("Paygate.PerWeek".localized)
-                            .font(Font.SFPro.font(size: 12, weight: .w510))
+                            .font(Font.SFPro.font(size: 12.scale, weight: .w510))
                     }
-                    .padding(.trailing, 40)
+                    .padding(.trailing, 40.scale)
                     
                     
                     Image(viewModel.currentProduct == .trial ? "Radiobutton.Selected" : "Radiobutton.Default")
@@ -203,8 +203,8 @@ private extension PaygateView {
             }
         )
         .foregroundStyle(.mono100)
-        .padding(.horizontal, 20)
-        .padding(.vertical, 12)
+        .padding(.horizontal, 20.scale)
+        .padding(.vertical, 12.scale)
         .background(.bgMain200, in: Capsule())
         .overlay {
             Capsule()

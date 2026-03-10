@@ -7,33 +7,6 @@
 
 import SwiftUI
 
-struct WaveLoader: View {
-    @State private var animating = false
-    let numberOfDots = 3
-    let dotSize: CGFloat = 4
-    let spacing: CGFloat = 4
-
-    var body: some View {
-        HStack(spacing: spacing) {
-            ForEach(0..<numberOfDots, id: \.self) { index in
-                Circle()
-                    .fill(.bgMain300)
-                    .frame(width: 10)
-                    .offset(y: animating ? 4 : 0)
-                    .animation(
-                        Animation.easeInOut(duration: 0.5)
-                            .repeatForever()
-                            .delay(Double(index) * 0.3), // Staggered delay for wave effect
-                        value: animating
-                    )
-            }
-        }
-        .onAppear {
-            animating = true
-        }
-    }
-}
-
 struct ChatViewScreen: View {
     @State private var viewModel: ChatScreenViewModel
     @State private var isPresentDeleteAlert = false
@@ -44,33 +17,16 @@ struct ChatViewScreen: View {
     var body: some View {
         VStack(spacing: 0) {
             ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack(spacing: 16) {
-                    if !viewModel.isShowRetry {
-                        VStack(spacing: 12) {
-                            Button(action: viewModel.retryMessageAction) {
-                                Text("Chat.RetryButton".localized)
-                                    .font(Font.SFPro.font(size: 17, weight: .w510))
-                                    .padding(.vertical, 10)
-                                    .padding(.horizontal, 12)
-                            }
-                            .foregroundStyle(.textMain200)
-                            .background(.bgMain300)
-                            .clipShape(Capsule())
-                            
-                            Text("Chat.RetryMessage".localized)
-                                .font(Font.SFPro.font(size: 15, weight: .w400))
-                                .foregroundStyle(.textMain200.opacity(0.6))
-                        }
-                        .padding(.top, 40)
+                LazyVStack(spacing: 16.scale) {
+                    if viewModel.isShowRetry {
+                        ChatRetryView(action: viewModel.retryMessageAction)
+                        .padding(.top, 40.scale)
                         .rotationEffect(.degrees(180))
                     }
                     
                     if viewModel.isThinking {
-                        HStack {
-                            Spacer()
-                            WaveLoader()
-                        }
-                        .transition(.opacity)
+                        ThinkingView()
+                            .transition(.opacity)
                     }
                     
                     
@@ -78,24 +34,23 @@ struct ChatViewScreen: View {
                         switch message.role {
                         case .user:
                             HStack {
-                                Spacer(minLength: 72)
+                                Spacer(minLength: 72.scale)
                                 Text(message.content)
-                                    .padding(.horizontal, 20)
-                                    .padding(.vertical, 16)
-                                    .background(.bgMain400, in: RoundedRectangle(cornerRadius: 32))
+                                    .padding(.horizontal, 20.scale)
+                                    .padding(.vertical, 16.scale)
+                                    .background(.bgMain400, in: RoundedRectangle(cornerRadius: 32.scale))
                             }
                             .transition(.opacity)
                         case .assistant:
                             HStack {
                                 Text(message.content)
                                 
-                                Spacer(minLength: 46)
+                                Spacer(minLength: 46.scale)
                             }
                             .transition(.opacity)
                         }
-                        
                     }
-                    .font(Font.SFPro.font(size: 17, weight: .w400))
+                    .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                     .foregroundStyle(.textMain200)
                     .multilineTextAlignment(.leading)
                     .rotationEffect(.degrees(180))
@@ -110,7 +65,7 @@ struct ChatViewScreen: View {
                 }
             }
             .rotationEffect(.degrees(180))
-            .contentMargins(24, for: .scrollContent)
+            .contentMargins(24.scale, for: .scrollContent)
         }
         .scrollDismissesKeyboard(.immediately)
         .animation(.easeInOut, value: viewModel.dataSource)
@@ -118,14 +73,14 @@ struct ChatViewScreen: View {
         .customBackButton()
         .toolbar {
             ToolbarItem(placement: .principal) {
-                HStack(spacing: 4) {
+                HStack(spacing: 4.scale) {
                     Text("MargoMargoMargoMargo")
-                        .font(Font.Gambarino.font(size: 22, weight: .w400))
+                        .font(Font.Gambarino.font(size: 22.scale, weight: .w400))
                     Text(ConnectionType.friend.title)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
+                        .padding(.horizontal, 12.scale)
+                        .padding(.vertical, 6.scale)
                         .background(.bgMain300, in: Capsule())
-                        .font(Font.SFPro.font(size: 17, weight: .w510))
+                        .font(Font.SFPro.font(size: 17.scale, weight: .w510))
                 }
                 .foregroundStyle(.textMain200)
             }
@@ -135,12 +90,11 @@ struct ChatViewScreen: View {
                     content: {
                         Button(
                             role: .destructive,
-                            action: { isPresentDeleteAlert = true},
+                            action: { isPresentDeleteAlert = true },
                             label: {
                                 Label("Chat.DeleteTitle".localized, systemImage: "trash")
                             }
                         )
-//                        .foregroundStyle(Color(red: 1, green: 56/255, blue: 60/255))
                             
                     },
                     label: {
@@ -155,13 +109,12 @@ struct ChatViewScreen: View {
                 )
             }
         }
-        .appBackground()
         .safeAreaInset(edge: .bottom) {
             HStack {
                 TextField(text: $viewModel.currentText, axis: .vertical) {
                     Text("Chat.Placeholder".localized)
                         .foregroundStyle(.textMain200.opacity(0.6))
-                        .font(Font.SFPro.font(size: 17, weight: .w400))
+                        .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                        
                 }
                 .foregroundStyle(.textMain200)
@@ -176,18 +129,19 @@ struct ChatViewScreen: View {
                         label: {
                             Image(systemName: "arrow.up")
                                 .resizable()
-                                .frame(width: 32, height: 32)
+                                .frame(width: 32.scale, height: 32.scale)
                         }
                     )
                     .symbolVariant(.circle.fill)
                     .foregroundStyle(.textMain100, .accentMain100)
+                    .disabled(viewModel.isThinking)
                 }
             }
-            .padding(.vertical, 16)
-            .padding(.horizontal, 24)
-            .background(.bgMain300, in: RoundedRectangle(cornerRadius: 32))
-            .padding(.horizontal, 24)
-            .padding(.bottom, 16)
+            .padding(.vertical, 16.scale)
+            .padding(.horizontal, 24.scale)
+            .background(.bgMain300, in: RoundedRectangle(cornerRadius: 32.scale))
+            .padding(.horizontal, 24.scale)
+            .padding(.bottom, 16.scale)
         }
         .customTabBarVisible(false)
         .alert("Chat.DeleteTitle".localized, isPresented: $isPresentDeleteAlert) {
@@ -207,7 +161,8 @@ struct ChatViewScreen: View {
             Text("Chat.DeleteMessage".localized)
                 .foregroundStyle(.textMain200)
         }
-
+        .appBackground()
+        .screenState(viewModel.screenState, tryAgain: viewModel.deleteChat)
     }
 }
 

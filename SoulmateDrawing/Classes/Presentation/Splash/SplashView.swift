@@ -6,28 +6,23 @@
 //
 
 import SwiftUI
+import RiveRuntime
 
 struct SplashView: View {
+    private let model = RiveViewModel(fileName: "splash_screen", autoPlay: true)
+    
     var body: some View {
         VStack {
-            Text("Soulmate\nDrawing")
-                .font(Font.Gambarino.font(size: 32, weight: .w400))
-                .foregroundStyle(Color.textMain200)
-                .multilineTextAlignment(.center)
-                .padding(.top, 60)
-                .padding(.horizontal, 24)
-            
             Spacer()
             
             ProgressView()
                 .progressViewStyle(.spinner)
-                .padding(.bottom, 65)
+                .padding(.bottom, 65.scale)
         }
         .frame(maxWidth: .infinity)
         .background {
-            Image("Splash")
-                .padding(.top, 189)
-                .blendMode(.lighten)
+            model.view()
+                .ignoresSafeArea()
         }
         .appBackground()
     }
@@ -49,7 +44,7 @@ struct SpinnerProgerssStyle: ProgressViewStyle {
                 .animation(animation, value: rotation)
                 .task { rotation = .pi * 2 }
         }
-        .frame(width: 30, height: 30)
+        .frame(width: 30.scale, height: 30.scale)
     }
 }
 

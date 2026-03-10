@@ -14,7 +14,7 @@ enum RetryType {
 
 @Observable
 final class ChatScreenViewModel {
-    
+    private(set) var screenState: ScreenState = .loaded
     private(set) var dataSource: [ChatMessageModel] = []
     private(set) var isThinking = false
     private(set) var isShowRetry = false
@@ -179,9 +179,14 @@ final class ChatScreenViewModel {
     func deleteChat() {
         Task {
             do {
+                await MainActor.run {
+                    screenState = .loading
+                }
                 try await chatManager.chatDelete(threadID: threadID)
             } catch {
-                
+                await MainActor.run {
+                    screenState = .error
+                }
             }
         }
     }

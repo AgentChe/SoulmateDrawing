@@ -9,6 +9,7 @@ import SwiftUI
 import RiveRuntime
 
 struct SoulmateOnboarding: View {
+    @Environment(\.dismiss) private var dismiss
     @Environment(\.navigation) private var navigation
     
     @State private var isAppear = false
@@ -16,17 +17,17 @@ struct SoulmateOnboarding: View {
     
     var body: some View {
         VStack {
-            VStack(spacing: 12) {
+            VStack(spacing: 12.scale) {
                 Text("Soulmate.Onboarding.Title".localized)
-                    .font(Font.Gambarino.font(size: 32, weight: .w400))
+                    .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 Text("Soulmate.Onboarding.Subtitle".localized)
-                    .font(Font.SFPro.font(size: 17, weight: .w400))
+                    .font(Font.SFPro.font(size: 17.scale, weight: .w400))
             }
             .foregroundStyle(.textMain200)
             .multilineTextAlignment(.center)
-            .padding(.horizontal, 40)
-            .padding(.top, 10)
-            .offset(y: isAppear ? 0 : 40)
+            .padding(.horizontal, 40.scale)
+            .padding(.top, 10.scale)
+            .offset(y: isAppear ? 0 : 40.scale)
             .opacity(isAppear ? 1 : 0)
             .animation(.spring().speed(0.5), value: isAppear)
             
@@ -34,7 +35,7 @@ struct SoulmateOnboarding: View {
             
             Button(
                 action: {
-                    navigation.dismissFullScreen()
+                    dismiss()
                     navigation.fullScreen(.soulmateCheckProfile)
                 },
                 label: {
@@ -42,8 +43,8 @@ struct SoulmateOnboarding: View {
                 }
             )
             .buttonStyle(.primary)
-            .padding(.horizontal, 24)
-            .offset(y: isAppear ? 0 : 20)
+            .padding(.horizontal, 24.scale)
+            .offset(y: isAppear ? 0 : 20.scale)
             .opacity(isAppear ? 1 : 0)
             .animation(.spring().speed(0.5).delay(0.5), value: isAppear)
         }
@@ -63,7 +64,7 @@ struct SoulmateOnboarding: View {
                 }
             }
         }
-        .closeButton(action: navigation.dismissFullScreen)
+        .closeButton(action: dismiss.callAsFunction)
     }
 }
 

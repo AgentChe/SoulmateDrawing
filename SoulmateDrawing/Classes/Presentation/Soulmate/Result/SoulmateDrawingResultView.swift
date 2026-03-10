@@ -24,6 +24,7 @@ enum SoulmateSegmentItem: Hashable, CaseIterable {
 struct SoulmateDrawingResultView: View {
     @Environment(\.navigation) private var navigation
     @State private var viewModel: SoulmateDrawingResultViewModel
+    @State private var isShowPaygate = false
     
     init(soulmate: SoulmateModel) {
         _viewModel = State(initialValue: .init(soulmate: soulmate))
@@ -33,16 +34,16 @@ struct SoulmateDrawingResultView: View {
         ScrollView(.vertical) {
             LazyVStack(spacing: 0) {
                 Text("Soulmate.Title".localized)
-                    .font(Font.Gambarino.font(size: 32, weight: .w400))
+                    .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                     .foregroundStyle(.textMain200)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 24)
+                    .padding(.horizontal, 16.scale)
+                    .padding(.top, 24.scale)
                 
                 MainPointsView(mainPoints: viewModel.mainPoints)
-                    .padding(.top, 12)
+                    .padding(.top, 12.scale)
                 
-                RoundedRectangle(cornerRadius: 32)
+                RoundedRectangle(cornerRadius: 32.scale)
                     .fill(Color(red: 1, green: 251/255, blue: 435/255))
                     .aspectRatio(0.98, contentMode: .fit)
                     .overlay {
@@ -58,18 +59,18 @@ struct SoulmateDrawingResultView: View {
                             }
                         )
                     }
-                    .clipShape(RoundedRectangle(cornerRadius: 32))
-                    .padding(.vertical, 24)
+                    .clipShape(RoundedRectangle(cornerRadius: 32.scale))
+                    .padding(.vertical, 24.scale)
                 
                 SegmentView(
                     elements: SoulmateSegmentItem.allCases,
                     selection: $viewModel.selectedSegment
                 ) { value in
                     Text(value.name)
-                        .font(Font.SFPro.font(size: 16, weight: .w510))
+                        .font(Font.SFPro.font(size: 16.scale, weight: .w510))
                         .foregroundStyle(.textMain200)
                 }
-                .padding(.bottom, 16)
+                .padding(.bottom, 16.scale)
                 
                 switch viewModel.selectedSegment {
                 case .explore:
@@ -77,17 +78,19 @@ struct SoulmateDrawingResultView: View {
                         title: viewModel.exploreTitle,
                         items: viewModel.exploreItems,
                         selected: {
-                            navigation.push(.exploreDetails($0))
+                            if !$0.isLocked {
+                                navigation.push(.exploreDetails($0))
+                            }
                         },
                         unfoldAction: {
-                            navigation.fullScreen(.paygate)
+                            isShowPaygate = true
                         }
                     )
                 case .chart:
                     ChartsView(charts: viewModel.charts)
                 }
             }
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scale)
         }
         .animation(.default, value: viewModel.selectedSegment)
         .safeAreaInset(edge: .bottom) {
@@ -101,9 +104,14 @@ struct SoulmateDrawingResultView: View {
                 }
             )
             .buttonStyle(.primary)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scale)
         }
         .appBackground()
+        .fullScreenCover(isPresented: $isShowPaygate) {
+            NavigationStack {
+                PaygateView()
+            }
+        }
     }
 }
 
@@ -116,13 +124,13 @@ struct SoulmateExploreView: View {
     var body: some View {
         LazyVStack(alignment: .leading, spacing: 0) {
             Text(title)
-                .font(Font.SFPro.font(size: 17, weight: .w400))
+                .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
             
             Text("Soulmate.Explore.Title".localized)
-                .font(Font.Gambarino.font(size: 22, weight: .w400))
+                .font(Font.Gambarino.font(size: 22.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
-                .padding(.top, 32)
+                .padding(.top, 32.scale)
             
             ForEach(items, id: \.self) { item in
                 Button(
@@ -134,7 +142,7 @@ struct SoulmateExploreView: View {
                 .buttonStyle(.card)
                 .itemShadow()
             }
-            .padding(.top, 16)
+            .padding(.top, 16.scale)
         }
         .customBackButton()
         .toolbar {

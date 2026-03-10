@@ -13,6 +13,10 @@
 		860E1F162EF31B7B0090C7B7 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860E1F112EF31B7B0090C7B7 /* SplashView.swift */; };
 		860E1F172EF31B7B0090C7B7 /* SoulmateDrawingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860E1F122EF31B7B0090C7B7 /* SoulmateDrawingApp.swift */; };
 		860E1F212EF31D4C0090C7B7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860E1F202EF31D4C0090C7B7 /* Fonts.swift */; };
+		861D68642F5F035F002CA938 /* splash_screen.riv in Resources */ = {isa = PBXBuildFile; fileRef = 861D68632F5F035F002CA938 /* splash_screen.riv */; };
+		861D68662F5F04A6002CA938 /* welcome_soulmate_drawing.riv in Resources */ = {isa = PBXBuildFile; fileRef = 861D68652F5F04A6002CA938 /* welcome_soulmate_drawing.riv */; };
+		861D68692F5F0B45002CA938 /* ChatRetryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861D68682F5F0B45002CA938 /* ChatRetryView.swift */; };
+		861D686B2F5F0B93002CA938 /* ThinkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861D686A2F5F0B93002CA938 /* ThinkingView.swift */; };
 		865195D42F4650B9000D716F /* DreamerMainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865195D32F4650B9000D716F /* DreamerMainScreen.swift */; };
 		865626CE2F5A029500A6D7E0 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865626CD2F5A029500A6D7E0 /* View+Extensions.swift */; };
 		865626D12F5A02E800A6D7E0 /* DreamerDetailsScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865626D02F5A02E800A6D7E0 /* DreamerDetailsScreenView.swift */; };
@@ -55,6 +59,7 @@
 		868E73B42F543DE3002F391A /* ChatMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868E73B32F543DE3002F391A /* ChatMessageModel.swift */; };
 		868E73B62F54411D002F391A /* ChatScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868E73B52F54411D002F391A /* ChatScreenViewModel.swift */; };
 		868E73B82F544462002F391A /* MessageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868E73B72F544462002F391A /* MessageResponse.swift */; };
+		8698ADA02F60408100740E8B /* Scalable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8698AD9F2F60408100740E8B /* Scalable.swift */; };
 		86A779A72F228ACA0029C758 /* drawing.riv in Resources */ = {isa = PBXBuildFile; fileRef = 86A779A62F228ACA0029C758 /* drawing.riv */; };
 		86A779AB2F228F7E0029C758 /* SoulmateOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A779AA2F228F7E0029C758 /* SoulmateOnboarding.swift */; };
 		86D4BFAB2F0AB49200F7A882 /* RestAPITransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4BFAA2F0AB49200F7A882 /* RestAPITransport.swift */; };
@@ -165,6 +170,10 @@
 		860E1F112EF31B7B0090C7B7 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		860E1F122EF31B7B0090C7B7 /* SoulmateDrawingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmateDrawingApp.swift; sourceTree = "<group>"; };
 		860E1F202EF31D4C0090C7B7 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		861D68632F5F035F002CA938 /* splash_screen.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = splash_screen.riv; sourceTree = "<group>"; };
+		861D68652F5F04A6002CA938 /* welcome_soulmate_drawing.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = welcome_soulmate_drawing.riv; sourceTree = "<group>"; };
+		861D68682F5F0B45002CA938 /* ChatRetryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRetryView.swift; sourceTree = "<group>"; };
+		861D686A2F5F0B93002CA938 /* ThinkingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingView.swift; sourceTree = "<group>"; };
 		865195D32F4650B9000D716F /* DreamerMainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamerMainScreen.swift; sourceTree = "<group>"; };
 		865626CD2F5A029500A6D7E0 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		865626D02F5A02E800A6D7E0 /* DreamerDetailsScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamerDetailsScreenView.swift; sourceTree = "<group>"; };
@@ -207,6 +216,7 @@
 		868E73B32F543DE3002F391A /* ChatMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageModel.swift; sourceTree = "<group>"; };
 		868E73B52F54411D002F391A /* ChatScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatScreenViewModel.swift; sourceTree = "<group>"; };
 		868E73B72F544462002F391A /* MessageResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageResponse.swift; sourceTree = "<group>"; };
+		8698AD9F2F60408100740E8B /* Scalable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scalable.swift; sourceTree = "<group>"; };
 		86A779A62F228ACA0029C758 /* drawing.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = drawing.riv; sourceTree = "<group>"; };
 		86A779AA2F228F7E0029C758 /* SoulmateOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmateOnboarding.swift; sourceTree = "<group>"; };
 		86D4BFAA2F0AB49200F7A882 /* RestAPITransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestAPITransport.swift; sourceTree = "<group>"; };
@@ -476,8 +486,18 @@
 				86D4BFAE2F0ABEAC00F7A882 /* GlobalDefinitions.swift */,
 				86D4C00F2F0ECE4C00F7A882 /* ScreenSize.swift */,
 				868C0CAD2F1FF2C500D8FEB2 /* UINavigationController+Extensions.swift */,
+				8698AD9F2F60408100740E8B /* Scalable.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		861D68672F5F0B35002CA938 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				861D68682F5F0B45002CA938 /* ChatRetryView.swift */,
+				861D686A2F5F0B93002CA938 /* ThinkingView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		865195D22F4650A8000D716F /* Dreamer */ = {
@@ -693,8 +713,10 @@
 		86A779A52F228AAE0029C758 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				861D68652F5F04A6002CA938 /* welcome_soulmate_drawing.riv */,
 				86A779A62F228ACA0029C758 /* drawing.riv */,
 				8682FF362F58A8AD00E9A0DA /* dreamer.riv */,
+				861D68632F5F035F002CA938 /* splash_screen.riv */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -1064,6 +1086,7 @@
 		86EBD9482F4F75C6008B1E30 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				861D68672F5F0B35002CA938 /* Views */,
 				868E73B22F543DD3002F391A /* Models */,
 				86EBD9492F4F75D4008B1E30 /* ChatViewScreen.swift */,
 				868E73B52F54411D002F391A /* ChatScreenViewModel.swift */,
@@ -1253,6 +1276,8 @@
 				86FAD1572EF57841009E6F5A /* Gambarino-Regular.otf in Resources */,
 				86FAD15C2EF57972009E6F5A /* SFProText-Regular.ttf in Resources */,
 				86FAD15E2EF5797B009E6F5A /* SFProText-Medium.ttf in Resources */,
+				861D68642F5F035F002CA938 /* splash_screen.riv in Resources */,
+				861D68662F5F04A6002CA938 /* welcome_soulmate_drawing.riv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1334,6 +1359,7 @@
 				86FAD1532EF56E99009E6F5A /* String+Extensions.swift in Sources */,
 				86D4C0412F11884200F7A882 /* PersonResponse.swift in Sources */,
 				86FAD1612EF57BCB009E6F5A /* MainView.swift in Sources */,
+				8698ADA02F60408100740E8B /* Scalable.swift in Sources */,
 				868E73B82F544462002F391A /* MessageResponse.swift in Sources */,
 				86D4C0162F0FE66000F7A882 /* RootViewModel.swift in Sources */,
 				86D4C0242F11516200F7A882 /* LocationRequest.swift in Sources */,
@@ -1342,6 +1368,7 @@
 				86757AF92F1557B5002973C8 /* PersonListViewModel.swift in Sources */,
 				86FAD18B2EF6D5F8009E6F5A /* HomeView.swift in Sources */,
 				868C0C2E2F1D061A00D8FEB2 /* NewPersonViewModel.swift in Sources */,
+				861D686B2F5F0B93002CA938 /* ThinkingView.swift in Sources */,
 				86D4BFDD2F0BE7D900F7A882 /* DiscoverModel.swift in Sources */,
 				865626D42F5A03BC00A6D7E0 /* DreamerDetailsViewModel.swift in Sources */,
 				86D4BFBD2F0ADBE600F7A882 /* HomeViewModel.swift in Sources */,
@@ -1352,6 +1379,7 @@
 				868C0C712F1EAB9400D8FEB2 /* PersonModel.swift in Sources */,
 				86FD82252F2E2ECB00FA4950 /* SettingsItemView.swift in Sources */,
 				86D4BFD32F0ADDB600F7A882 /* IAPProduct.swift in Sources */,
+				861D68692F5F0B45002CA938 /* ChatRetryView.swift in Sources */,
 				86D4BFE62F0C038200F7A882 /* ExploreType.swift in Sources */,
 				86D4BFD42F0ADDB600F7A882 /* IAPErrorHelper.swift in Sources */,
 				865626D72F5A043800A6D7E0 /* DreamDetailsModel.swift in Sources */,

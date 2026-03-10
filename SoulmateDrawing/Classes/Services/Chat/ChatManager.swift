@@ -85,7 +85,6 @@ final class ChatManager {
 //        return try await restApiTransport.callServerApi(requestBody: request)
         let random = [0, 1, 10, 13, 20, 50].randomElement() ?? 0
         try await Task.sleep(for: .seconds(0.5))
-        print(random)
         if random == 50 {
             return ChatRunnerResponse(
                 runID: runID,

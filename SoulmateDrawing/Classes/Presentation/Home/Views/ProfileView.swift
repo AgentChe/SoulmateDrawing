@@ -11,16 +11,16 @@ struct MainPointsView: View {
     let mainPoints: [MainPoint]
     
     var body: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: 16.scale) {
             ForEach(mainPoints, id: \.self) { model in
-                HStack(spacing: 4) {
+                HStack(spacing: 4.scale) {
                     // TODO: Поправить иконку
 //                        Image(model.label.iconName)
                     Text(model.label.name)
                 }
             }
         }
-        .font(Font.SFPro.font(size: 17, weight: .w400))
+        .font(Font.SFPro.font(size: 17.scale, weight: .w400))
         .foregroundStyle(.textMain200)
     }
 }
@@ -36,11 +36,11 @@ struct ProfileView: View {
             Image(zodiac.largeIconName)
             
             Text(name)
-                .font(Font.Gambarino.font(size: 32, weight: .w400))
+                .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
             
             MainPointsView(mainPoints: mainPoints)
-            .padding(.top, 12)
+                .padding(.top, 12.scale)
         }
     }
 }

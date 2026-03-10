@@ -66,8 +66,7 @@ final class RootViewModel {
     }
     
     func makeStartRoute() {
-        // TODO: Избавиться
-        if !UserDefaults.standard.bool(forKey: Self.onboardingKey) {
+        if UserDefaults.standard.bool(forKey: Self.onboardingKey) {
             currentRoute = .main
         } else {
             currentRoute = .onboarding

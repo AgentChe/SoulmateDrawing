@@ -14,21 +14,21 @@ struct ConnectionTypeView: View {
     @State private var height: CGFloat = .zero
     
     var body: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: 4.scale) {
             ForEach(types, id: \.self) { type in
                 Button(
                     action: { selected(type) },
                     label: {
                         Text(type.title)
-                            .font(Font.Gambarino.font(size: 22, weight: .w400))
+                            .font(Font.Gambarino.font(size: 22.scale, weight: .w400))
                             .foregroundStyle(.textMain200)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.init(top: 9.5, leading: 24, bottom: 13.5, trailing: 24))
+                            .padding(.init(top: 9.5, leading: 24.scale, bottom: 13.5.scale, trailing: 24.scale))
                     }
                 )
             }
         }
-        .padding(.top, 32)
+        .padding(.top, 32.scale)
         .onGeometryChange(
             for: CGFloat.self,
             of: { $0.size.height },
@@ -36,7 +36,7 @@ struct ConnectionTypeView: View {
         )
         .presentationDetents([.height(height)])
         .presentationDragIndicator(.visible)
-        .presentationCornerRadius(32)
+        .presentationCornerRadius(32.scale)
         .background {
             Color.bgMain200.ignoresSafeArea()
         }

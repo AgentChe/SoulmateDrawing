@@ -13,22 +13,22 @@ struct SoulmateProfileView: View {
     @Bindable var viewModel: SoulmateCheckProfileViewModel
     var body: some View {
         VStack(spacing: 0) {
-            VStack(spacing: 12) {
+            VStack(spacing: 12.scale) {
                 Text("Soulmate.Profile.Title".localized)
-                    .font(Font.Gambarino.font(size: 32, weight: .w400))
+                    .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 Text("Soulmate.Profile.Subtitle".localized)
-                    .font(Font.SFPro.font(size: 17, weight: .w400))
+                    .font(Font.SFPro.font(size: 17.scale, weight: .w400))
             }
             .foregroundStyle(.textMain200)
             .multilineTextAlignment(.center)
-            .padding(.horizontal, 16)
+            .padding(.horizontal, 16.scale)
             
             ProfileView(
                 name: viewModel.profileName,
                 zodiac: .aries,
                 mainPoints: viewModel.mainPoints
             )
-            .padding(.top, 40)
+            .padding(.top, 40.scale)
             
             Spacer()
             
@@ -53,7 +53,7 @@ struct SoulmateProfileView: View {
                 }
             )
             .buttonStyle(.secondary)
-            .padding(.top, 16)
+            .padding(.top, 16.scale)
         }
         .screenState(viewModel.screenState) {
             viewModel.load()
@@ -66,18 +66,18 @@ struct SoulmateGenerateView: View {
     var body: some View {
         VStack(spacing: 0) {
             Text("Soulmate.Generate.Title".localized)
-                .font(Font.Gambarino.font(size: 32, weight: .w400))
+                .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
                 .multilineTextAlignment(.center)
-                .padding(.bottom, 12)
+                .padding(.bottom, 12.scale)
             
             Text("Soulmate.Generate.Subtitle".localized)
-                .font(Font.SFPro.font(size: 17, weight: .w400))
+                .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
                 .multilineTextAlignment(.center)
-                .padding(.bottom, 40)
+                .padding(.bottom, 40.scale)
             
-            RoundedRectangle(cornerRadius: 32)
+            RoundedRectangle(cornerRadius: 32.scale)
                 .fill(Color(red: 1, green: 251/255, blue: 245/255))
                 .aspectRatio(0.98, contentMode: .fit)
                 .overlay {
@@ -90,9 +90,9 @@ struct SoulmateGenerateView: View {
                         ProgressView()
                             .progressViewStyle(.spinner)
                     }
-                    .padding(26)
+                    .padding(26.scale)
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 32))
+                .clipShape(RoundedRectangle(cornerRadius: 32.scale))
         }
         .screenState(viewModel.screenState) {
             viewModel.generateSoulmate()
@@ -116,7 +116,7 @@ struct SoulmateCheckProfile: View {
                     .transition(.move(edge: .leading))
             }
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, 24.scale)
         .frame(maxWidth: .infinity)
         .appBackground()
         .closeButton(action: dismiss.callAsFunction)
@@ -127,13 +127,13 @@ struct SoulmateCheckProfile: View {
                     viewModel.didSelect(ethnicity: $0)
                 }
                 .presentationDragIndicator(.visible)
-                .presentationCornerRadius(32)
+                .presentationCornerRadius(32.scale)
             case .gender(let items):
                 SoulmatePreferencesView(elements: items) {
                     viewModel.didSelect(gender: $0)
                 }
                 .presentationDragIndicator(.visible)
-                .presentationCornerRadius(32)
+                .presentationCornerRadius(32.scale)
             }
         }
         .fullScreenCover(item: $viewModel.fullScreen) { item in
@@ -148,7 +148,7 @@ struct SoulmateCheckProfile: View {
             guard let newValue else { return }
             switch newValue {
             case let .soulmateResult(model):
-                navigation.dismissFullScreen()
+                dismiss()
                 navigation.push(.soulmateResult(model))
             }
             

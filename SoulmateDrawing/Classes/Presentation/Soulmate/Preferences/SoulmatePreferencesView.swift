@@ -22,13 +22,13 @@ struct SoulmatePreferencesView: View {
     var body: some View {
         VStack {
             Text("Soulmate.Preferences.Region".localized)
-                .font(Font.Gambarino.font(size: 32, weight: .w400))
+                .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
                 .multilineTextAlignment(.center)
-                .padding(.top, 60)
+                .padding(.top, 60.scale)
             
             ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack(spacing: 12) {
+                LazyVStack(spacing: 12.scale) {
                     ForEach(elements, id: \.self) { item in
                         Button(
                             action: {
@@ -38,10 +38,10 @@ struct SoulmatePreferencesView: View {
                             },
                             label: {
                                 Text(item)
-                                    .font(Font.SFPro.font(size: 17, weight: .w400))
+                                    .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                                     .foregroundStyle(.textMain200)
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(16)
+                                    .padding(16.scale)
                                     .background {
                                         let color = item == current
                                         ? Color(red: 144/255, green: 115/255, blue: 95/255, opacity: 0.4)
@@ -56,12 +56,12 @@ struct SoulmatePreferencesView: View {
                                     }
                             }
                         )
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .clipShape(RoundedRectangle(cornerRadius: 16.scale))
                         .buttonStyle(.card)
                     }
                 }
             }
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scale)
         }
         .safeAreaInset(edge: .bottom) {
             Button(
@@ -75,7 +75,7 @@ struct SoulmatePreferencesView: View {
                 }
             )
             .buttonStyle(.primary)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scale)
             .disabled(current == nil)
         }
         .frame(maxWidth: .infinity)

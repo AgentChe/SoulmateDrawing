@@ -30,10 +30,10 @@ struct PrimaryButtonStyle: ButtonStyle {
             } else {
                 configuration.label
                     .foregroundStyle(.textMain100)
-                    .font(Font.SFPro.font(size: 17, weight: .w510))
+                    .font(Font.SFPro.font(size: 17.scale, weight: .w510))
             }
         }
-        .frame(height: 56)
+        .frame(height: 56.scale)
         .clipShape(Capsule())
         .opacity(isEnabled ? 1 : 0.4)
         .disabled(isLoading)
@@ -48,9 +48,9 @@ struct SecondaryButtonStyle: ButtonStyle {
             Color.bgMain300
             configuration.label
                 .foregroundStyle(.textMain200)
-                .font(Font.SFPro.font(size: 17, weight: .w510))
+                .font(Font.SFPro.font(size: 17.scale, weight: .w510))
         }
-        .frame(height: 56)
+        .frame(height: 56.scale)
         .clipShape(Capsule())
         .opacity(isEnabled ? 1 : 0.4)
     }
@@ -60,8 +60,8 @@ struct SecondaryButtonStyle: ButtonStyle {
 struct NavigationButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .frame(width: 24, height: 24)
-            .padding(8)
+            .frame(width: 24.scale, height: 24.scale)
+            .padding(8.scale)
             .background(.bgMain300)
             .clipShape(Circle())
             .scaleEffect(configuration.isPressed ? 1.2 : 1)
@@ -108,7 +108,7 @@ struct ProButton: View {
                     .font(Font.Gambarino.font(size: 16, weight: .w400))
                     .foregroundStyle(.textMain100)
             }
-            .padding(EdgeInsets(top: 7, leading: 7, bottom: 7, trailing: 12))
+            .padding(EdgeInsets(top: 7.scale, leading: 7.scale, bottom: 7.scale, trailing: 12.scale))
         }
         .buttonStyle(.pro)
     }

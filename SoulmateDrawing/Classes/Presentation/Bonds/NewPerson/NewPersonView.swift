@@ -19,11 +19,11 @@ struct NewPersonView: View {
     var body: some View {
         VStack(spacing: 0) {
             Text("NewPerson.Title".localized)
-                .font(Font.Gambarino.font(size: 32, weight: .w400))
+                .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
-                .padding(.top, 60)
+                .padding(.horizontal, 40.scale)
+                .padding(.top, 60.scale)
             
             ScrollView(.vertical) {
                 SegmentView(
@@ -31,12 +31,12 @@ struct NewPersonView: View {
                     selection: $viewModel.gender
                 ) { value in
                     Text(value.name)
-                        .font(Font.SFPro.font(size: 16, weight: .w510))
+                        .font(Font.SFPro.font(size: 16.scale, weight: .w510))
                         .foregroundStyle(.textMain200)
                 }
-                .padding(.vertical, 24)
+                .padding(.vertical, 24.scale)
                 
-                VStack(spacing: 12) {
+                VStack(spacing: 12.scale) {
                     NewPersonTextField(
                         placeholder: "NewPerson.Placeholder.FirstName".localized,
                         text: $viewModel.name
@@ -76,10 +76,10 @@ struct NewPersonView: View {
                     Toggle("NewPerson.SwitchTitle".localized, isOn: $viewModel.isKnownExtractTime)
                         .toggleStyle(NewPersonToggleStyle())
                         .foregroundStyle(.textMain200)
-                        .font(Font.SFPro.font(size: 17, weight: .w400))
+                        .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, 24.scale)
             }
             .scrollDismissesKeyboard(.immediately)
             
@@ -88,23 +88,23 @@ struct NewPersonView: View {
                 viewModel.save()
             }
             .buttonStyle(.primary)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scale)
             .disabled(!viewModel.isAvailableSave || viewModel.isSaving)
             .loading(viewModel.isSaving)
             
             Text("NewPerson.PrivacyMessage".localized)
-                .font(Font.SFPro.font(size: 12, weight: .w510))
+                .font(Font.SFPro.font(size: 12.scale, weight: .w510))
                 .foregroundStyle(.textMain200)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
+                .padding(.horizontal, 40.scale)
                 .opacity(0.6)
-                .padding(.top, 16)
+                .padding(.top, 16.scale)
         }
         .frame(maxWidth: .infinity)
         .appBackground()
         .ignoresSafeArea(.keyboard)
         .presentationDragIndicator(.visible)
-        .presentationCornerRadius(32)
+        .presentationCornerRadius(32.scale)
         .screenState(viewModel.screenState, tryAgain: viewModel.save)
         .sheet(item: $sheetType) { type in
             Group {
@@ -128,7 +128,7 @@ struct NewPersonView: View {
             }
             .appBackground()
             .presentationDragIndicator(.visible)
-            .presentationCornerRadius(32)
+            .presentationCornerRadius(32.scale)
         }
     }
 }
@@ -148,17 +148,17 @@ struct NewPersonToggleStyle: ToggleStyle {
                         Rectangle()
                             .fill(.white)
                             .frame(width: 1)
-                            .padding(.vertical, 9)
-                            .padding(.leading, 12)
+                            .padding(.vertical, 9.scale)
+                            .padding(.leading, 12.scale)
                     }
                 }
                 .overlay(alignment: configuration.isOn ? .trailing : .leading) {
                     Capsule()
                         .fill(.white)
-                        .frame(width: 39)
-                        .padding(2)
+                        .frame(width: 39.scale)
+                        .padding(2.scale)
                 }
-                .frame(width: 64, height: 28)
+                .frame(width: 64.scale, height: 28.scale)
                 .onTapGesture {
                     withAnimation(.spring()) {
                         configuration.isOn.toggle()

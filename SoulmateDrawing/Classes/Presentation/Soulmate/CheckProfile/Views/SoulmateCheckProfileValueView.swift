@@ -14,14 +14,14 @@ struct SoulmateCheckProfileValueView: View {
     var body: some View {
         HStack {
             Text(title)
-                .font(Font.SFPro.font(size: 17, weight: .w400))
+                .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
             Spacer()
             Text(value)
-                .font(Font.SFPro.font(size: 17, weight: .w400))
+                .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                 .foregroundStyle(.textMain200.opacity(0.5))
         }
-        .padding(.vertical, 16)
+        .padding(.vertical, 16.scale)
         .overlay(alignment: .bottom) {
             Rectangle()
                 .fill(.bgMain300)

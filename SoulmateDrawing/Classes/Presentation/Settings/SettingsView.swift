@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Environment(\.navigation) private var navigation
+    @Environment(\.dismiss) private var dismiss
     @State private var viewModel = SettingsViewModel()
     @State private var sheetType: SettingsSheet?
+    @State private var isShowPaygate = false
     
     var body: some View {
         ScrollView(.vertical) {
@@ -46,27 +47,27 @@ struct SettingsView: View {
                         }
                     } header: {
                         Text(section.title.uppercased())
-                            .font(Font.Gambarino.font(size: 18, weight: .w400))
+                            .font(Font.Gambarino.font(size: 18.scale, weight: .w400))
                             .foregroundStyle(.textMain200.opacity(0.5))
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.bottom, 8)
-                            .padding(.top, 32)
+                            .padding(.bottom, 8.scale)
+                            .padding(.top, 32.scale)
                     }
                 }
             }
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scale)
         }
         .appBackground()
         .toolbar {
             ToolbarButton(placement: .topBarTrailing) {
                 ProButton {
-                    navigation.fullScreen(.paygate)
+                    isShowPaygate = true
                 }
             }
             
             ToolbarButton(placement: .topBarLeading) {
                 Button(
-                    action: { navigation.dismissFullScreen() },
+                    action: { dismiss() },
                     label: { Image(systemName: "xmark") }
                 )
                 .foregroundStyle(.textMain200)
@@ -96,7 +97,12 @@ struct SettingsView: View {
             }
             .appBackground()
             .presentationDragIndicator(.visible)
-            .presentationCornerRadius(32)
+            .presentationCornerRadius(32.scale)
+        }
+        .fullScreenCover(isPresented: $isShowPaygate) {
+            NavigationStack {
+                PaygateView()
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ struct NewPersonTextField: View {
     @Binding var text: String
     @FocusState private var isFocused: Bool
     
-    @State var paddingContent: EdgeInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
+    @State var paddingContent: EdgeInsets = .init(top: 16.scale, leading: 16.scale, bottom: 16.scale, trailing: 16.scale)
     
     @State private var isAvailableContent = false
     
@@ -31,17 +31,17 @@ struct NewPersonTextField: View {
             .alignmentGuide(.inputGuide) {
                 $0[isAvailableContent ? .top : VerticalAlignment.center]
             }
-            .font(Font.SFPro.font(size: 17, weight: .w400))
+            .font(Font.SFPro.font(size: 17.scale, weight: .w400))
             .tint(.textMain200)
             .focused($isFocused)
             .padding(paddingContent)
-            .background(.bgMain300, in: RoundedRectangle(cornerRadius: 16))
+            .background(.bgMain300, in: RoundedRectangle(cornerRadius: 16.scale))
             .overlay(alignment: .init(horizontal: .leading, vertical: .inputGuide)) {
                 Text(placeholder)
-                    .font(Font.SFPro.font(size: isAvailableContent ? 14 : 17, weight: .w400))
+                    .font(Font.SFPro.font(size: isAvailableContent ? 14.scale : 17.scale, weight: .w400))
                     .foregroundStyle(.textMain200)
                     .opacity(0.3)
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, 16.scale)
                     .alignmentGuide(.inputGuide) {
                         $0[isAvailableContent ? .bottom : VerticalAlignment.center]
                     }
@@ -62,10 +62,10 @@ struct NewPersonTextField: View {
                 guard newValue != oldValue else { return }
                 withAnimation {
                     paddingContent = .init(
-                        top: newValue ? 26 : 16,
-                        leading: 16,
-                        bottom: newValue ? 9 : 16,
-                        trailing: 16
+                        top: newValue ? 26.scale : 16.scale,
+                        leading: 16.scale,
+                        bottom: newValue ? 9.scale : 16.scale,
+                        trailing: 16.scale
                     )
                 }
             }

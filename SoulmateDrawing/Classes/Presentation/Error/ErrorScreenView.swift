@@ -67,13 +67,13 @@ private struct ErrorScreenView: View {
         VStack(spacing: 0) {
             Spacer()
             Image(errorType.imageName)
-                .padding(.bottom, 20)
+                .padding(.bottom, 20.scale)
             Text(errorType.title)
-                .font(Font.Gambarino.font(size: 32, weight: .w400))
+                .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
-                .padding(.bottom, 12)
+                .padding(.bottom, 12.scale)
             Text(errorType.subtitle)
-                .font(Font.SFPro.font(size: 17, weight: .w400))
+                .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
                 .lineSpacing(3)
             Spacer()
@@ -89,10 +89,10 @@ private struct ErrorScreenView: View {
                     Text("Error.Support".localized)
                 }
                 .buttonStyle(.secondary)
-                .padding(.top, 16)
+                .padding(.top, 16.scale)
             }
         }
-        .padding(.horizontal, 22)
+        .padding(.horizontal, 22.scale)
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)
         .background {

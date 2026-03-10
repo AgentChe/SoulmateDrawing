@@ -13,10 +13,10 @@ struct ExploreCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(card.text)
-                .font(Font.Gambarino.font(size: 22, weight: .w400))
+                .font(Font.Gambarino.font(size: 22.scale, weight: .w400))
                 .lineSpacing(8)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding([.top, .horizontal], 24)
+                .padding([.top, .horizontal], 24.scale)
                 .multilineTextAlignment(.leading)
                 .foregroundStyle(.textMain200)
             Spacer()
@@ -24,8 +24,8 @@ struct ExploreCardView: View {
         .overlay(alignment: .bottom) {
             Image(card.imageName)
         }
-        .frame(width: 200, height: 250)
+        .frame(width: 200.scale, height: 250.scale)
         .background(.bgMain200)
-        .clipShape(RoundedRectangle(cornerRadius: 32))
+        .clipShape(RoundedRectangle(cornerRadius: 32.scale))
     }
 }

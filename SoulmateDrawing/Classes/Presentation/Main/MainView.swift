@@ -35,26 +35,12 @@ enum TabElement: Hashable, CaseIterable, Identifiable {
             "Bonds".localized
         }
     }
-    
-    @ViewBuilder
-    var rootView: some View {
-        Color.red
-        switch self {
-        case .home:
-            HomeView()
-        case .dreamer:
-            DreamerMainScreen()
-        case .bonds:
-            BondsView()
-        }
-    }
 }
 
 struct CustomTabBarVisiblePreferenceKey: PreferenceKey {
     static var defaultValue: Bool = true
     
     static func reduce(value: inout Bool, nextValue: () -> Bool) {
-        print(value && nextValue())
         value = value && nextValue()
     }
 }
@@ -66,16 +52,13 @@ extension View {
 }
 
 struct MainView: View {
-    @State var selected: TabElement = .home
+    @State private var router = NavigationManager.shared
     @State var isVisible = true
+    
     var body: some View {
-//        TabCoordinatorStack1(tabs: TabItem.allCases)
-//        RootNavigationStack {
-//            TabBarView(items: TabElement.allCases, selected: $selected) { tab in }
-//        }
-        TabView(selection: $selected) {
+        TabView(selection: $router.selectedTab) {
             ForEach(TabElement.allCases) { tab in
-                RootNavigationStack {
+                RootNavigationStack(router: router) {
                     switch tab {
                     case .home:
                         HomeView()
@@ -95,41 +78,47 @@ struct MainView: View {
         }
         .overlay(alignment: .bottom) {
             if isVisible {
-                tabBar
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                TabBarView(selected: router.selectedTab) {
+                    router.selectTab($0)
+                }
+                .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
         .ignoresSafeArea(.keyboard)
     }
+}
+
+struct TabBarView: View {
+    var selected: TabElement
+    let action: (TabElement) -> Void
     
-    @ViewBuilder
-    private var tabBar: some View {
+    var body: some View {
         HStack(spacing: 0) {
             ForEach(TabElement.allCases) { item in
                 Button(
                     action: {
                         withAnimation {
-                            selected = item
+                            action(item)
                         }
                     },
                     label: {
                         VStack(spacing: 2) {
                             Image(item.iconName)
                                 .resizable()
-                                .frame(width: 24, height: 24)
+                                .frame(width: 24.scale, height: 24.scale)
                             Text(item.title)
                         }
                         .foregroundStyle(selected == item ? .textMain200 : .textMain200.opacity(0.4))
                     }
                 )
-                .frame(width: 60, height: 75)
+                .frame(width: 60.scale, height: 75.scale)
                 if item != TabElement.allCases.last {
                     Spacer()
                 }
             }
         }
-        .padding(.horizontal, 40)
-        .font(Font.SFPro.font(size: 12, weight: .w510))
+        .padding(.horizontal, 40.scale)
+        .font(Font.SFPro.font(size: 12.scale, weight: .w510))
         .background(.bgMain100)
         .overlay(alignment: .top) {
             Rectangle()

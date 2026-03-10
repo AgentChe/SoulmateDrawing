@@ -29,6 +29,7 @@ final class HomeViewModel {
     
     var fullScreen: Route?
     var push: MainRoute?
+    var switchTab: TabElement?
     
     @ObservationIgnored
     private let discoverManager = DiscoverManager()
@@ -73,7 +74,7 @@ final class HomeViewModel {
     }
     
     
-    
+    @MainActor
     func selectedExplore(_ item: ExploreType) {
         switch item {
         case .soulmate:
@@ -83,9 +84,9 @@ final class HomeViewModel {
                 fullScreen = .soulmateOnboarding
             }
         case .dream:
-            break
+            switchTab = .dreamer
         case .relationship:
-            break
+            switchTab = .bonds
         }
     }
 //    

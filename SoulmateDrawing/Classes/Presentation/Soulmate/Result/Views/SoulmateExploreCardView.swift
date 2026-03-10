@@ -15,25 +15,25 @@ struct SoulmateExploreCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if item.isLocked, let unlockLabel = item.unlockLabel {
-                HStack(spacing: 4) {
+                HStack(spacing: 4.scale) {
                     Text(unlockLabel)
-                        .font(Font.SFPro.font(size: 17, weight: .w400))
+                        .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                         .foregroundStyle(.textMain200.opacity(0.8))
                     
                     Image("lock")
                         .resizable()
-                        .frame(width: 20, height: 20)
+                        .frame(width: 20.scale, height: 20)
                 }
-                .padding(.bottom, 4)
+                .padding(.bottom, 4.scale)
             }
             Text(item.title)
-                .font(Font.Gambarino.font(size: 22, weight: .w400))
+                .font(Font.Gambarino.font(size: 22.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
                 .lineLimit(1)
-                .padding(.bottom, 12)
+                .padding(.bottom, 12.scale)
             
             Text(item.text)
-                .font(Font.SFPro.font(size: 17, weight: .w400))
+                .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
                 .lineLimit(2)
                 .overlay(alignment: .leading) {
@@ -56,18 +56,18 @@ struct SoulmateExploreCardView: View {
                     action: unfoldAction,
                     label: {
                         Text("Soulmate.Unfold".localized)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 12)
+                            .padding(.vertical, 10.scale)
+                            .padding(.horizontal, 12.scale)
                     }
                 )
                 .background(.bgMain300)
                 .clipShape(Capsule())
                 .foregroundStyle(.textMain200)
-                .padding(.top, 12)
+                .padding(.top, 12.scale)
             }
         }
-        .padding(24)
-        .background(.bgMain200, in: RoundedRectangle(cornerRadius: 32))
+        .padding(24.scale)
+        .background(.bgMain200, in: RoundedRectangle(cornerRadius: 32.scale))
         .compositingGroup()
     }
 }

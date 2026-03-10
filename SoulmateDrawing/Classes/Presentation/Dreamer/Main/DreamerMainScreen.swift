@@ -14,12 +14,12 @@ struct DreamerMainScreen: View {
     @FocusState private var isFocused
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 24) {
+            VStack(spacing: 24.scale) {
                 TextField("Dreamer.Placeholder".localized, text: $text, axis: .vertical)
-                    .frame(height: 300, alignment: .top)
-                    .padding(24)
-                    .background(.bgMain400, in: RoundedRectangle(cornerRadius: 32))
-                    .font(Font.SFPro.font(size: 17, weight: .w400))
+                    .frame(height: 300.scale, alignment: .top)
+                    .padding(24.scale)
+                    .background(.bgMain400, in: RoundedRectangle(cornerRadius: 32.scale))
+                    .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                     .onTapGesture { isFocused = true }
                     .focused($isFocused)
                 
@@ -37,7 +37,7 @@ struct DreamerMainScreen: View {
                 
                 Spacer()
             }
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scale)
             .frame(maxWidth: .infinity)
         }
         .appBackground()
@@ -54,7 +54,7 @@ struct DreamerMainScreen: View {
             
             ToolbarItem(placement: .principal) {
                 Text("Dreamer.Title".localized)
-                    .font(Font.Gambarino.font(size: 22, weight: .w400))
+                    .font(Font.Gambarino.font(size: 22.scale, weight: .w400))
                     .foregroundStyle(.textMain200)
             }
         }

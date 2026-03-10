@@ -38,14 +38,14 @@ struct DreamerDetailsScreenView: View {
         ScrollView(.vertical) {
             VStack(spacing: 24) {
                 Text("Dreamer.Details.Title".localized)
-                    .font(Font.Gambarino.font(size: 32, weight: .w400))
-                    .padding(.horizontal, 40)
-                    .padding(.top, 174)
+                    .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
+                    .padding(.horizontal, 40.scale)
+                    .padding(.top, 174.scale)
                     .multilineTextAlignment(.center)
                 
                 Text(model.text)
-                    .font(Font.SFPro.font(size: 17, weight: .w400))
-                    .padding(.horizontal, 24)
+                    .font(Font.SFPro.font(size: 17.scale, weight: .w400))
+                    .padding(.horizontal, 24.scale)
             }
             .foregroundStyle(.textMain200)
         }

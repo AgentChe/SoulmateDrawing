@@ -19,14 +19,14 @@ struct SettingsItemView: View {
             label: {
                 HStack {
                     Text(item.title)
-                        .font(Font.SFPro.font(size: 17, weight: .w400))
+                        .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                         .foregroundStyle(.textMain200)
                     Spacer()
                     
                     if let value = item.value {
-                        HStack(spacing: 8) {
+                        HStack(spacing: 8.scale) {
                             Text(value)
-                                .font(Font.SFPro.font(size: 17, weight: .w400))
+                                .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                                 .foregroundStyle(.textMain200.opacity(0.5))
                             Image(systemName: "chevron.right")
                                 .foregroundStyle(.textMain200)

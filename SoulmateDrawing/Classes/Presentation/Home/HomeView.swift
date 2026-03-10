@@ -7,6 +7,30 @@
 
 import SwiftUI
 
+struct HeaderBlur: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 26, *) {
+            content
+        } else {
+            content
+                .mask {
+                    Color.black
+                        .overlay(alignment: .top) {
+                            LinearGradient(colors: [.black.opacity(0.75), .black.opacity(0.25), .black.opacity(0)], startPoint: .bottom, endPoint: .top)
+                        }
+                        .blur(radius: 20)
+                }
+                .toolbarBackground(.hidden, for: .navigationBar)
+        }
+    }
+}
+
+extension View {
+    func bluredNavigationBar() -> some View {
+        modifier(HeaderBlur())
+    }
+}
+
 struct HomeView: View {
     @Environment(\.navigation) private var navigation
     @State private var viewModel = HomeViewModel()
@@ -25,33 +49,31 @@ struct HomeView: View {
                     selection: $viewModel.selectionSegment
                 ) { value in
                     Text(value.name)
-                        .font(Font.SFPro.font(size: 16, weight: .w510))
+                        .font(Font.SFPro.font(size: 16.scale, weight: .w510))
                         .foregroundStyle(.textMain200)
                 }
-                .padding(.top, 24)
+                .padding(.top, 24.scale)
                 
                 switch viewModel.selectionSegment {
                 case .explore:
                     HomeExploreView(selected: viewModel.selectedExplore)
-                        .padding(.top, 16)
+                        .padding(.top, 16.scale)
                         .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .trailing)))
+                        .clipped()
                 case .chart:
                     ChartsView(charts: viewModel.charts)
-                        .padding(.horizontal, 24)
-                        .padding(.top, 32)
+                        .padding(.horizontal, 24.scale)
+                        .padding(.top, 32.scale)
                         .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                 }
             }
         }
-//        .scrollContentBackground(.hidden)
-//        .navigationBarHidden(true)
-        .toolbarBackground(.hidden, for: .navigationBar)
+        .padding(.top, -20.scale)
         .toolbar {
             ToolbarButton(placement: .topBarLeading) {
                 Button(
                     action: {
                         viewModel.showSettings()
-//                            coordinator.sheet(.settings)
                     },
                     label: { Image("settings") }
                 )
@@ -72,28 +94,34 @@ struct HomeView: View {
                 }
             }
         }
+        .toolbarBackground(.hidden, for: .navigationBar)
         .appBackground()
         .screenState(viewModel.screenState) {
             viewModel.load()
         }
-        .onChange(of: viewModel.fullScreen) { oldValue, newValue in
-            guard let newValue else { return }
-            switch newValue {
-            case .settings:
-                navigation.fullScreen(.settings)
-            case .paygate:
-                navigation.fullScreen(.paygate)
-            case .soulmateOnboarding:
-                navigation.fullScreen(.soulmateOnboarding)
-            case .soulmateCheckProfile:
-                navigation.fullScreen(.soulmateCheckProfile)
+        .fullScreenCover(item: $viewModel.fullScreen) { item in
+            NavigationStack {
+                switch item {
+                case .settings:
+                    SettingsView()
+                case .paygate:
+                    PaygateView()
+                case .soulmateOnboarding:
+                    SoulmateOnboarding()
+                case .soulmateCheckProfile:
+                    SoulmateCheckProfile()
+                }
             }
-            viewModel.fullScreen = nil
         }
         .onChange(of: viewModel.push) { _, newValue in
             if let newValue {
                 navigation.push(newValue)
                 viewModel.push = nil
+            }
+        }
+        .onChange(of: viewModel.switchTab) { _, newValue in
+            if let newValue {
+                navigation.selectTab(newValue)
             }
         }
     }

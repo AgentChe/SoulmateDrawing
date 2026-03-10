@@ -25,7 +25,7 @@ struct SegmentView<Element: Hashable, Content: View>: View {
         HStack(spacing: 0) {
             ForEach(elements, id: \.self) { value in
                 content(value)
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, 12.scale)
                     .anchorPreference(key: SegmentItemKey.self, value: .bounds) { [value: $0] }
                     .onTapGesture {
                         withAnimation {
@@ -46,16 +46,14 @@ struct SegmentView<Element: Hashable, Content: View>: View {
                 GeometryReader { geometry in
                     let rect = geometry[anchor]
                     Capsule()
-//                        .fill(Color.bgMain200)
                         .foregroundStyle(
                             Color
                                 .bgMain200
                                 .shadow(.inner(color: Color.white.opacity(0.04), radius: 1, x: 1, y: 1))
                                 .shadow(.inner(color: Color.white.opacity(0.06), radius: 1, x: -1, y: -1))
                         )
-                        .padding(.vertical, 4)
+                        .padding(.vertical, 4.scale)
                         .frame(width: rect.width)
-//                        .shadow(color: Color.red.opacity(0.94), radius: 1, x: 1, y: 1)
                         
                         .position(x: rect.midX, y: rect.midY)
                 }

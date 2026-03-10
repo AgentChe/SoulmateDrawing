@@ -15,8 +15,6 @@ import SwiftUI
     var currentOnboarding: OnboardingElement
     var screenState: ScreenState = .loaded
     
-    private var _searchCity = ""
-    
     private(set) var isFinish = false
     
     var progress: Double {
@@ -24,6 +22,7 @@ import SwiftUI
         return Double(index) / Double(onboardings.count - 1)
     }
     
+    @ObservationIgnored
     private var saveUserTask: Task<Void, Never>?
     @ObservationIgnored
     private let profileManager = ProfileManager()
@@ -48,16 +47,22 @@ import SwiftUI
     }
     
     func saveData() {
+        saveUserTask?.cancel()
+        
         saveUserTask = Task {
-            screenState = .loading
+            await MainActor.run {
+                screenState = .loading
+            }
             do {
-                guard Task.isCancelled else { return }
                 try await profileManager.saveAttributes(user: user)
                 _ = try? await profileManager.getProfile(forceUpdate: true)
-                isFinish = true
+                await MainActor.run {
+                    isFinish = true
+                }
             } catch {
-                guard Task.isCancelled else { return }
-                screenState = .error
+                await MainActor.run {
+                    screenState = .error
+                }
             }
         }
     }

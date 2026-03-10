@@ -27,7 +27,7 @@ extension View {
 
 extension View {
     func itemShadow() -> some View {
-        shadow(color: Color.black.opacity(0.1), radius: 144)
+        shadow(color: .clear, radius: 144)
             .shadow(color: Color.black.opacity(0.1), radius: 53, y: 21)
             .shadow(color: Color.white.opacity(0.04), radius: 42, y: 10)
             .shadow(color: Color.white.opacity(0.16), radius: 0, y: 1.34)

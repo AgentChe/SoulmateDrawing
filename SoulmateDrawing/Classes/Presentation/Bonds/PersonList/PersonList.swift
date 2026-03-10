@@ -20,37 +20,36 @@ struct PersonList: View {
     }
     
     var body: some View {
-        VStack(spacing: 32) {
+        VStack(spacing: 32.scale) {
             Text("ChoosePerson.Title".localized)
-                .font(Font.Gambarino.font(size: 32, weight: .w400))
+                .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
-                .padding(.top, 60)
-                .padding(.horizontal, 24)
+                .padding(.top, 60.scale)
+                .padding(.horizontal, 24.scale)
             
             Button(
                 action: {
                     showSheet = true
-//                    coordinator.sheet(.create(created: selected))
                 },
                 label: {
                     Text("ChoosePerson.Add".localized)
                 }
             )
             .buttonStyle(.primary)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scale)
             
             ScrollView(.vertical) {
-                LazyVStack(spacing: 12) {
+                LazyVStack(spacing: 12.scale) {
                     ForEach(viewModel.persons) { person in
                         Button(
                             action: {
                                 selected(person)
                             },
                             label: {
-                                HStack(spacing: 12) {
+                                HStack(spacing: 12.scale) {
                                     Circle()
-                                        .frame(width: 45, height: 50)
-                                        .padding(.vertical, 2)
+                                        .frame(width: 45.scale, height: 50.scale)
+                                        .padding(.vertical, 2.scale)
                                         .overlay {
                                             AsyncImage(url: person.singImage)
                                         }
@@ -61,16 +60,16 @@ struct PersonList: View {
                             }
                         )
                     }
-                    .font(Font.Gambarino.font(size: 22, weight: .w400))
+                    .font(Font.Gambarino.font(size: 22.scale, weight: .w400))
                     .foregroundStyle(.textMain200)
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, 24.scale)
             }
         }
         .frame(maxWidth: .infinity)
         .appBackground()
         .presentationDragIndicator(.visible)
-        .presentationCornerRadius(32)
+        .presentationCornerRadius(32.scale)
         .sheet(isPresented: $showSheet) {
             NavigationStack {
                 NewPersonView(createdPerson: selected)
@@ -78,20 +77,3 @@ struct PersonList: View {
         }
     }
 }
-
-//#Preview {
-//    PersonList(persons: [
-//        .init(type: .friend, items: [
-//            .init(id: "1", name: "Megan", singImage: nil),
-//            .init(id: "2", name: "Megan1", singImage: nil),
-//            .init(id: "3", name: "Megan2", singImage: nil),
-//            .init(id: "4", name: "Megan3", singImage: nil)
-//        ]),
-//        .init(type: .partner, items: [
-//            .init(id: "5", name: "Fox", singImage: nil),
-//            .init(id: "6", name: "Fox1", singImage: nil),
-//            .init(id: "7", name: "Fox2", singImage: nil),
-//            .init(id: "8", name: "Fox3", singImage: nil)
-//        ])
-//    ]) { _ in }
-//}

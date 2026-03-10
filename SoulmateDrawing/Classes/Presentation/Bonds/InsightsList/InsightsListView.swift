@@ -8,20 +8,27 @@
 import SwiftUI
 
 struct InsightsListView: View {
+    @Environment(\.navigation) private var router
     let models: [InsightModel]
     
     var body: some View {
         ScrollView(.vertical) {
-            LazyVStack(spacing: 16) {
+            LazyVStack(spacing: 16.scale) {
                 ForEach(models) { model in
-                    Button(action: {}) {
-                        BondsInsightCard(model: model)
-                    }
+                    Button(
+                        action: {
+                            router.push(.chat(threadID: model.id))
+                        },
+                        label: {
+                            BondsInsightCard(model: model)
+                        }
+                    )
                     .buttonStyle(.card)
                 }
             }
         }
-        .contentMargins(24, for: .scrollContent)
+        .bluredNavigationBar()
+        .contentMargins(24.scale, for: .scrollContent)
         .appBackground()
         .customBackButton()
         .toolbar {

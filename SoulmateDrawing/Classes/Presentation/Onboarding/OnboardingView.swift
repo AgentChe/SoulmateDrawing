@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RiveRuntime
 
 struct OnboardingView: View {
     @Environment(RootViewModel.self) private var rootManager
@@ -58,8 +59,8 @@ struct OnboardingView: View {
         .overlay(alignment: .top, content: {
             ProgressView(value: viewModel.progress)
                 .progressViewStyle(.onboarding)
-                .padding(.top, 32)
-                .padding(.horizontal, 24)
+                .padding(.top, 32.scale)
+                .padding(.horizontal, 24.scale)
                 .opacity(isStart ? 0 : 1)
         })
         .appBackground()
@@ -74,20 +75,22 @@ struct OnboardingView: View {
 }
 
 struct OnboardingWelcomeScreen: View {
+    private let model = RiveViewModel(fileName: "welcome_soulmate_drawing", autoPlay: true)
+    
     var didTapContinue: () -> Void
     
     var body: some View {
         VStack {
-            VStack(spacing: 16) {
+            VStack(spacing: 16.scale) {
                 Text("Onboarding.Welcom.Title".localized)
-                    .font(Font.Gambarino.font(size: 32, weight: .w400))
+                    .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 
                 Text("Onboarding.Welcom.Subtitle".localized)
-                    .font(Font.SFPro.font(size: 17, weight: .w400))
+                    .font(Font.SFPro.font(size: 17.scale, weight: .w400))
             }
             .foregroundStyle(.textMain200)
             .multilineTextAlignment(.center)
-            .padding(.top, 74)
+            .padding(.top, 74.scale)
             
             Spacer()
             
@@ -96,10 +99,15 @@ struct OnboardingWelcomeScreen: View {
                 label: { Text("Continue") }
             )
             .buttonStyle(.primary)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scale)
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, 24.scale)
         .frame(maxWidth: .infinity)
+        .background(alignment: .bottom) {
+            model.view()
+                .ignoresSafeArea()
+        }
+        .appBackground()
     }
 }
 
@@ -115,16 +123,16 @@ struct OnboardingNameView: View {
     var body: some View {
         VStack(spacing: 0) {
             Text("Onboarding.Name.Title".localized)
-                .font(Font.Gambarino.font(size: 32, weight: .w400))
+                .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
                 .multilineTextAlignment(.center)
-                .padding(.top, 74)
+                .padding(.top, 74.scale)
             
             TextField(text: $name) {
                 Text("Onboarding.Name.Placeholder".localized)
-                    .font(.system(size: 23, weight: .regular))
+                    .font(.system(size: 23.scale, weight: .regular))
             }
-            .padding(.top, 118)
+            .padding(.top, 118.scale)
             .multilineTextAlignment(.center)
             
             Spacer()
@@ -136,9 +144,9 @@ struct OnboardingNameView: View {
                 label: { Text("Continue") }
             )
             .buttonStyle(.primary)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scale)
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, 24.scale)
         .frame(maxWidth: .infinity, alignment: .center)
     }
 }
@@ -154,22 +162,22 @@ struct OnboardingBornDate: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            VStack(spacing: 16) {
+            VStack(spacing: 16.scale) {
                 Text("Onboarding.Born.Title".localized)
-                    .font(Font.Gambarino.font(size: 32, weight: .w400))
+                    .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 
                 Text("Onboarding.Date.Subtitle".localized)
-                    .font(Font.SFPro.font(size: 17, weight: .w400))
+                    .font(Font.SFPro.font(size: 17.scale, weight: .w400))
             }
             .foregroundStyle(.textMain200)
             .multilineTextAlignment(.center)
-            .padding(.top, 74)
+            .padding(.top, 74.scale)
             
-            DatePicker("", selection: $bornDate, displayedComponents: .date)
+            DatePicker("", selection: $bornDate, in: ...Date(), displayedComponents: .date)
                 .datePickerStyle(.wheel)
-                .padding(.top, 100)
+                .padding(.top, 100.scale)
                 .labelsHidden()
-                .font(Font.Gambarino.font(size: 32, weight: .w400))
+                .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
             
             Spacer()
             
@@ -180,9 +188,9 @@ struct OnboardingBornDate: View {
                 label: { Text("Continue") }
             )
             .buttonStyle(.primary)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scale)
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, 24.scale)
         .frame(maxWidth: .infinity, alignment: .center)
     }
 }
@@ -198,22 +206,22 @@ struct OnboardingBornTime: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            VStack(spacing: 16) {
+            VStack(spacing: 16.scale) {
                 Text("Onboarding.Born.Title".localized)
-                    .font(Font.Gambarino.font(size: 32, weight: .w400))
+                    .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 
                 Text("Onboarding.Time.Subtitle".localized)
-                    .font(Font.SFPro.font(size: 17, weight: .w400))
+                    .font(Font.SFPro.font(size: 17.scale, weight: .w400))
             }
             .foregroundStyle(.textMain200)
             .multilineTextAlignment(.center)
-            .padding(.top, 74)
-            .padding(.horizontal, 24)
+            .padding(.top, 74.scale)
+            .padding(.horizontal, 24.scale)
             
             DatePicker("", selection: $bornTime, displayedComponents: .hourAndMinute)
                 .datePickerStyle(.wheel)
-                .padding(.horizontal, 24)
-                .padding(.top, 100)
+                .padding(.horizontal, 24.scale)
+                .padding(.top, 100.scale)
                 .labelsHidden()
             
             Spacer()
@@ -225,7 +233,7 @@ struct OnboardingBornTime: View {
                 label: { Text("Continue") }
             )
             .buttonStyle(.primary)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scale)
         }
         .frame(maxWidth: .infinity, alignment: .center)
     }
@@ -243,16 +251,16 @@ struct OnboardingCityView: View {
     var body: some View {
         VStack(spacing: 0) {
             Text("Onboarding.Born.Title".localized)
-                .font(Font.Gambarino.font(size: 32, weight: .w400))
+                .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
                 .multilineTextAlignment(.center)
-                .padding(.top, 74)
+                .padding(.top, 74.scale)
             
             TextField(text: $city) {
                 Text("Onboarding.City.Placeholder".localized)
-                    .font(.system(size: 23, weight: .regular))
+                    .font(.system(size: 23.scale, weight: .regular))
             }
-            .padding(.top, 118)
+            .padding(.top, 118.scale)
             .multilineTextAlignment(.center)
             
             Spacer()
@@ -264,14 +272,13 @@ struct OnboardingCityView: View {
                 label: { Text("Continue") }
             )
             .buttonStyle(.primary)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scale)
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, 24.scale)
         .frame(maxWidth: .infinity, alignment: .center)
     }
 }
 
 #Preview {
-    OnboardingView()
-        .environment(RootViewModel())
+    OnboardingWelcomeScreen {}
 }
