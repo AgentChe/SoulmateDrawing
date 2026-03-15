@@ -29,11 +29,11 @@ final class ProfileManager {
         return try await restApiTransport.callServerApi(requestBody: request)
     }
     
-    func saveAttributes(user: ProfileModel) async throws {
+    func saveAttributes(attrs: [String: Any?]) async throws {
         let request = ProfileAttributesRequest(
             anonymousId: sessionManager.anonymousId,
             internalId: sessionManager.internalId,
-            model: user
+            attrs: attrs
         )
         
         return try await restApiTransport.callServerApi(requestBody: request)
@@ -58,10 +58,8 @@ private extension ProfileManager {
             anonymousId: sessionManager.anonymousId,
             internalId: sessionManager.internalId
         )
-        // TODO: Раскомментить
-//        let response: ProfileResponse = try await restApiTransport.callServerApi(requestBody: request)
-        try await Task.sleep(for: .seconds(1))
-        let response = ProfileResponse(name: "Magan", bornDate: .init(), bornLocation: "My City")
+        
+        let response: ProfileResponse = try await restApiTransport.callServerApi(requestBody: request)
         
         let model = ProfileModel(response: response)
         if let data = try? JSONEncoder().encode(model) {

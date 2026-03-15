@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct ExploreCardDetailView: View {
     let item: ExploreItem
@@ -26,11 +27,9 @@ struct ExploreCardDetailView: View {
             .frame(maxWidth: .infinity)
         }
         .background(alignment: .top) {
-            AsyncImage(
-                url: item.image,
-                content: { image in
+            LazyImage(source: item.image) { state in
+                if let image = state.image {
                     image
-                        .resizable()
                         .aspectRatio(1.09, contentMode: .fit)
                         .overlay(alignment: .top) {
                             let color = Color(red: 1, green: 240/255, blue: 223/255)
@@ -43,11 +42,8 @@ struct ExploreCardDetailView: View {
                                 endPoint: .bottom
                             )
                         }
-                },
-                placeholder: {
-                    
                 }
-            )
+            }
             .ignoresSafeArea()
         }
         .background(.bgMain100)

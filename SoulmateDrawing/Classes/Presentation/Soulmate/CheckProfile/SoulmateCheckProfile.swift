@@ -25,7 +25,7 @@ struct SoulmateProfileView: View {
             
             ProfileView(
                 name: viewModel.profileName,
-                zodiac: .aries,
+                sign: viewModel.sign,
                 mainPoints: viewModel.mainPoints
             )
             .padding(.top, 40.scale)
@@ -55,6 +55,7 @@ struct SoulmateProfileView: View {
             .buttonStyle(.secondary)
             .padding(.top, 16.scale)
         }
+        .frame(maxWidth: .infinity)
         .screenState(viewModel.screenState) {
             viewModel.load()
         }

@@ -8,11 +8,11 @@
 import Foundation
 
 enum GlobalDefinitions {
-    static let domain = "https://sportcards.sergeyapps.com"
-    static let apiKey = "NgIOqMk0bRMKXANEd5"
+    static let domain = "https://soulmate.korrekted.com"
+    static let apiKey = "IgxtWlYp0yRy99N"
     
     static let otterScaleHost = "https://api.korrekted.com"
-    static let otterScaleApiKey = "Tg0hAPk5QrHx5TwQ"
+    static let otterScaleApiKey = "7B33mX0knifGk3p2"
     
     static let privacyPolicy: URL = URL(string: "https://sergeyapps.com/privacy-policy")!
     static let termsOfUse: URL = URL(string: "https://sergeyapps.com/terms-of-use")!

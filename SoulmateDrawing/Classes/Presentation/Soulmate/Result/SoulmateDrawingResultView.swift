@@ -6,20 +6,7 @@
 //
 
 import SwiftUI
-
-enum SoulmateSegmentItem: Hashable, CaseIterable {
-    case explore
-    case chart
-    
-    var name: String {
-        switch self {
-        case .explore:
-            "Soulmate.Segment.Explore".localized
-        case .chart:
-            "Soulmate.Segment.Chart".localized
-        }
-    }
-}
+import NukeUI
 
 struct SoulmateDrawingResultView: View {
     @Environment(\.navigation) private var navigation
@@ -47,17 +34,13 @@ struct SoulmateDrawingResultView: View {
                     .fill(Color(red: 1, green: 251/255, blue: 435/255))
                     .aspectRatio(0.98, contentMode: .fit)
                     .overlay {
-                        AsyncImage(
-                            url: viewModel.imageURL,
-                            content: { image in
+                        LazyImage(source: viewModel.imageURL) { state in
+                            if let image = state.image {
                                 image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                            },
-                            placeholder: {
-                                
+                            } else {
+                                Color.clear
                             }
-                        )
+                        }
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 32.scale))
                     .padding(.vertical, 24.scale)
@@ -77,8 +60,9 @@ struct SoulmateDrawingResultView: View {
                     SoulmateExploreView(
                         title: viewModel.exploreTitle,
                         items: viewModel.exploreItems,
+                        hasActiveSubscription: viewModel.hasActiveSubscription,
                         selected: {
-                            if !$0.isLocked {
+                            if !$0.isLocked || viewModel.hasActiveSubscription {
                                 navigation.push(.exploreDetails($0))
                             }
                         },
@@ -118,6 +102,7 @@ struct SoulmateDrawingResultView: View {
 struct SoulmateExploreView: View {
     let title: String
     let items: [ExploreItem]
+    let hasActiveSubscription: Bool
     let selected: (ExploreItem) -> Void
     let unfoldAction: () -> Void
     
@@ -136,7 +121,7 @@ struct SoulmateExploreView: View {
                 Button(
                     action: { selected(item) },
                     label: {
-                        SoulmateExploreCardView(item: item, unfoldAction: unfoldAction)
+                        SoulmateExploreCardView(item: item, hasActiveSubscription: hasActiveSubscription, unfoldAction: unfoldAction)
                     }
                 )
                 .buttonStyle(.card)
@@ -155,11 +140,5 @@ struct SoulmateExploreView: View {
             }
         }
         .customTabBarVisible(false)
-    }
-}
-
-#Preview {
-    NavigationStack {
-        SoulmateDrawingResultView(soulmate: .mock)
     }
 }

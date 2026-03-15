@@ -13,7 +13,7 @@ enum MainRoute: Hashable, Identifiable {
     case insightsList([InsightModel])
     case exploreDetails(ExploreItem)
     case soulmateResult(SoulmateModel)
-    case chat(threadID: String)
+    case chat(ChatInitialModel)
     case soulmateOnboarding
     case dreamerDetails(type: DreamerDetailsType)
     case dreamerHistory
@@ -28,8 +28,8 @@ enum MainRoute: Hashable, Identifiable {
             return "exploreDetails"
         case .soulmateResult(let result):
             return "soulmateResult_\(result.explore.items.map(\.title))"
-        case .chat(let threadID):
-            return threadID
+        case .chat(let model):
+            return model.id
         case .soulmateOnboarding:
             return "soulmateOnboarding"
         case .dreamerDetails(let type):
@@ -105,8 +105,8 @@ struct RootNavigationStack<Content: View>: View {
             SoulmateDrawingResultView(soulmate: soulmate)
         case .soulmateOnboarding:
             SoulmateOnboarding()
-        case let .chat(threadID):
-            ChatViewScreen(threadID: threadID)
+        case let .chat(model):
+            ChatViewScreen(model: model)
         case let .dreamerDetails(type):
             DreamerDetailsScreenView(type: type)
         case .dreamerHistory:

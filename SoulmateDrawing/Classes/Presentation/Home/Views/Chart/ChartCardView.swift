@@ -46,6 +46,6 @@ struct CardButtonStyle: ButtonStyle {
 
 private extension Chart {
     var formattedTitle: String {
-        "\(sign.name) \(label.name) · \("House".localized) \(house)"
+        "\(sign) \(label) · \("House".localized) \(house)"
     }
 }

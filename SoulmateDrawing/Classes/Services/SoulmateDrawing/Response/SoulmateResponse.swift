@@ -11,12 +11,18 @@ struct SoulmateResponse: Decodable {
     let image: URL?
     let mainPoints: [MainPoint]
     let explore: SoulmateExploreResponse
-    let charts: [Chart]
+    
+    enum CodingKeys: String, CodingKey {
+        case image
+        case mainPoints = "main_points"
+        case explore
+    }
 }
 
 struct SoulmateExploreResponse: Decodable {
     let tip: String
     let items: [Item]
+    let charts: [Chart]
     
     struct Item: Decodable {
         let image: URL?
@@ -24,5 +30,13 @@ struct SoulmateExploreResponse: Decodable {
         let text: String
         let isLocked: Bool
         let unlockLabel: String?
+        
+        enum CodingKeys: String, CodingKey {
+            case image
+            case title
+            case text
+            case isLocked = "is_locked"
+            case unlockLabel = "unlock_label"
+        }
     }
 }

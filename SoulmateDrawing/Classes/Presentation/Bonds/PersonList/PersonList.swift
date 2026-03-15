@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct PersonList: View {
-//    @Environment(Coordinator<SelectPersonRoute>.self) private var coordinator
     @State private var viewModel: PersonListViewModel
     private let selected: (PersonModel) -> Void
     
@@ -47,12 +47,16 @@ struct PersonList: View {
                             },
                             label: {
                                 HStack(spacing: 12.scale) {
-                                    Circle()
-                                        .frame(width: 45.scale, height: 50.scale)
-                                        .padding(.vertical, 2.scale)
-                                        .overlay {
-                                            AsyncImage(url: person.singImage)
+                                    LazyImage(source: person.singImage) { state in
+                                        if let image = state.image {
+                                            image
+                                        } else {
+                                            Circle()
+                                                .fill(.main300)
                                         }
+                                    }
+                                    .frame(width: 45.scale, height: 50.scale)
+                                    .padding(.vertical, 2.scale)
                                     
                                     Text(person.name)
                                 }

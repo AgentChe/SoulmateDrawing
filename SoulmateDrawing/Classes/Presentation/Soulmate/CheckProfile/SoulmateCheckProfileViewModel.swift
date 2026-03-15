@@ -38,6 +38,7 @@ final class SoulmateCheckProfileViewModel {
     private(set) var screenState: ScreenState = .loaded
     private(set) var profileName: String = ""
     private(set) var mainPoints: [MainPoint] = []
+    private(set) var sign: URL?
     private(set) var profileInfo: [SoulmateProfileInfo] = []
     
     private(set) var soulmatePreferences: SoulmatePreferencesModel?
@@ -89,6 +90,7 @@ final class SoulmateCheckProfileViewModel {
                     mainPoints = discovery.mainPoints
                     profileName = profile.name
                     profileInfo = info
+                    sign = discovery.sign
                     screenState = .loaded
                 }
             } catch {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct DreamerDetailsScreenView: View {
     @Environment(\.navigation) private var navigation
@@ -50,11 +51,9 @@ struct DreamerDetailsScreenView: View {
             .foregroundStyle(.textMain200)
         }
         .background(alignment: .top) {
-            AsyncImage(
-                url: model.image,
-                content: { image in
+            LazyImage(source: model.image) { state in
+                if let image = state.image {
                     image
-                        .resizable()
                         .aspectRatio(1.09, contentMode: .fit)
                         .overlay(alignment: .top) {
                             let color = Color(red: 1, green: 240/255, blue: 223/255)
@@ -68,11 +67,10 @@ struct DreamerDetailsScreenView: View {
                             )
                         }
                         .transition(.opacity)
-                },
-                placeholder: {
+                } else {
                     Color.clear
                 }
-            )
+            }
             .ignoresSafeArea()
         }
         .customBackButton()

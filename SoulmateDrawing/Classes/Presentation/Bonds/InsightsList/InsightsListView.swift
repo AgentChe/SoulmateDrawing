@@ -17,7 +17,7 @@ struct InsightsListView: View {
                 ForEach(models) { model in
                     Button(
                         action: {
-                            router.push(.chat(threadID: model.id))
+                            router.push(.chat(.open(threadID: model.id)))
                         },
                         label: {
                             BondsInsightCard(model: model)

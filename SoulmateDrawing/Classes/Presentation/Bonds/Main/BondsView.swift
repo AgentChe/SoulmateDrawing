@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct BondsView: View {
     @Environment(\.navigation) private var navigation
     @State private var viewModel = BondsViewModel()
     @State private var sheetType: BondsSheetType?
+    @State private var isShowPaygate = false
     
     var body: some View {
         ScrollView(.vertical) {
@@ -30,6 +32,16 @@ struct BondsView: View {
                     .foregroundStyle(.textMain200)
                 
                 HStack(spacing: 12.scale) {
+                    LazyImage(source: viewModel.userSign) { state in
+                        if let image = state.image {
+                            image
+                        } else {
+                            Circle()
+                                .fill(.bgMain300)
+                        }
+                    }
+                    .frame(width: 45.scale, height: 45.scale)
+                    
                     Button(
                         action: {},
                         label: {
@@ -42,19 +54,19 @@ struct BondsView: View {
                 .padding(.horizontal, 40.scale)
                 
                 HStack(spacing: 12.scale) {
-                    if let image = viewModel.person?.singImage {
-                        AsyncImage(url: image)
-                    } else {
-                        Circle()
-                            .fill(.bgMain300)
-                            .frame(width: 45.scale)
+                    LazyImage(source: viewModel.person?.singImage) { state in
+                        if let image = state.image {
+                            image
+                        } else {
+                            Circle()
+                                .fill(.bgMain300)
+                        }
                     }
+                    .frame(width: 45.scale, height: 45.scale)
                     
                     Button(
                         action: {
                             sheetType = viewModel.persons.isEmpty ? .createPerson : .persons
-                            //                        coordinator.sheet(.personList(
-                            //                            persons: viewModel.persons, selected: { viewModel.person = $0 }))
                         },
                         label: {
                             Text(viewModel.person?.name ?? "Bonds.Person".localized)
@@ -72,7 +84,6 @@ struct BondsView: View {
                 
                 Button(
                     action: {
-                        //                    coordinator.sheet(.connectionType)
                         sheetType = .connectionType
                     },
                     label: {
@@ -89,7 +100,11 @@ struct BondsView: View {
                 
                 Button(
                     action: {
-                        viewModel.tapDiscover()
+                        if viewModel.hasActiveSubscription {
+                            viewModel.tapDiscover()
+                        } else {
+                            isShowPaygate = true
+                        }
                     },
                     label: {
                         Text("Bonds.Button".localized)
@@ -110,7 +125,6 @@ struct BondsView: View {
                         
                         Button(
                             action: {
-                                //                            coordinator.push(.insightsList(models: viewModel.insights))
                                 navigation.push(.insightsList(viewModel.insights))
                             },
                             label: {
@@ -131,7 +145,7 @@ struct BondsView: View {
                             ForEach(viewModel.insights) { model in
                                 Button(
                                     action: {
-                                        navigation.push(.chat(threadID: model.id))
+                                        navigation.push(.chat(.open(threadID: model.id)))
                                     },
                                     label: {
                                         BondsInsightCard(model: model)
@@ -183,7 +197,20 @@ struct BondsView: View {
                 }
             }
         }
+        .fullScreenCover(isPresented: $isShowPaygate) {
+            NavigationStack {
+                PaygateView()
+            }
+        }
+        .onChange(of: viewModel.push, { _, newValue in
+            guard let newValue else { return }
+            navigation.push(newValue)
+            viewModel.push = nil
+        })
         .screenState(viewModel.screenState) {
+            viewModel.load()
+        }
+        .task {
             viewModel.load()
         }
     }
@@ -215,7 +242,7 @@ struct BondsInsightCard: View {
         }
         .foregroundStyle(.textMain200)
         .padding(24.scale)
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(.bgMain200)
         .clipShape(RoundedRectangle(cornerRadius: 32.scale))
     }

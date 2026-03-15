@@ -59,9 +59,11 @@ struct SettingsView: View {
         }
         .appBackground()
         .toolbar {
-            ToolbarButton(placement: .topBarTrailing) {
-                ProButton {
-                    isShowPaygate = true
+            if !viewModel.hasActiveSubscription {
+                ToolbarButton(placement: .topBarTrailing) {
+                    ProButton {
+                        isShowPaygate = true
+                    }
                 }
             }
             
@@ -79,17 +81,17 @@ struct SettingsView: View {
             Group {
                 switch type {
                 case .bornDate:
-                    OnboardingBornDate(bornDate: viewModel.bornDate) {
+                    OnboardingBornDate(bornDate: viewModel.profile?.bornDate) {
                         viewModel.save(date: $0)
                         sheetType = nil
                     }
                 case .bornTime:
-                    OnboardingBornTime(bornTime: viewModel.bornDate) {
+                    OnboardingBornTime(bornTime: viewModel.profile?.bornDate) {
                         viewModel.save(date: $0)
                         sheetType = nil
                     }
                 case .city:
-                    OnboardingCityView(city: viewModel.city) {
+                    OnboardingCityView(city: viewModel.profile?.city) {
                         viewModel.save(city: $0)
                         sheetType = nil
                     }

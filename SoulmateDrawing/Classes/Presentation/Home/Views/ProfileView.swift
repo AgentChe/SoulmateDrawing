@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct MainPointsView: View {
     let mainPoints: [MainPoint]
@@ -14,9 +15,16 @@ struct MainPointsView: View {
         HStack(spacing: 16.scale) {
             ForEach(mainPoints, id: \.self) { model in
                 HStack(spacing: 4.scale) {
-                    // TODO: Поправить иконку
-//                        Image(model.label.iconName)
-                    Text(model.label.name)
+                    LazyImage(source: model.iconURL) { state in
+                        if let image = state.image {
+                            image
+                        } else {
+                            Color.clear
+                        }
+                    }
+                    .frame(width: 20, height: 20)
+                    
+                    Text(model.label)
                 }
             }
         }
@@ -27,13 +35,19 @@ struct MainPointsView: View {
 
 struct ProfileView: View {
     let name: String
-    // TODO: Что-то решить с этим, возможно не нужно и с бека будет приходить
-    let zodiac: Zodiac
+    let sign: URL?
     let mainPoints: [MainPoint]
     
     var body: some View {
         VStack(spacing: 0) {
-            Image(zodiac.largeIconName)
+            LazyImage(source: sign) { state in
+                if let image = state.image {
+                    image
+                } else {
+                    Color.clear
+                }
+            }
+            .frame(width: 80.scale, height: 88.scale)
             
             Text(name)
                 .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
@@ -43,16 +57,4 @@ struct ProfileView: View {
                 .padding(.top, 12.scale)
         }
     }
-}
-
-#Preview {
-    ProfileView(
-        name: "Megan",
-        zodiac: .aries,
-        mainPoints: [
-            .init(iconURL: URL(string: ""), label: .aquarius),
-            .init(iconURL: URL(string: ""), label: .carpicorn),
-            .init(iconURL: URL(string: ""), label: .libra),
-        ]
-    )
 }

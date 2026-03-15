@@ -10,62 +10,24 @@ import SwiftUI
 struct ChatViewScreen: View {
     @State private var viewModel: ChatScreenViewModel
     @State private var isPresentDeleteAlert = false
-    init(threadID: String) {
-        _viewModel = State(initialValue: .init(threadID: threadID))
+    @Namespace private var insight
+    @FocusState private var isFocused: Bool
+    
+    init(model: ChatInitialModel) {
+        _viewModel = State(initialValue: .init(initialModel: model))
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack(spacing: 16.scale) {
-                    if viewModel.isShowRetry {
-                        ChatRetryView(action: viewModel.retryMessageAction)
-                        .padding(.top, 40.scale)
-                        .rotationEffect(.degrees(180))
-                    }
-                    
-                    if viewModel.isThinking {
-                        ThinkingView()
-                            .transition(.opacity)
-                    }
-                    
-                    
-                    ForEach(viewModel.dataSource) { message in
-                        switch message.role {
-                        case .user:
-                            HStack {
-                                Spacer(minLength: 72.scale)
-                                Text(message.content)
-                                    .padding(.horizontal, 20.scale)
-                                    .padding(.vertical, 16.scale)
-                                    .background(.bgMain400, in: RoundedRectangle(cornerRadius: 32.scale))
-                            }
-                            .transition(.opacity)
-                        case .assistant:
-                            HStack {
-                                Text(message.content)
-                                
-                                Spacer(minLength: 46.scale)
-                            }
-                            .transition(.opacity)
-                        }
-                    }
-                    .font(Font.SFPro.font(size: 17.scale, weight: .w400))
-                    .foregroundStyle(.textMain200)
-                    .multilineTextAlignment(.leading)
-                    .rotationEffect(.degrees(180))
-                    
-                    if viewModel.hasNext {
-                        ProgressView()
-                            .progressViewStyle(.spinner)
-                            .onAppear {
-                                viewModel.loadNext()
-                            }
-                    }
-                }
+        ZStack {
+            if viewModel.isShowSkeleton {
+                ChatSkeleton()
+                    .padding([.horizontal, .top], 24.scale)
+                    .transition(.opacity)
+            } else if let tipsDataSource = viewModel.tipsDataSource {
+                tipsContent(for: tipsDataSource)
+            } else {
+                content.transition(.opacity)
             }
-            .rotationEffect(.degrees(180))
-            .contentMargins(24.scale, for: .scrollContent)
         }
         .scrollDismissesKeyboard(.immediately)
         .animation(.easeInOut, value: viewModel.dataSource)
@@ -110,38 +72,12 @@ struct ChatViewScreen: View {
             }
         }
         .safeAreaInset(edge: .bottom) {
-            HStack {
-                TextField(text: $viewModel.currentText, axis: .vertical) {
-                    Text("Chat.Placeholder".localized)
-                        .foregroundStyle(.textMain200.opacity(0.6))
-                        .font(Font.SFPro.font(size: 17.scale, weight: .w400))
-                       
-                }
-                .foregroundStyle(.textMain200)
-                
-                if !viewModel.currentText.isEmpty {
-                    Button(
-                        action: {
-                            withAnimation {
-                                viewModel.sendMessage()
-                            }
-                        },
-                        label: {
-                            Image(systemName: "arrow.up")
-                                .resizable()
-                                .frame(width: 32.scale, height: 32.scale)
-                        }
-                    )
-                    .symbolVariant(.circle.fill)
-                    .foregroundStyle(.textMain100, .accentMain100)
-                    .disabled(viewModel.isThinking)
-                }
-            }
-            .padding(.vertical, 16.scale)
-            .padding(.horizontal, 24.scale)
-            .background(.bgMain300, in: RoundedRectangle(cornerRadius: 32.scale))
-            .padding(.horizontal, 24.scale)
-            .padding(.bottom, 16.scale)
+            ChatInputFieldView(
+                currentText: $viewModel.currentText,
+                isFocused: $isFocused,
+                action: viewModel.sendMessage
+            )
+            .disabled(viewModel.isThinking || viewModel.isShowSkeleton)
         }
         .customTabBarVisible(false)
         .alert("Chat.DeleteTitle".localized, isPresented: $isPresentDeleteAlert) {
@@ -163,6 +99,70 @@ struct ChatViewScreen: View {
         }
         .appBackground()
         .screenState(viewModel.screenState, tryAgain: viewModel.deleteChat)
+        .onChange(of: isFocused) { _, newValue in
+            if newValue, viewModel.tipsDataSource != nil {
+                withAnimation {
+                    viewModel.tipsDataSource = nil
+                }
+            }
+        }
+        .task {
+            viewModel.load()
+        }
+    }
+    
+    @ViewBuilder
+    private var content: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            LazyVStack(spacing: 16.scale) {
+                if viewModel.isShowRetry {
+                    ChatRetryView(action: viewModel.retryMessageAction)
+                    .padding(.top, 40.scale)
+                    .rotationEffect(.degrees(180))
+                }
+                
+                if viewModel.isThinking {
+                    ThinkingView()
+                        .transition(.opacity)
+                }
+                
+                ForEach(viewModel.dataSource.reversed()) { message in
+                    ChatMessageView(model: message)
+                        .matchedGeometryEffect(id: message.id, in: insight)
+                        .onAppear {
+                            if viewModel.dataSource.last == message {
+                                viewModel.loadNext()
+                            }
+                        }
+                }
+                .font(Font.system(size: 17.scale))
+                .foregroundStyle(.textMain200)
+                .multilineTextAlignment(.leading)
+                .rotationEffect(.degrees(180))
+                
+                if viewModel.isMessagesLoading {
+                    ProgressView()
+                        .progressViewStyle(.spinner)
+                        .transition(.opacity)
+                }
+            }
+        }
+        .rotationEffect(.degrees(180))
+        .contentMargins(24.scale, for: .scrollContent)
+    }
+    
+    @ViewBuilder
+    private func tipsContent(for source: ChatTipsSource) -> some View {
+        VStack(spacing: 0) {
+            ChatMessageView(model: source.insight)
+                .matchedGeometryEffect(id: source.insight.id, in: insight)
+            Spacer()
+            ForEach(source.tips) { model in
+                ChatMessageView(model: model)
+                    .padding(.top, 16.scale)
+            }
+        }
+        .padding(.horizontal, 24)
     }
 }
 
@@ -178,6 +178,6 @@ extension VerticalAlignment {
 
 #Preview {
     NavigationStack {
-        ChatViewScreen(threadID: "")
+        ChatViewScreen(model: .open(threadID: ""))
     }
 }

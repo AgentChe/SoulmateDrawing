@@ -8,14 +8,6 @@
 import Foundation
 
 struct ChatSendMessageResponse: Decodable {
-    let runner: Runner
     let user: MessageResponse
-}
-
-extension ChatSendMessageResponse {
-    struct Runner: Decodable {
-        let runID: String
-        let status: String
-        let isComplete: Bool
-    }
+    let assistant: MessageResponse
 }

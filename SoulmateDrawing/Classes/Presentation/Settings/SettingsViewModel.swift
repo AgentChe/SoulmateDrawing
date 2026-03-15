@@ -11,14 +11,15 @@ import Foundation
 final class SettingsViewModel {
     private(set) var screenState: ScreenState = .loaded
     private(set) var sections: [ProfileSection] = []
+    var hasActiveSubscription: Bool {
+        return sessionManager.hasActiveSubscriptions()
+    }
     
-    @ObservationIgnored
-    private(set) var bornDate: Date?
-    @ObservationIgnored
-    private(set) var city: String = ""
-    
+    private(set) var profile: ProfileModel?
     @ObservationIgnored
     private let profileManager = ProfileManager()
+    @ObservationIgnored
+    private let sessionManager = SessionManager()
     
     init() {
         load()
@@ -31,12 +32,10 @@ final class SettingsViewModel {
                     screenState = .loading
                 }
                 let profile = try await profileManager.getProfile(forceUpdate: true)
-                self.bornDate = profile.bornDate
-                self.city = profile.city
-                
-                await configureDataSource()
                 
                 await MainActor.run {
+                    self.profile = profile
+                    configureDataSource()
                     screenState = .loaded
                 }
                 
@@ -49,49 +48,42 @@ final class SettingsViewModel {
     }
     
     func save(date: Date) {
-        bornDate = date
-        // TODO: Реализовать сохранение
+        profile?.bornDate = date
+        updateProfile(attrs: ["birth_datetime": Int(date.timeIntervalSince1970)])
+    }
+    
+    private func updateProfile(attrs: [String: Any?]) {
         Task {
-            await configureDataSource()
+            await MainActor.run {
+                screenState = .loading
+            }
+            do {
+                try await profileManager.saveAttributes(attrs: attrs)
+                
+                await MainActor.run {
+                    configureDataSource()
+                    screenState = .loaded
+                }
+            } catch {
+                await MainActor.run {
+                    screenState = .error
+                }
+            }
         }
     }
     
-    func save(city: String) {
-        self.city = city
-        Task {
-            await configureDataSource()
-        }
+    func save(city: CityModel) {
+        profile?.city = city.address
+        updateProfile(attrs: ["birth_location": city.id] )
     }
-    
-//    func open(item: ProfileSection.Model) {
-//        switch item {
-//        case .date:
-//            coordinator.sheet(.dateOfBird(current: bornDate ?? .init(), selected: { [weak self] in
-//                self?.bornDate = $0
-//            }))
-//        case .place:
-//            coordinator.sheet(.placeOfBird(current: city, selected: { [weak self] in
-//                self?.city = $0
-//            }))
-//        case .time:
-//            coordinator.sheet(.timeOfBird(current: bornDate ?? .init(), selected: { [weak self] in
-//                self?.bornDate = $0
-//            }))
-//        case .privacyPolicy:
-//            break
-//        case .termOfUse:
-//            break
-//        case .contactUs:
-//            break
-//        }
-//    }
 }
 
 private extension SettingsViewModel {
-    func configureDataSource() async {
-        let date = bornDate?.formatted(date: .long, time: .omitted)
-        let location = city
-        let time = bornDate?.formatted(date: .omitted, time: .shortened)
+    @MainActor
+    func configureDataSource() {
+        let date = profile?.bornDate?.formatted(date: .long, time: .omitted)
+        let location = profile?.city ?? ""
+        let time = profile?.bornDate?.formatted(date: .omitted, time: .shortened)
         
         let profileInfo: [ProfileSection] = [
             .init(
@@ -114,8 +106,6 @@ private extension SettingsViewModel {
             )
         ]
         
-        await MainActor.run {
-            sections = profileInfo
-        }
+        sections = profileInfo
     }
 }

@@ -18,10 +18,7 @@ final class DreamerManager {
             dreamText: dream
         )
         
-        try await Task.sleep(for: .seconds(1))
-        // TODO: Расскоментировать
-//        return try await restApiTransport.callServerApi(requestBody: request)
-        return .mock
+        return try await restApiTransport.callServerApi(requestBody: request)
     }
     
     func dreamHistory(page: Int?) async throws -> DreamerHistoryResponse {
@@ -29,10 +26,8 @@ final class DreamerManager {
             anonymousId: sessionManager.anonymousId,
             internalId: sessionManager.internalId
         )
-        try await Task.sleep(for: .seconds(1))
-        // TODO: Расскоментировать
-//        return try await restApiTransport.callServerApi(requestBody: request)
-        return .mock
+        
+        return try await restApiTransport.callServerApi(requestBody: request)
     }
     
     func dreamDetails(dreamID: String) async throws -> DreamerRevealResponse {
@@ -41,10 +36,8 @@ final class DreamerManager {
             internalId: sessionManager.internalId,
             dreamID: dreamID
         )
-        try await Task.sleep(for: .seconds(1))
-        // TODO: Расскоментировать
-//        return try await restApiTransport.callServerApi(requestBody: request)
-        return .mock
+        
+        return try await restApiTransport.callServerApi(requestBody: request)
     }
 }
 

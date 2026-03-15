@@ -10,11 +10,12 @@ import SwiftUI
 
 struct SoulmateExploreCardView: View {
     let item: ExploreItem
+    let hasActiveSubscription: Bool
     let unfoldAction: () -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            if item.isLocked, let unlockLabel = item.unlockLabel {
+            if item.isLocked, let unlockLabel = item.unlockLabel, !hasActiveSubscription {
                 HStack(spacing: 4.scale) {
                     Text(unlockLabel)
                         .font(Font.SFPro.font(size: 17.scale, weight: .w400))
@@ -37,7 +38,7 @@ struct SoulmateExploreCardView: View {
                 .foregroundStyle(.textMain200)
                 .lineLimit(2)
                 .overlay(alignment: .leading) {
-                    if item.isLocked {
+                    if item.isLocked, !hasActiveSubscription {
                         let color = Color(red: 1, green: 251/255, blue: 245/255)
                         LinearGradient(
                             stops: [
@@ -51,7 +52,7 @@ struct SoulmateExploreCardView: View {
                     }
                 }
             
-            if item.isLocked {
+            if item.isLocked, !hasActiveSubscription {
                 Button(
                     action: unfoldAction,
                     label: {

@@ -28,30 +28,8 @@ final class DiscoverManager {
             anonymousId: sessionManager.anonymousId,
             internalId: sessionManager.internalId
         )
-        // TODO: Раскомментить
-//        let response = try await restApiTransport.callServerApi(requestBody: request)
         
-        try await Task.sleep(for: .seconds(1.5))
-        let response = DiscoverModel(
-            mainPoints: [
-                .init(iconURL: URL(string: ""), label: .aquarius),
-                .init(iconURL: URL(string: ""), label: .aries),
-                .init(iconURL: URL(string: ""), label: .carpicorn),
-            ],
-            charts: [
-                .init(sign: .aquarius, label: .jupiter, icon: URL(string: ""), house: 7, description: description),
-                .init(sign: .aries, label: .mars, icon: URL(string: ""), house: 8, description: description),
-                .init(sign: .cancer, label: .rising, icon: URL(string: ""), house: 6, description: description),
-                .init(sign: .carpicorn, label: .moon, icon: URL(string: ""), house: 9, description: description),
-                .init(sign: .gemini, label: .pluto, icon: URL(string: ""), house: 5, description: description),
-                .init(sign: .leo, label: .mercury, icon: URL(string: ""), house: 3, description: description),
-                .init(sign: .libra, label: .neptune, icon: URL(string: ""), house: 8, description: description),
-                .init(sign: .pisces, label: .saturn, icon: URL(string: ""), house: 7, description: description),
-                .init(sign: .sagittarius, label: .venus, icon: URL(string: ""), house: 7, description: description),
-                .init(sign: .taurus, label: .sun, icon: URL(string: ""), house: 7, description: description),
-                .init(sign: .virgo, label: .venus, icon: URL(string: ""), house: 7, description: description)
-            ]
-        )
+        let response: DiscoverModel = try await restApiTransport.callServerApi(requestBody: request)
         
         if let data = try? JSONEncoder().encode(response) {
             UserDefaults.standard.set(data, forKey: Constants.discoverKey)
@@ -65,8 +43,6 @@ final class DiscoverManager {
         guard let data else { throw NSError(domain: "DiscoverManager", code: -1) }
         return try JSONDecoder().decode(DiscoverModel.self, from: data)
     }
-    
-    private let description = "You meet the world with softness, intuition, and emotional depth. In relationships, you crave safety, tenderness, and genuine connection. With this placement in the 7th house, partnerships become a mirror for your inner world — you attract people who awaken your protective side or who help you feel truly seen. You bond slowly but meaningfully, and once trust is built, your loyalty is unwavering. Your greatest growth comes from learning to balance your sensitivity with healthy boundaries."
 }
 
 private extension DiscoverManager {

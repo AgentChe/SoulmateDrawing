@@ -25,7 +25,11 @@ final class HomeViewModel {
     private(set) var profileName: String = ""
     private(set) var mainPoints: [MainPoint] = []
     private(set) var charts: [Chart] = []
+    private(set) var sign: URL?
     var selectionSegment: HomeSegmentItem = .explore
+    var hasActiveSubscription: Bool {
+        return sessionManager.hasActiveSubscriptions()
+    }
     
     var fullScreen: Route?
     var push: MainRoute?
@@ -37,13 +41,11 @@ final class HomeViewModel {
     private let profileManager = ProfileManager()
     @ObservationIgnored
     private let soulmateManager = SoulmateManager()
+    @ObservationIgnored
+    private let sessionManager = SessionManager()
     
     @ObservationIgnored
     private var soulmate: SoulmateModel?
-    
-    init() {
-        load()
-    }
     
     func load() {
         Task {
@@ -51,8 +53,8 @@ final class HomeViewModel {
                 await MainActor.run {
                     screenState = .loading
                 }
-                async let discoveryRequest = discoverManager.discover(forceUpdate: false)
-                async let profileRequest = profileManager.getProfile(forceUpdate: false)
+                async let discoveryRequest = discoverManager.discover(forceUpdate: true)
+                async let profileRequest = profileManager.getProfile(forceUpdate: true)
                 async let soulmateRequest = soulmateManager.soulmate()
                 
                 let (discovery, profile, soulmate) = try await (discoveryRequest, profileRequest, soulmateRequest)
@@ -62,6 +64,7 @@ final class HomeViewModel {
                 await MainActor.run {
                     mainPoints = discovery.mainPoints
                     charts = discovery.charts
+                    sign = discovery.sign
                     profileName = profile.name
                     screenState = .loaded
                 }

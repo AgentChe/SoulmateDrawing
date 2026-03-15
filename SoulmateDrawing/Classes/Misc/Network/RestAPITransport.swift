@@ -24,7 +24,7 @@ final class RestAPITransport {
             method: requestBody.method,
             parameters: requestBody.parameters,
             encoding: requestBody.encoding,
-            headers: requestBody.headers
+            headers: headers
         )
         .validate(statusCode: [200, 201])
         .serializingResponse(using: APIDecodableResponseSerializer<T>())
@@ -54,10 +54,10 @@ final class RestAPITransport {
             method: requestBody.method,
             parameters: requestBody.parameters,
             encoding: requestBody.encoding,
-            headers: requestBody.headers
+            headers: headers
         )
         .validate(statusCode: [200, 201])
-        .serializingDecodable(ResponseContainer<String?>.self)
+        .serializingDecodable(ResponseContainer<EmptyResponseType?>.self)
         
         let result = await dataTask.result
         
@@ -71,6 +71,10 @@ final class RestAPITransport {
     
     func callMultipartServerApi<T: Decodable>(requestBody: APIRequestBody) async throws -> T {
         guard let url = URL(string: requestBody.url) else { throw NSError(domain: "RestAPITransport", code: -11) }
+        var headers = requestBody.headers ?? HTTPHeaders()
+        
+        headers.add(HTTPHeader(name: "Access-Token", value: GlobalDefinitions.apiKey))
+        
         let dataTask = AF.upload(
             multipartFormData: { multipartFormData in
                 requestBody.parameters?.forEach { key, value in
@@ -79,7 +83,7 @@ final class RestAPITransport {
                 }
             },
             to: url,
-            headers: requestBody.headers
+            headers: headers
         )
             .validate(statusCode: [200, 201])
             .serializingResponse(using: APIDecodableResponseSerializer<T>())
@@ -95,8 +99,10 @@ final class RestAPITransport {
     }
 }
 
+nonisolated struct EmptyResponseType: Decodable, Sendable {}
+
 nonisolated struct ResponseContainer<T: Decodable & Sendable>: Decodable {
-    let body: T?
+    let body: T
     let error: APIError?
 }
 
@@ -143,11 +149,18 @@ final class APIDecodableResponseSerializer<T: Decodable>: ResponseSerializer whe
             let container = try decoder.decode(ResponseContainer<T>.self, from: data)
             if let error = container.error {
                 throw error
-            } else if let body = container.body {
-                return body
             } else {
-                throw AFError.responseSerializationFailed(reason: .decodingFailed(error: NSError(domain: "SoulmateDrawing", code: -1)))
+               return  container.body
             }
+//            if let error = container.error {
+//                throw error
+//            } else if let body = container.body {
+//                return body
+//            } else if container.body == nil {
+//                return nil
+//            } else {
+//                throw AFError.responseSerializationFailed(reason: .decodingFailed(error: NSError(domain: "SoulmateDrawing", code: -1)))
+//            }
         } catch {
             throw AFError.responseSerializationFailed(reason: .decodingFailed(error: error))
         }
@@ -156,7 +169,7 @@ final class APIDecodableResponseSerializer<T: Decodable>: ResponseSerializer whe
 
 extension DataRequest {
     @discardableResult
-    func responseContainer<T: Decodable>(of type: T.Type = T.self, completionHandler: @escaping (AFDataResponse<T>) -> Void) -> Self {
+    func responseContainer<T: Decodable>(of type: T.Type = T.self, completionHandler: @escaping (AFDataResponse<T?>) -> Void) -> Self {
         response(
             responseSerializer: APIDecodableResponseSerializer(),
             completionHandler: completionHandler

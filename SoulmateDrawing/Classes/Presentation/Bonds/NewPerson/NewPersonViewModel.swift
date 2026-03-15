@@ -13,13 +13,13 @@ final class NewPersonViewModel {
     var name: String = ""
     var dayOfBorn: Date?
     var timeOfBorn: Date?
-    var city: String = ""
+    var city: CityModel? = nil
     var screenState: ScreenState = .loaded
     
     var isSaving = false
     
     var isAvailableSave: Bool {
-        let main = !name.isEmpty && !city.isEmpty && dayOfBorn != nil
+        let main = !name.isEmpty && city != nil && dayOfBorn != nil
         return isKnownExtractTime ? main : main && timeOfBorn != nil
     }
     
@@ -41,7 +41,7 @@ final class NewPersonViewModel {
     }
     
     func save() {
-        guard let dayOfBorn else { return }
+        guard let dayOfBorn, let city else { return }
         let calendar = Calendar.current
         var dateComponents = calendar.dateComponents([.day, .month, .year], from: dayOfBorn)
         let timeComponents = timeOfBorn.map { timeOfBorn in
@@ -55,7 +55,7 @@ final class NewPersonViewModel {
         let newPerson = NewPersonModel(
             name: name,
             bornDate: bornDate,
-            city: city,
+            city: city.id,
             gender: gender
         )
         

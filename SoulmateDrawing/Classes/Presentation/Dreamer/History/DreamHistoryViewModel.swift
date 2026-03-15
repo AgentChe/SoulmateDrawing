@@ -30,6 +30,7 @@ final class DreamHistoryViewModel {
                     screenState = .loading
                 }
                 let response = try await dreamerManager.dreamHistory(page: nil)
+                pagination = response.pagination
                 let items: [DreamHistoryItem] = response.items.map(DreamHistoryItem.init)
                 
                 await MainActor.run {
@@ -40,6 +41,20 @@ final class DreamHistoryViewModel {
                 await MainActor.run {
                     screenState = .error
                 }
+            }
+        }
+    }
+    
+    func loadNext() {
+        Task {
+            guard let pagination, pagination.next > pagination.current else { return }
+            let response = try await dreamerManager.dreamHistory(page: pagination.next)
+            guard !Task.isCancelled else { return }
+            
+            self.pagination = response.pagination
+            let elements = response.items.map(DreamHistoryItem.init)
+            await MainActor.run {
+                items.append(contentsOf: elements)
             }
         }
     }

@@ -25,6 +25,12 @@ final class BondsViewModel {
     private(set) var insights: [InsightModel] = []
     private(set) var isDescovering = false
     private(set) var isAvailablePagination = true
+    private(set) var userSign: URL?
+    var hasActiveSubscription: Bool {
+        return sessionManager.hasActiveSubscriptions()
+    }
+    
+    var push: MainRoute?
     
     var actionIsEnabled: Bool {
         person != nil && connectionType != nil
@@ -37,25 +43,29 @@ final class BondsViewModel {
     @ObservationIgnored
     private let chatManager = ChatManager()
     @ObservationIgnored
+    private let sessionManager = SessionManager()
+    @ObservationIgnored
+    private let discoverManager = DiscoverManager()
+    @ObservationIgnored
     private var paginationTask: Task<Void, Never>?
-    
-    init() {
-        load()
-    }
     
     func load() {
         Task {
             do {
-                async let personListRequest = bondsManager.personList(forceUpdate: false)
+                async let personListRequest = bondsManager.personList(page: nil)
                 async let historyRequest = chatManager.getHistory(page: nil)
+                async let discoveryRequest = discoverManager.discover(forceUpdate: true)
                 
-                let (personList, history) = try await (personListRequest, historyRequest)
-                pagination = history.pagination
-                isAvailablePagination = history.pagination.current <  history.pagination.total
-                
-                insights = history.items.map(InsightModel.init)
-                persons = personList.map(PersonModel.init)
-                screenState = .loaded
+                let (personList, history, discovery) = try await (personListRequest, historyRequest, discoveryRequest)
+                await MainActor.run {
+                    pagination = history.pagination
+                    isAvailablePagination = history.pagination.current <  history.pagination.total
+                    
+                    userSign = discovery.sign
+                    insights = history.items.map(InsightModel.init)
+                    persons = personList.items.map(PersonModel.init)
+                    screenState = .loaded
+                }
             } catch {
                 await MainActor.run {
                     screenState = .error
@@ -102,6 +112,7 @@ final class BondsViewModel {
                 let result = try await chatManager.createThread(for: person.id, use: connectionType)
                 await MainActor.run {
                     isDescovering = false
+                    push = .chat(.start(threadID: result.threadID, insight: result.insight, tips: result.tips))
                 }
             } catch {
                 await MainActor.run {
@@ -110,38 +121,40 @@ final class BondsViewModel {
             }
         }
     }
-    
-//    func openInsightsList() {
-//        coordinator.push(.insightsList(models: insights))
-//    }
-//    
-//    func openConnectionType() {
-//        coordinator.sheet(.connectionType { [weak self] in
-//            self?.connectionType = $0
-//        })
-//    }
-//    
-//    func openSelectPerson() {
-//        if persons.isEmpty {
-//            coordinator.sheet(.newPerson { [weak self] in
-//                self?.selectPerson(person: $0)
-//            })
-//        } else {
-//            coordinator.sheet(.personList(persons: persons, selected: { [weak self] in
-//                self?.selectPerson(person: $0)
-//            }))
-//        }
-//    }
 }
 
 
 extension InsightModel {
     init(response: ChatHistoryResponse.Item) {
         self.id = response.threadId
-        // TODO: Поправить форматирование
-        self.formattedDate = ""
+        self.formattedDate = SmartDateStyle().format(response.createdDate)
         self.text = response.message.content
         self.pairText = "Bonds.You".localized + " & " + response.personName
         self.connectionType = response.petsonType
+    }
+}
+
+struct SmartDateStyle: FormatStyle {
+    typealias FormatInput = Date
+    typealias FormatOutput = String
+    
+    func format(_ value: Date) -> String {
+        let calendar = Calendar.current
+        
+        if calendar.isDateInToday(value) {
+            return "Сегодня"
+        }
+        
+        if calendar.isDateInYesterday(value) {
+            return "Вчера"
+        }
+        
+        // Для остальных дат используем стандартный формат
+        let style = Date.FormatStyle()
+            .day(.defaultDigits)
+            .month(.abbreviated)
+            .locale(Locale(identifier: "ru_RU"))
+        
+        return style.format(value)
     }
 }

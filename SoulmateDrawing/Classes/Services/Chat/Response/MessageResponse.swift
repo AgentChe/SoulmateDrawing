@@ -12,11 +12,18 @@ struct MessageResponse: Decodable {
     let threadID: String
     let content: String
     let role: Role
-    let createdAt: Date
-    let createdTimestamp: Int
+    let createdDate: Date
     
     enum Role: String, Decodable {
         case assistant
         case user
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case messageID = "message_id"
+        case threadID = "thread_id"
+        case content
+        case role
+        case createdDate = "created_timestamp"
     }
 }

@@ -54,7 +54,12 @@ import SwiftUI
                 screenState = .loading
             }
             do {
-                try await profileManager.saveAttributes(user: user)
+                let attrs: [String: Any?] = [
+                    "name": user.name,
+                    "birth_datetime": user.bornDate.map { Int($0.timeIntervalSince1970) },
+                    "birth_location": user.city
+                ]
+                try await profileManager.saveAttributes(attrs: attrs)
                 _ = try? await profileManager.getProfile(forceUpdate: true)
                 await MainActor.run {
                     isFinish = true

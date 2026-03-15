@@ -7,9 +7,9 @@
 
 import Foundation
 
-enum RetryType {
-    case sendMessage(message: String, localMessageID: String)
-    case runner(runID: String)
+struct ChatTipsSource {
+    let insight: ChatMessageModel
+    let tips: [ChatMessageModel]
 }
 
 @Observable
@@ -19,49 +19,47 @@ final class ChatScreenViewModel {
     private(set) var isThinking = false
     private(set) var isShowRetry = false
     private(set) var hasNext = false
-    var currentText: String = "sdlgkjh sdh sjdkgh u bsuvg u sg sdf jjkn"
+    private(set) var isShowSkeleton = false
+    private(set) var isMessagesLoading = false
+    
+    var tipsDataSource: ChatTipsSource?
+    var currentText: String = ""
     
     @ObservationIgnored
     private let chatManager = ChatManager()
     
     @ObservationIgnored
-    private var isMessagesLoading = false
-    
-    @ObservationIgnored
     private let threadID: String
     @ObservationIgnored
     private var page: Pagination?
-    
     @ObservationIgnored
-    private var runnerTask: Task<Void, Error>?
+    private var message: String = ""
     
-    private(set) var retryAction: RetryType?
-
-    private let (stream, continuation) = AsyncStream.makeStream(of: RetryType.self)
+    private let initialModel: ChatInitialModel
     
-    init(threadID: String) {
-        self.threadID = threadID
-        load()
-    }
-    
-    deinit {
-        continuation.finish()
+    init(initialModel: ChatInitialModel) {
+        self.initialModel = initialModel
+        switch initialModel {
+        case .open(let threadID):
+            self.threadID = threadID
+        case .start(let threadID, let insight, let tips):
+            self.threadID = threadID
+            let insightMessage = ChatMessageModel(id: UUID().uuidString, content: insight, role: .assistant)
+            dataSource = [insightMessage]
+            tipsDataSource = ChatTipsSource(
+                insight: insightMessage,
+                tips: tips.map { ChatMessageModel(id: UUID().uuidString, content: $0, role: .user) }
+            )
+        }
     }
     
     func load() {
+        guard case .open = initialModel else { return }
         Task {
-            await loadMessages()
-        }
-        
-        Task {
-            for await action in stream {
-                switch action {
-                case .sendMessage(let message, let localMessageID):
-                    await sendMessageRequest(message: message, localMessageID: localMessageID)
-                case .runner(let runID):
-                    await checkRunner(runID: runID)
-                }
+            await MainActor.run {
+                isShowSkeleton = true
             }
+            await loadMessages()
         }
     }
     
@@ -74,19 +72,17 @@ final class ChatScreenViewModel {
             let dataSource = messages.items.map(ChatMessageModel.init).reversed()
             
             await MainActor.run {
-                page = messages.pagingation
-                hasNext = messages.pagingation.current < messages.pagingation.next
+                page = messages.pagination
+                hasNext = messages.pagination.current < messages.pagination.next
                 self.dataSource.append(contentsOf: dataSource)
                 isMessagesLoading = false
+                isShowSkeleton = false
             }
         } catch {
             await MainActor.run {
-                if let page {
-                    hasNext = page.current < page.next
-                } else {
-                    hasNext = false
-                }
+                hasNext = page.map { $0.current < $0.next } ?? false
                 isMessagesLoading = false
+                isShowSkeleton = false
             }
         }
     }
@@ -105,75 +101,37 @@ final class ChatScreenViewModel {
     func sendMessage() {
         Task {
             let messageID = UUID().uuidString
-            let message = currentText
+            message = currentText
+            guard !message.isEmpty else { return }
             await MainActor.run {
-                dataSource.insert(.init(id: messageID, content: message, role: .user), at: 0)
+                dataSource.append(.init(id: messageID, content: message, role: .user))
                 currentText = ""
+                isThinking = true
             }
             
-            continuation.yield(.sendMessage(message: message, localMessageID: messageID))
-        }
-    }
-    
-    private func sendMessageRequest(message: String, localMessageID: String) async {
-        await MainActor.run {
-            isThinking = true
-            isShowRetry = false
-        }
-        do {
-            let sendResponse = try await chatManager.sendMessage(message: message, threadID: threadID)
-            
-            let index = dataSource.firstIndex(where: { $0.id == localMessageID })
-            
-            if let index {
-                dataSource[index] = .init(item: sendResponse.user)
-            }
-            
-            continuation.yield(.runner(runID: sendResponse.runner.runID))
-        } catch {
-            await MainActor.run {
-                retryAction = .sendMessage(message: message, localMessageID: localMessageID)
-                isShowRetry = true
-                isThinking = false
-            }
-        }
-    }
-    
-    private func checkRunner(runID: String) async {
-        await MainActor.run {
-            isThinking = true
-            isShowRetry = false
-        }
-        runnerTask?.cancel()
-        runnerTask = Task {
-            while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(2))
-                guard !Task.isCancelled else { return }
-                do {
-                    let runnerResult = try await chatManager.checkRunner(runID: runID, for: threadID)
-                    if runnerResult.isComplete, let message = runnerResult.content {
-                        await MainActor.run {
-                            dataSource.insert(.init(item: message), at: 0)
-                            isThinking = false
-                            isShowRetry = false
-                        }
-                        return
-                    }
-                } catch {
-                    await MainActor.run {
-                        retryAction = .runner(runID: runID)
-                        isShowRetry = true
+            do {
+                let response = try await chatManager.sendMessage(message: message, threadID: threadID)
+                let index = dataSource.firstIndex(where: { $0.id == messageID })
+                
+                await MainActor.run {
+                    message = ""
+                    if let index {
+                        dataSource[index] = .init(item: response.user)
+                        dataSource.append(.init(item: response.assistant))
                         isThinking = false
                     }
+                }
+            } catch {
+                await MainActor.run {
+                    isShowRetry = true
+                    isThinking = false
                 }
             }
         }
     }
     
     func retryMessageAction() {
-        if let retryAction {
-            continuation.yield(retryAction)
-        }
+        sendMessage()
     }
     
     func deleteChat() {
@@ -189,5 +147,9 @@ final class ChatScreenViewModel {
                 }
             }
         }
+    }
+    
+    private func startDataSource(insight: String, tips: [String]) {
+        
     }
 }

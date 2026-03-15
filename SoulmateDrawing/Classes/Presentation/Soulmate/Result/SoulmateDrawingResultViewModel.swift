@@ -17,14 +17,20 @@ final class SoulmateDrawingResultViewModel {
     
     var selectedSegment = SoulmateSegmentItem.explore
     
+    var hasActiveSubscription: Bool {
+        return sessionManager.hasActiveSubscriptions()
+    }
+    
     @ObservationIgnored
     private let soulmate: SoulmateModel
+    @ObservationIgnored
+    private let sessionManager = SessionManager()
     
     init(soulmate: SoulmateModel) {
         self.soulmate = soulmate
         mainPoints = soulmate.mainPoints
         imageURL = soulmate.image
-        charts = soulmate.charts
+        charts = soulmate.explore.charts
         exploreTitle = soulmate.explore.tip
         exploreItems = soulmate.explore.items
     }

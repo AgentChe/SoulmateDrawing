@@ -39,18 +39,15 @@ final class RootViewModel {
                 screenState = .loaded
             }
             do {
-                // TODO: Раскомментить
-//                if anonymousId == internalId {
-//                    try await profileManager.create()
-//                } else {
-//                    try await profileManager.binding()
-//                }
-                // TODO: Запросы нужных данных на старте
-                async let discoverRequest = discoverManager.discover(forceUpdate: true)
-                async let personListRequest = bondsManager.personList(forceUpdate: true)
+                if anonymousId == internalId {
+                    try await profileManager.create()
+                } else {
+                    try await profileManager.binding()
+                }
+//                async let discoverRequest = discoverManager.discover(forceUpdate: true)
                 async let profileRequest = profileManager.getProfile(forceUpdate: true)
                 
-                let (_, _, _) = try await (discoverRequest, personListRequest, profileRequest)
+                let (/*_,*/ _) = try await (/*discoverRequest, */ profileRequest)
                 makeStartRoute()
             } catch {
                 await MainActor.run {

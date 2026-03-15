@@ -46,7 +46,7 @@ struct NewPersonView: View {
                         action: { sheetType = .city },
                         label: {
                             NewPersonInputView(
-                                text: viewModel.city,
+                                text: viewModel.city?.address ?? "",
                                 placeholder: "NewPerson.Placeholder.PlaceOfBirth".localized
                             )
                         }
@@ -120,7 +120,7 @@ struct NewPersonView: View {
                         sheetType = nil
                     }
                 case .city:
-                    OnboardingCityView(city: viewModel.city) {
+                    OnboardingCityView(city: viewModel.city?.address) {
                         viewModel.city = $0
                         sheetType = nil
                     }

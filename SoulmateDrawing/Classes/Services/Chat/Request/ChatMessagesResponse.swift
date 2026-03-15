@@ -9,5 +9,5 @@ import Foundation
 
 struct ChatMessagesResponse: Decodable {
     let items: [MessageResponse]
-    let pagingation: Pagination
+    let pagination: Pagination
 }

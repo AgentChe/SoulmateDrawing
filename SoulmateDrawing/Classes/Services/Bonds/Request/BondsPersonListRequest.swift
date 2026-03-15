@@ -10,6 +10,7 @@ import Alamofire
 struct BondsPersonListRequest: APIRequestBody {
     let anonymousId: String
     let internalId: String?
+    let page: Int?
     
     var url: String {
         GlobalDefinitions.domain + "/api/v1/persons/list"
@@ -20,11 +21,11 @@ struct BondsPersonListRequest: APIRequestBody {
     }
     
     var parameters: Parameters? {
-        var params: Parameters = [
-            "anonymous_id": anonymousId
+        let params: Parameters = [
+            "anonymous_id": anonymousId,
+            "internal_id": internalId,
+            "page": page
         ]
-        
-        params["internal_id"] = internalId
         
         return params
     }

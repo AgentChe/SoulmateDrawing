@@ -8,6 +8,8 @@ target 'SoulmateDrawing' do
   pod 'SwiftyStoreKit'
   pod 'RiveRuntime'
   
+  pod 'NukeUI'
+  
   pod 'OtterScaleiOS', :git => "https://github.com/AgentChe/OtterScaleiOS.git"
   
   pod 'FBSDKCoreKit'
