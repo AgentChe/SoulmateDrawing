@@ -11,7 +11,8 @@ import NukeUI
 struct DreamerDetailsScreenView: View {
 //    @Environment(\.navigation) private var navigation
     @State var viewModel: DreamerDetailsViewModel
-    
+    @State private var headerHeight: CGFloat = 0
+        @State private var topOffset: CGFloat = 0
     var body: some View {
         ZStack {
             Color.bgMain100
@@ -37,39 +38,29 @@ struct DreamerDetailsScreenView: View {
                 Text("Dreamer.Details.Title".localized)
                     .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                     .padding(.horizontal, 40.scale)
-                    .padding(.top, 174.scale)
+                    .padding(.top, 284.scale)
                     .multilineTextAlignment(.center)
                 
                 Text(model.text)
                     .font(Font.SFPro.font(size: 17.scale, weight: .w400))
                     .padding(.horizontal, 24.scale)
+                    .padding(.bottom, 34.scale)
             }
             .foregroundStyle(.textMain200)
-        }
-        .bluredNavigationBar()
-        .background(alignment: .top) {
-            LazyImage(source: model.image) { state in
-                if let image = state.image {
-                    image
-                        .aspectRatio(1.09, contentMode: .fit)
-                        .overlay(alignment: .top) {
-                            let color = Color(red: 1, green: 240/255, blue: 223/255)
-                            LinearGradient(
-                                stops: [
-                                    .init(color: color.opacity(0), location: 0.62),
-                                    .init(color: color, location: 0.84)
-                                ],
-                                startPoint: .top,
-                                endPoint: .bottom
-                            )
-                        }
-                        .transition(.opacity)
-                } else {
-                    Color.clear
+            .background(alignment: .top) {
+                LazyImage(source: model.image) { state in
+                    if let image = state.image {
+                        image
+                            .aspectRatio(1.09, contentMode: .fit)
+                            .transition(.opacity)
+                    } else {
+                        Color.clear
+                    }
                 }
+                .headerViewMask()
             }
-            .ignoresSafeArea()
         }
+        .toolbarBackground(.hidden, for: .navigationBar)
         .customBackButton()
         .toolbar {
             ToolbarButton(placement: .topBarTrailing) {
@@ -82,5 +73,6 @@ struct DreamerDetailsScreenView: View {
                 .buttonStyle(.navigation)
             }
         }
+        .ignoresSafeArea()
     }
 }

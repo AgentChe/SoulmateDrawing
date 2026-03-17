@@ -36,6 +36,7 @@ final class BondsCoordinator: CoordinatorBaseProtocol {
             sheet.preferredCornerRadius = 32.scale
             sheet.prefersGrabberVisible = true
         }
+        
         if navigationController?.presentedViewController != nil {
             navigationController?.dismiss(animated: true)
         }

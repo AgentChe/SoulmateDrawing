@@ -294,6 +294,11 @@ final class NewPersonCoordinator: CoordinatorModalProtocol {
         let view = OnboardingBornDate(bornDate: date, didTapContinue: didTapContinue)
         let controller = UIHostingController(rootView: view)
         
+        if let sheet = controller.sheetPresentationController {
+            sheet.preferredCornerRadius = 32.scale
+            sheet.prefersGrabberVisible = true
+        }
+        
         navigationController?.present(controller, animated: true)
     }
     
@@ -301,12 +306,22 @@ final class NewPersonCoordinator: CoordinatorModalProtocol {
         let view = OnboardingBornTime(bornTime: date, didTapContinue: didTapContinue)
         let controller = UIHostingController(rootView: view)
         
+        if let sheet = controller.sheetPresentationController {
+            sheet.preferredCornerRadius = 32.scale
+            sheet.prefersGrabberVisible = true
+        }
+        
         navigationController?.present(controller, animated: true)
     }
     
     func showChangeCity(city: String, didTapContinue: @escaping (CityModel) -> Void) {
         let view = OnboardingCityView(city: city, didTapContinue: didTapContinue)
         let controller = UIHostingController(rootView: view)
+        
+        if let sheet = controller.sheetPresentationController {
+            sheet.preferredCornerRadius = 32.scale
+            sheet.prefersGrabberVisible = true
+        }
         
         navigationController?.present(controller, animated: true)
     }
@@ -406,6 +421,11 @@ final class SettingsCoordinator: CoordinatorModalProtocol {
         let view = OnboardingBornDate(bornDate: date, didTapContinue: didTapContinue)
         let controller = UIHostingController(rootView: view)
         
+        if let sheet = controller.sheetPresentationController {
+            sheet.preferredCornerRadius = 32.scale
+            sheet.prefersGrabberVisible = true
+        }
+        
         navigationController?.present(controller, animated: true)
     }
     
@@ -413,12 +433,22 @@ final class SettingsCoordinator: CoordinatorModalProtocol {
         let view = OnboardingBornTime(bornTime: date, didTapContinue: didTapContinue)
         let controller = UIHostingController(rootView: view)
         
+        if let sheet = controller.sheetPresentationController {
+            sheet.preferredCornerRadius = 32.scale
+            sheet.prefersGrabberVisible = true
+        }
+        
         navigationController?.present(controller, animated: true)
     }
     
     func showChangeCity(city: String, didTapContinue: @escaping (CityModel) -> Void) {
         let view = OnboardingCityView(city: city, didTapContinue: didTapContinue)
         let controller = UIHostingController(rootView: view)
+        
+        if let sheet = controller.sheetPresentationController {
+            sheet.preferredCornerRadius = 32.scale
+            sheet.prefersGrabberVisible = true
+        }
         
         navigationController?.present(controller, animated: true)
     }

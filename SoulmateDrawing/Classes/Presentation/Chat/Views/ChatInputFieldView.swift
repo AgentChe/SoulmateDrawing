@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ChatInputFieldView: View {
     @Binding var currentText: String
-    var isFocused: FocusState<Bool>.Binding
     let action: () -> Void
     
     var body: some View {
@@ -21,7 +20,6 @@ struct ChatInputFieldView: View {
                    
             }
             .foregroundStyle(.textMain200)
-            .focused(isFocused)
             
             if !currentText.isEmpty {
                 Button(

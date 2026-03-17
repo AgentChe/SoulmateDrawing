@@ -48,6 +48,7 @@ struct OnboardingBornDate: View {
         }
         .padding(.horizontal, 24.scale)
         .frame(maxWidth: .infinity, alignment: .center)
+        .appBackground()
     }
 }
 

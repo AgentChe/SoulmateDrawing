@@ -19,23 +19,23 @@ struct OnboardingView: View {
                     ForEach(viewModel.onboardings, id: \.self) { element in
                         switch element {
                         case .name:
-                            OnboardingNameView(name: viewModel.user.name) { saved in
-                                viewModel.user.name = saved
+                            OnboardingNameView(name: viewModel.userName) { saved in
+                                viewModel.userName = saved
                                 viewModel.didTapContinue()
                             }
                         case .bornDate:
-                            OnboardingBornDate(bornDate: viewModel.user.bornDate) {
-                                viewModel.user.bornDate = $0
+                            OnboardingBornDate(bornDate: viewModel.bornDate) {
+                                viewModel.bornDate = $0
                                 viewModel.didTapContinue()
                             }
                         case .bornTime:
-                            OnboardingBornTime(bornTime: viewModel.user.bornDate) {
-                                viewModel.user.bornDate = $0
+                            OnboardingBornTime(bornTime: viewModel.bornTime) {
+                                viewModel.bornTime = $0
                                 viewModel.didTapContinue()
                             }
                         case .bornCity:
-                            OnboardingCityView(city: viewModel.user.city) {
-                                viewModel.user.city = $0.id
+                            OnboardingCityView(city: viewModel.city) {
+                                viewModel.city = $0.id
                                 viewModel.didTapContinue()
                             }
                         }

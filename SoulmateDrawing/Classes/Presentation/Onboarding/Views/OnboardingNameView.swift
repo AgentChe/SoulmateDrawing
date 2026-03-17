@@ -46,6 +46,7 @@ struct OnboardingNameView: View {
         .padding(.horizontal, 24.scale)
         .frame(maxWidth: .infinity, alignment: .center)
         .ignoresSafeArea(.keyboard)
+        .appBackground()
     }
 }
 

@@ -17,6 +17,13 @@ struct DiscoverModel: Codable {
         case mainPoints = "main_points"
         case charts
     }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.sign = try? container.decodeIfPresent(URL.self, forKey: .sign)
+        self.mainPoints = try container.decode([MainPoint].self, forKey: .mainPoints)
+        self.charts = try container.decode([Chart].self, forKey: .charts)
+    }
 }
 
 struct MainPoint: Hashable {

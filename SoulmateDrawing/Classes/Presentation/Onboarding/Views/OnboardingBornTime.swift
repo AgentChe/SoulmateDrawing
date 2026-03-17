@@ -12,7 +12,7 @@ struct OnboardingBornTime: View {
     var didTapContinue: (Date) -> Void
     
     init(bornTime: Date?, didTapContinue: @escaping (Date) -> Void) {
-        self._bornTime = .init(initialValue: bornTime ?? .init())
+        self._bornTime = .init(wrappedValue: bornTime ?? .init())
         self.didTapContinue = didTapContinue
     }
     
@@ -48,9 +48,6 @@ struct OnboardingBornTime: View {
             .padding(.horizontal, 24.scale)
         }
         .frame(maxWidth: .infinity, alignment: .center)
+        .appBackground()
     }
-}
-
-#Preview {
-    OnboardingBornTime(bornTime: nil, didTapContinue: { _ in })
 }

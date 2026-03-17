@@ -20,6 +20,7 @@ final class ChatScreenViewModel {
     private(set) var isShowRetry = false
     private(set) var isShowSkeleton = false
     private(set) var isMessagesLoading = false
+    private(set) var scrollToSendedMessage: String?
     var scrollPosition: String?
     
     let personName: String
@@ -99,10 +100,13 @@ final class ChatScreenViewModel {
         }
     }
     
-    func loadNext() {
+    func loadNext(id: String) {
+        guard dataSource.prefix(3).contains(where: { $0.id == id }) else { return }
+        
         guard let page, !isMessagesLoading else { return }
         guard page.current < page.next else { return }
         let currentPosition = scrollPosition
+        
         Task {
             await MainActor.run {
                 isMessagesLoading = true
@@ -133,6 +137,7 @@ final class ChatScreenViewModel {
             
             await MainActor.run {
                 dataSource.append(.init(id: messageID, content: message, role: .user))
+                scrollToSendedMessage = dataSource.last?.id
                 currentText = ""
                 isThinking = true
             }

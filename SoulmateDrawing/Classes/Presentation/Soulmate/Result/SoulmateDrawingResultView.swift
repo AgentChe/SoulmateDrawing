@@ -60,12 +60,10 @@ struct SoulmateDrawingResultView: View {
                         selected: {
                             if !$0.isLocked || viewModel.hasActiveSubscription {
                                 viewModel.openDetails(item: $0)
-//                                navigation.push(.exploreDetails($0))
                             }
                         },
                         unfoldAction: {
                             viewModel.showPaygate()
-//                            isShowPaygate = true
                         }
                     )
                 case .chart:
@@ -77,11 +75,7 @@ struct SoulmateDrawingResultView: View {
         .animation(.default, value: viewModel.selectedSegment)
         .safeAreaInset(edge: .bottom) {
             Button(
-                action: {
-                    viewModel.startOver()
-//                    navigation.fullScreen(.soulmateCheckProfile)
-//                    navigation.pop()
-                },
+                action: viewModel.startOver,
                 label: {
                     Text("Soulmate.Start".localized)
                 }
@@ -91,11 +85,16 @@ struct SoulmateDrawingResultView: View {
         }
         .bluredNavigationBar()
         .appBackground()
-//        .fullScreenCover(isPresented: $isShowPaygate) {
-//            NavigationStack {
-//                PaygateView()
-//            }
-//        }
+        .customBackButton()
+        .toolbar {
+            ToolbarButton(placement: .topBarTrailing) {
+                Button(
+                    action: { },
+                    label: { Image("share") }
+                )
+                .buttonStyle(.navigation)
+            }
+        }
     }
 }
 
@@ -121,7 +120,11 @@ struct SoulmateExploreView: View {
                 Button(
                     action: { selected(item) },
                     label: {
-                        SoulmateExploreCardView(item: item, hasActiveSubscription: hasActiveSubscription, unfoldAction: unfoldAction)
+                        SoulmateExploreCardView(
+                            item: item,
+                            hasActiveSubscription: hasActiveSubscription,
+                            unfoldAction: unfoldAction
+                        )
                     }
                 )
                 .buttonStyle(.card)
@@ -129,16 +132,5 @@ struct SoulmateExploreView: View {
             }
             .padding(.top, 16.scale)
         }
-        .customBackButton()
-        .toolbar {
-            ToolbarButton(placement: .topBarTrailing) {
-                Button(
-                    action: { },
-                    label: { Image("share") }
-                )
-                .buttonStyle(.navigation)
-            }
-        }
-        .customTabBarVisible(false)
     }
 }

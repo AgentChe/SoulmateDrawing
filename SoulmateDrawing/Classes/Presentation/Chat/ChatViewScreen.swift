@@ -26,10 +26,13 @@ struct ChatViewScreen: View {
             
             ChatInputFieldView(
                 currentText: $viewModel.currentText,
-                isFocused: $isFocused,
-                action: viewModel.sendMessage
+                action: {
+                    isFocused = false
+                    viewModel.sendMessage()
+                }
             )
             .disabled(viewModel.isThinking || viewModel.isShowSkeleton)
+            .focused($isFocused)
         }
         .scrollDismissesKeyboard(.immediately)
         .animation(.easeInOut, value: viewModel.dataSource)
@@ -54,21 +57,15 @@ struct ChatViewScreen: View {
                     content: {
                         Button(
                             role: .destructive,
-                            action: {
-                                viewModel.showDeleteAlert()
-                            },
-                            label: {
-                                Label("Chat.DeleteTitle".localized, systemImage: "trash")
-                            }
+                            action: viewModel.showDeleteAlert,
+                            label: { Label("Chat.DeleteTitle".localized, systemImage: "trash") }
                         )
                             
                     },
                     label: {
                         Button(
                             action: {},
-                            label: {
-                                Image(systemName: "ellipsis")
-                            }
+                            label: { Image(systemName: "ellipsis") }
                         )
                         .buttonStyle(.navigation)
                     }
@@ -98,23 +95,14 @@ struct ChatViewScreen: View {
                             ChatMessageView(model: message)
                                 .id(message.id)
                                 .onAppear {
-                                    if viewModel.dataSource.first == message {
-                                        viewModel.loadNext()
-                                    }
+                                    viewModel.loadNext(id: message.id)
                                 }
                         }
                         .font(Font.system(size: 17.scale))
                         .foregroundStyle(.textMain200)
                         .multilineTextAlignment(.leading)
-                        //                    .rotationEffect(.degrees(180))
                     },
                     header: {
-//                        ProgressView()
-//                            .frame(maxWidth: .infinity, alignment: .center)
-//                            .progressViewStyle(.spinner)
-//                            .onAppear {
-//                                viewModel.loadNext()
-//                            }
                         if viewModel.isMessagesLoading {
                             ProgressView()
                                 .frame(maxWidth: .infinity, alignment: .center)
@@ -140,7 +128,6 @@ struct ChatViewScreen: View {
                 .listRowInsets(.init())
             }
             .listRowSpacing(16.scale)
-            //        .rotationEffect(.degrees(180))
             .contentMargins(24.scale, for: .scrollContent)
             .scrollContentBackground(.hidden)
             .onAppear {
@@ -148,47 +135,52 @@ struct ChatViewScreen: View {
             }
             .animation(.easeInOut, value: viewModel.dataSource)
             .scrollPosition(id: $viewModel.scrollPosition, anchor: .bottom)
-        }
-    }
-    
-    @ViewBuilder
-    private var content: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            LazyVStack(spacing: 16.scale) {
-                if viewModel.isShowRetry {
-                    ChatRetryView(action: viewModel.retryMessageAction)
-                    .padding(.top, 40.scale)
-                    .rotationEffect(.degrees(180))
-                }
-                
-                if viewModel.isThinking {
-                    ThinkingView()
-                        .transition(.opacity)
-                }
-                
-                ForEach(viewModel.dataSource.reversed()) { message in
-                    ChatMessageView(model: message)
-                        .onAppear {
-                            if viewModel.dataSource.last == message {
-                                viewModel.loadNext()
-                            }
-                        }
-                }
-                .font(Font.system(size: 17.scale))
-                .foregroundStyle(.textMain200)
-                .multilineTextAlignment(.leading)
-                .rotationEffect(.degrees(180))
-                
-                if viewModel.isMessagesLoading {
-                    ProgressView()
-                        .progressViewStyle(.spinner)
-                        .transition(.opacity)
+            .onChange(of: viewModel.scrollToSendedMessage) { _, newValue in
+                if let newValue {
+                    proxy.scrollTo(newValue, anchor: .bottom)
                 }
             }
         }
-        .rotationEffect(.degrees(180))
-        .contentMargins(24.scale, for: .scrollContent)
     }
+    
+//    @ViewBuilder
+//    private var content: some View {
+//        ScrollView(.vertical, showsIndicators: false) {
+//            LazyVStack(spacing: 16.scale) {
+//                if viewModel.isShowRetry {
+//                    ChatRetryView(action: viewModel.retryMessageAction)
+//                    .padding(.top, 40.scale)
+//                    .rotationEffect(.degrees(180))
+//                }
+//                
+//                if viewModel.isThinking {
+//                    ThinkingView()
+//                        .transition(.opacity)
+//                }
+//                
+//                ForEach(viewModel.dataSource.reversed()) { message in
+//                    ChatMessageView(model: message)
+//                        .onAppear {
+//                            if viewModel.dataSource.last == message {
+//                                viewModel.loadNext()
+//                            }
+//                        }
+//                }
+//                .font(Font.system(size: 17.scale))
+//                .foregroundStyle(.textMain200)
+//                .multilineTextAlignment(.leading)
+//                .rotationEffect(.degrees(180))
+//                
+//                if viewModel.isMessagesLoading {
+//                    ProgressView()
+//                        .progressViewStyle(.spinner)
+//                        .transition(.opacity)
+//                }
+//            }
+//        }
+//        .rotationEffect(.degrees(180))
+//        .contentMargins(24.scale, for: .scrollContent)
+//    }
     
     @ViewBuilder
     private func tipsContent(for source: ChatTipsSource) -> some View {

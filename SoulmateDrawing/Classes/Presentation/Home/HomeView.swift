@@ -68,36 +68,5 @@ struct HomeView: View {
         }
         .bluredNavigationBar()
         .appBackground()
-//        .fullScreenCover(item: $viewModel.fullScreen) { item in
-//            NavigationStack {
-//                switch item {
-//                case .settings:
-//                    SettingsView()
-//                case .paygate:
-//                    PaygateView()
-//                case .soulmateOnboarding:
-//                    SoulmateOnboarding()
-//                case .soulmateCheckProfile:
-//                    SoulmateCheckProfile()
-//                }
-//            }
-//        }
-//        .onChange(of: viewModel.push) { _, newValue in
-//            if let newValue {
-//                navigation.push(newValue)
-//                viewModel.push = nil
-//            }
-//        }
-//        .onChange(of: viewModel.switchTab) { _, newValue in
-//            if let newValue {
-//                navigation.selectTab(newValue)
-//            }
-//        }
     }
 }
-
-//#Preview {
-//    NavigationStack {
-//        HomeView()
-//    }
-//}

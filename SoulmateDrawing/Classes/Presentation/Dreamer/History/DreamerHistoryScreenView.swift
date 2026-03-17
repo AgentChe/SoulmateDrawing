@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct DreamerHistoryScreenView: View {
-//    @Environment(\.navigation) private var navigation
     @State var viewModel: DreamHistoryViewModel
     
     var body: some View {
@@ -16,10 +15,7 @@ struct DreamerHistoryScreenView: View {
             LazyVStack(spacing: 16.scale) {
                 ForEach(viewModel.items) { item in
                     Button(
-                        action: {
-                            viewModel.showDetails(for: item.id)
-//                            navigation.push(.dreamerDetails(type: .load(id: item.id)))
-                        },
+                        action: { viewModel.showDetails(for: item.id) },
                         label: { DreamerHistoryItemView(item: item) }
                     )
                     .buttonStyle(.card)
@@ -32,7 +28,8 @@ struct DreamerHistoryScreenView: View {
                 }
             }
         }
-        .contentMargins(.horizontal, 24.scale)
+        .bluredNavigationBar()
+        .contentMargins([.horizontal, .top], 24.scale)
         .appBackground()
         .screenState(viewModel.screenState)
         .customBackButton()

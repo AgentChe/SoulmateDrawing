@@ -68,6 +68,7 @@ struct NavigationButtonStyle: ButtonStyle {
             .opacity(configuration.isPressed ? 0.5 : 1)
             .animation(.interpolatingSpring(), value: configuration.isPressed)
             .foregroundStyle(.textMain200)
+            .itemShadow()
     }
 }
 

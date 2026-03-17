@@ -33,6 +33,7 @@ struct NewPersonTextField: View {
             }
             .font(Font.SFPro.font(size: 17.scale, weight: .w400))
             .tint(.textMain200)
+            .foregroundStyle(.textMain200)
             .focused($isFocused)
             .padding(paddingContent)
             .background(.bgMain300, in: RoundedRectangle(cornerRadius: 16.scale))

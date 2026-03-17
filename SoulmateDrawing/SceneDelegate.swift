@@ -19,6 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         self.window = window
+        window.overrideUserInterfaceStyle = .light
         
         let coordinator = AppCoordinator(window: window)
         self.coordinator = coordinator

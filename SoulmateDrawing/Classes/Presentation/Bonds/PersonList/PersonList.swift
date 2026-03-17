@@ -67,8 +67,8 @@ struct PersonList: View {
         }
         .frame(maxWidth: .infinity)
         .appBackground()
-        .presentationDragIndicator(.visible)
-        .presentationCornerRadius(32.scale)
+//        .presentationDragIndicator(.visible)
+//        .presentationCornerRadius(32.scale)
 //        .sheet(isPresented: $showSheet) {
 //            NavigationStack {
 //                NewPersonView(createdPerson: selected)

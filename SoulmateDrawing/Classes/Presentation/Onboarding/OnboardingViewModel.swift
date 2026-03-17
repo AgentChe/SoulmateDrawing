@@ -9,7 +9,11 @@ import Foundation
 import SwiftUI
 
 @Observable final class OnboardingViewModel {
-    var user: ProfileModel
+    var userName: String = ""
+    var bornDate: Date = .init()
+    var bornTime: Date = .init()
+    var city: String = ""
+    
     @ObservationIgnored
     let onboardings: [OnboardingElement]
     var currentOnboarding: OnboardingElement
@@ -33,7 +37,6 @@ import SwiftUI
         self.coordinator = coordinator
         onboardings = OnboardingElement.allCases
         currentOnboarding = .name
-        user = .init(name: "", bornDate: .init(), city: "")
     }
     
     func didTapContinue() {
@@ -57,10 +60,19 @@ import SwiftUI
                 screenState = .loading
             }
             do {
+                
+                let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: bornTime)
+                
+                let date = Calendar.current.date(
+                    bySettingHour: timeComponents.hour ?? 0,
+                    minute: timeComponents.minute ?? 0,
+                    second: 0, of: bornDate
+                )
+                
                 let attrs: [String: Any?] = [
-                    "name": user.name,
-                    "birth_datetime": user.bornDate.map { Int($0.timeIntervalSince1970) },
-                    "birth_location": user.city
+                    "name": userName,
+                    "birth_datetime": date.map { Int($0.timeIntervalSince1970) },
+                    "birth_location": city
                 ]
                 try await profileManager.saveAttributes(attrs: attrs)
                 _ = try? await profileManager.getProfile(forceUpdate: true)

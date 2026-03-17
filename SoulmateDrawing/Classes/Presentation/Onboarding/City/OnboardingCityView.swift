@@ -30,6 +30,8 @@ struct OnboardingCityView: View {
                 Text("Onboarding.City.Placeholder".localized)
                     .font(.system(size: 23.scale, weight: .regular))
             }
+            .tint(.textMain200)
+            .foregroundStyle(.textMain200)
             .padding(.top, 118.scale)
             .multilineTextAlignment(.center)
             .focused($isFocused)
@@ -60,6 +62,7 @@ struct OnboardingCityView: View {
         }
         .padding(.horizontal, 24.scale)
         .frame(maxWidth: .infinity, alignment: .center)
+        .appBackground()
     }
     
     @ViewBuilder
