@@ -9,8 +9,11 @@ import SwiftUI
 import RiveRuntime
 
 struct SoulmateOnboarding: View {
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.navigation) private var navigation
+//    @Environment(\.dismiss) private var dismiss
+//    @Environment(\.navigation) private var navigation
+    
+    let didTapBegin: () -> Void
+    let close: () -> Void
     
     @State private var isAppear = false
     private let model = RiveViewModel(fileName: "drawing", autoPlay: false)
@@ -34,10 +37,7 @@ struct SoulmateOnboarding: View {
             Spacer()
             
             Button(
-                action: {
-                    dismiss()
-                    navigation.fullScreen(.soulmateCheckProfile)
-                },
+                action: didTapBegin,
                 label: {
                     Text("Soulmate.Onboarding.Button".localized)
                 }
@@ -64,12 +64,6 @@ struct SoulmateOnboarding: View {
                 }
             }
         }
-        .closeButton(action: dismiss.callAsFunction)
-    }
-}
-
-#Preview {
-    NavigationStack {
-        SoulmateOnboarding()
+        .closeButton(action: close)
     }
 }

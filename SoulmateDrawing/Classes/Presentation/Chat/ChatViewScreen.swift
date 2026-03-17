@@ -8,17 +8,12 @@
 import SwiftUI
 
 struct ChatViewScreen: View {
-    @State private var viewModel: ChatScreenViewModel
+    @State var viewModel: ChatScreenViewModel
     @State private var isPresentDeleteAlert = false
-    @Namespace private var insight
     @FocusState private var isFocused: Bool
     
-    init(model: ChatInitialModel) {
-        _viewModel = State(initialValue: .init(initialModel: model))
-    }
-    
     var body: some View {
-        ZStack {
+        VStack(spacing: 24.scale) {
             if viewModel.isShowSkeleton {
                 ChatSkeleton()
                     .padding([.horizontal, .top], 24.scale)
@@ -26,23 +21,30 @@ struct ChatViewScreen: View {
             } else if let tipsDataSource = viewModel.tipsDataSource {
                 tipsContent(for: tipsDataSource)
             } else {
-                content.transition(.opacity)
+                chatList.transition(.opacity)
             }
+            
+            ChatInputFieldView(
+                currentText: $viewModel.currentText,
+                isFocused: $isFocused,
+                action: viewModel.sendMessage
+            )
+            .disabled(viewModel.isThinking || viewModel.isShowSkeleton)
         }
         .scrollDismissesKeyboard(.immediately)
         .animation(.easeInOut, value: viewModel.dataSource)
         .frame(maxWidth: .infinity)
-        .customBackButton()
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack(spacing: 4.scale) {
-                    Text("MargoMargoMargoMargo")
+                    Text(viewModel.personName)
                         .font(Font.Gambarino.font(size: 22.scale, weight: .w400))
-                    Text(ConnectionType.friend.title)
+                    Text(viewModel.personType.title)
                         .padding(.horizontal, 12.scale)
                         .padding(.vertical, 6.scale)
                         .background(.bgMain300, in: Capsule())
                         .font(Font.SFPro.font(size: 17.scale, weight: .w510))
+                        .layoutPriority(1)
                 }
                 .foregroundStyle(.textMain200)
             }
@@ -52,7 +54,9 @@ struct ChatViewScreen: View {
                     content: {
                         Button(
                             role: .destructive,
-                            action: { isPresentDeleteAlert = true },
+                            action: {
+                                viewModel.showDeleteAlert()
+                            },
                             label: {
                                 Label("Chat.DeleteTitle".localized, systemImage: "trash")
                             }
@@ -71,34 +75,8 @@ struct ChatViewScreen: View {
                 )
             }
         }
-        .safeAreaInset(edge: .bottom) {
-            ChatInputFieldView(
-                currentText: $viewModel.currentText,
-                isFocused: $isFocused,
-                action: viewModel.sendMessage
-            )
-            .disabled(viewModel.isThinking || viewModel.isShowSkeleton)
-        }
-        .customTabBarVisible(false)
-        .alert("Chat.DeleteTitle".localized, isPresented: $isPresentDeleteAlert) {
-            Button(
-                role: .cancel,
-                action: { isPresentDeleteAlert = false },
-                label: { Text("Chat.Cancel".localized) }
-            )
-            .foregroundStyle(.textMain200)
-            
-            Button(
-                role: .destructive,
-                action: viewModel.deleteChat,
-                label: { Text("Chat.Delete".localized) }
-            )
-        } message: {
-            Text("Chat.DeleteMessage".localized)
-                .foregroundStyle(.textMain200)
-        }
+        .bluredNavigationBar()
         .appBackground()
-        .screenState(viewModel.screenState, tryAgain: viewModel.deleteChat)
         .onChange(of: isFocused) { _, newValue in
             if newValue, viewModel.tipsDataSource != nil {
                 withAnimation {
@@ -106,8 +84,70 @@ struct ChatViewScreen: View {
                 }
             }
         }
-        .task {
-            viewModel.load()
+        .screenState(viewModel.screenState)
+        .customBackButton()
+    }
+    
+    @ViewBuilder
+    private var chatList: some View {
+        ScrollViewReader { proxy in
+            List {
+                Section(
+                    content: {
+                        ForEach(viewModel.dataSource) { message in
+                            ChatMessageView(model: message)
+                                .id(message.id)
+                                .onAppear {
+                                    if viewModel.dataSource.first == message {
+                                        viewModel.loadNext()
+                                    }
+                                }
+                        }
+                        .font(Font.system(size: 17.scale))
+                        .foregroundStyle(.textMain200)
+                        .multilineTextAlignment(.leading)
+                        //                    .rotationEffect(.degrees(180))
+                    },
+                    header: {
+//                        ProgressView()
+//                            .frame(maxWidth: .infinity, alignment: .center)
+//                            .progressViewStyle(.spinner)
+//                            .onAppear {
+//                                viewModel.loadNext()
+//                            }
+                        if viewModel.isMessagesLoading {
+                            ProgressView()
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .progressViewStyle(.spinner)
+                                .transition(.opacity)
+                        }
+                    },
+                    footer: {
+                        if viewModel.isShowRetry {
+                            ChatRetryView(action: viewModel.retryMessageAction)
+                                .frame(maxWidth: .infinity)
+                                .padding(.top, 40.scale)
+                        }
+                        
+                        if viewModel.isThinking {
+                            ThinkingView()
+                                .transition(.opacity)
+                        }
+                    }
+                )
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+                .listRowInsets(.init())
+            }
+            .listRowSpacing(16.scale)
+            //        .rotationEffect(.degrees(180))
+            .contentMargins(24.scale, for: .scrollContent)
+            .scrollContentBackground(.hidden)
+            .onAppear {
+                proxy.scrollTo(viewModel.dataSource.last?.id, anchor: .bottom)
+            }
+            .animation(.easeInOut, value: viewModel.dataSource)
+            .scrollPosition(id: $viewModel.scrollPosition, anchor: .bottom)
         }
     }
     
@@ -128,7 +168,6 @@ struct ChatViewScreen: View {
                 
                 ForEach(viewModel.dataSource.reversed()) { message in
                     ChatMessageView(model: message)
-                        .matchedGeometryEffect(id: message.id, in: insight)
                         .onAppear {
                             if viewModel.dataSource.last == message {
                                 viewModel.loadNext()
@@ -155,7 +194,6 @@ struct ChatViewScreen: View {
     private func tipsContent(for source: ChatTipsSource) -> some View {
         VStack(spacing: 0) {
             ChatMessageView(model: source.insight)
-                .matchedGeometryEffect(id: source.insight.id, in: insight)
             Spacer()
             ForEach(source.tips) { model in
                 ChatMessageView(model: model)
@@ -175,9 +213,9 @@ struct ChatFieldAlignmentID: AlignmentID {
 extension VerticalAlignment {
     static let chatField = VerticalAlignment(ChatFieldAlignmentID.self)
 }
-
-#Preview {
-    NavigationStack {
-        ChatViewScreen(model: .open(threadID: ""))
-    }
-}
+//
+//#Preview {
+//    NavigationStack {
+//        ChatViewScreen(model: .open(threadID: ""))
+//    }
+//}

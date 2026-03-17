@@ -28,8 +28,11 @@ final class PaygateViewModel {
     private lazy var iapManager = IAPManager()
     @ObservationIgnored
     private lazy var paygateInteractor = PaygateInteractor()
+    let coordinator: PaygateCoordinator
     
-    init() { }
+    init(coordinator: PaygateCoordinator) {
+        self.coordinator = coordinator
+    }
     
     func load() async {
         observePurchaseResult()
@@ -64,6 +67,10 @@ final class PaygateViewModel {
             
             await paygateInteractor.purchase(productId: productID)
         }
+    }
+    
+    func close() {
+        coordinator.dismiss()
     }
 }
 

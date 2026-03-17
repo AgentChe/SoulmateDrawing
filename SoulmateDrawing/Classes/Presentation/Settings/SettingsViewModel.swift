@@ -20,12 +20,14 @@ final class SettingsViewModel {
     private let profileManager = ProfileManager()
     @ObservationIgnored
     private let sessionManager = SessionManager()
+    let coordinator: SettingsCoordinator
     
-    init() {
+    init(coordinator: SettingsCoordinator) {
+        self.coordinator = coordinator
         load()
     }
     
-    func load() {
+    private func load() {
         Task {
             do {
                 await MainActor.run {
@@ -41,7 +43,9 @@ final class SettingsViewModel {
                 
             } catch {
                 await MainActor.run {
-                    screenState = .error
+                    screenState = .error { [weak self] in
+                        self?.load()
+                    }
                 }
             }
         }
@@ -66,7 +70,9 @@ final class SettingsViewModel {
                 }
             } catch {
                 await MainActor.run {
-                    screenState = .error
+                    screenState = .error { [weak self] in
+                        self?.updateProfile(attrs: attrs)
+                    }
                 }
             }
         }
@@ -75,6 +81,36 @@ final class SettingsViewModel {
     func save(city: CityModel) {
         profile?.city = city.address
         updateProfile(attrs: ["birth_location": city.id] )
+    }
+    
+    func open(item: ProfileSection.Model) {
+        switch item {
+        case .date:
+            coordinator.showChangeDate(date: profile?.bornDate) { [weak self] newDate in
+                self?.save(date: newDate)
+                self?.coordinator.dismiss()
+            }
+        case .place:
+            coordinator.showChangeCity(city: profile?.city ?? "") { [weak self] model in
+                self?.save(city: model)
+                self?.coordinator.dismiss()
+            }
+        case .time:
+            coordinator.showChangeTime(date: profile?.bornDate) { [weak self] newDate in
+                self?.save(date: newDate)
+                self?.coordinator.dismiss()
+            }
+        case .privacyPolicy:
+            break
+        case .termOfUse:
+            break
+        case .contactUs:
+            break
+        }
+    }
+    
+    func close() {
+        coordinator.dismiss()
     }
 }
 

@@ -8,28 +8,47 @@
 import SwiftUI
 
 struct InsightsListView: View {
-    @Environment(\.navigation) private var router
-    let models: [InsightModel]
+//    @Environment(\.navigation) private var router
+    @State var viewModel: InsightsListViewModel
     
     var body: some View {
-        ScrollView(.vertical) {
-            LazyVStack(spacing: 16.scale) {
-                ForEach(models) { model in
-                    Button(
-                        action: {
-                            router.push(.chat(.open(threadID: model.id)))
-                        },
-                        label: {
-                            BondsInsightCard(model: model)
+        List {
+            Section(
+                content: {
+                    ForEach(viewModel.items) { model in
+                        Button(
+                            action: {
+                                viewModel.openChat(for: model)
+        //                            router.push(.chat(.open(threadID: model.id)))
+                            },
+                            label: {
+                                BondsInsightCard(model: model)
+                            }
+                        )
+                        .buttonStyle(.card)
+                        .onAppear {
+                            viewModel.loadNext()
                         }
-                    )
-                    .buttonStyle(.card)
+                    }
+                },
+                footer: {
+                    if viewModel.isLoading {
+                        ProgressView()
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .progressViewStyle(.spinner)
+                    }
                 }
-            }
+            )
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
+            .listRowInsets(.init())
         }
         .bluredNavigationBar()
+        .listRowSpacing(16)
+        .scrollContentBackground(.hidden)
         .contentMargins(24.scale, for: .scrollContent)
         .appBackground()
+        .screenState(viewModel.screenState)
         .customBackButton()
         .toolbar {
             ToolbarButton(placement: .topBarTrailing) {
@@ -43,16 +62,6 @@ struct InsightsListView: View {
             }
         }
         .customTabBarVisible(false)
-    }
-}
-
-#Preview {
-    NavigationStack {
-        InsightsListView(models: [
-            .init(id: "1", formattedDate: "Today", text: "What makes my friendship with Margo special?", pairText: "You & Margo", connectionType: .friend),
-            .init(id: "2", formattedDate: "Nov 22", text: "Why do we sometimes misunderstand each other, and how can we communicate better", pairText: "You & Madison", connectionType: .partner),
-            .init(id: "3", formattedDate: "Nov 19", text: "What creates the strongest emotional connection between us", pairText: "You & Liam", connectionType: .friend),
-            .init(id: "4", formattedDate: "Nov 19", text: "What makes my friendship with Ivan special?", pairText: "You & Liam", connectionType: .partner)
-        ])
+        .listStyle(.plain)
     }
 }

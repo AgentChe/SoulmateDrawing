@@ -8,13 +8,8 @@
 import SwiftUI
 
 struct NewPersonView: View {
-    @State private var viewModel: NewPersonViewModel
-    @State private var sheetType: NewPersonSheet?
-    
-    
-    init(createdPerson: @escaping (PersonModel) -> Void) {
-        self._viewModel = State(initialValue: .init(createdPerson: createdPerson))
-    }
+    @State var viewModel: NewPersonViewModel
+//    @State private var sheetType: NewPersonSheet?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -43,7 +38,7 @@ struct NewPersonView: View {
                     )
                     
                     Button(
-                        action: { sheetType = .city },
+                        action: viewModel.openCity,
                         label: {
                             NewPersonInputView(
                                 text: viewModel.city?.address ?? "",
@@ -53,7 +48,7 @@ struct NewPersonView: View {
                     )
                     
                     Button(
-                        action: { sheetType = .bornDate },
+                        action: viewModel.openBornDate,
                         label: {
                             NewPersonInputView(
                                 text: viewModel.dayOfBorn?.formatted(date: .long, time: .omitted) ?? "",
@@ -63,7 +58,7 @@ struct NewPersonView: View {
                     )
                     
                     Button(
-                        action: { sheetType = .bornTime },
+                        action: viewModel.openBornTime,
                         label: {
                             NewPersonInputView(
                                 text: viewModel.timeOfBorn?.formatted(date: .omitted, time: .shortened) ?? "",
@@ -105,31 +100,31 @@ struct NewPersonView: View {
         .ignoresSafeArea(.keyboard)
         .presentationDragIndicator(.visible)
         .presentationCornerRadius(32.scale)
-        .screenState(viewModel.screenState, tryAgain: viewModel.save)
-        .sheet(item: $sheetType) { type in
-            Group {
-                switch type {
-                case .bornDate:
-                    OnboardingBornDate(bornDate: viewModel.dayOfBorn) {
-                        viewModel.dayOfBorn = $0
-                        sheetType = nil
-                    }
-                case .bornTime:
-                    OnboardingBornTime(bornTime: viewModel.timeOfBorn) {
-                        viewModel.timeOfBorn = $0
-                        sheetType = nil
-                    }
-                case .city:
-                    OnboardingCityView(city: viewModel.city?.address) {
-                        viewModel.city = $0
-                        sheetType = nil
-                    }
-                }
-            }
-            .appBackground()
-            .presentationDragIndicator(.visible)
-            .presentationCornerRadius(32.scale)
-        }
+        .screenState(viewModel.screenState)
+//        .sheet(item: $sheetType) { type in
+//            Group {
+//                switch type {
+//                case .bornDate:
+//                    OnboardingBornDate(bornDate: viewModel.dayOfBorn) {
+//                        viewModel.dayOfBorn = $0
+//                        sheetType = nil
+//                    }
+//                case .bornTime:
+//                    OnboardingBornTime(bornTime: viewModel.timeOfBorn) {
+//                        viewModel.timeOfBorn = $0
+//                        sheetType = nil
+//                    }
+//                case .city:
+//                    OnboardingCityView(city: viewModel.city?.address) {
+//                        viewModel.city = $0
+//                        sheetType = nil
+//                    }
+//                }
+//            }
+//            .appBackground()
+//            .presentationDragIndicator(.visible)
+//            .presentationCornerRadius(32.scale)
+//        }
     }
 }
 
@@ -169,8 +164,4 @@ struct NewPersonToggleStyle: ToggleStyle {
             configuration.label
         }
     }
-}
-
-#Preview {
-    NewPersonView(createdPerson: { _ in })
 }

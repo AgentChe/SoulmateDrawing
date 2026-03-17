@@ -23,13 +23,20 @@ final class RootViewModel {
     @ObservationIgnored
     private let bondsManager = BondsManager()
     
+    let coordinator: SplashCoordinator
+    
+    init(coordinator: SplashCoordinator) {
+        self.coordinator = coordinator
+        makeInitialize()
+    }
+    
     func makeInitialize() {
         sdkInitialize.observe { [weak self] in
             self?.login()
         }
     }
     
-    func login() {
+    private func login() {
         
         let anonymousId = sessionManager.anonymousId
         let internalId = sessionManager.internalId
@@ -51,22 +58,25 @@ final class RootViewModel {
                 makeStartRoute()
             } catch {
                 await MainActor.run {
-                    screenState = .error
+                    screenState = .error { [weak self] in
+                        self?.login()
+                    }
                 }
             }
         }
     }
     
     func finishOnboarding() {
-        UserDefaults.standard.set(true, forKey: Self.onboardingKey)
-        currentRoute = .main
+//        currentRoute = .main
     }
     
     func makeStartRoute() {
         if UserDefaults.standard.bool(forKey: Self.onboardingKey) {
-            currentRoute = .main
+            coordinator.showMain()
+//            currentRoute = .main
         } else {
-            currentRoute = .onboarding
+            coordinator.showOnboarding()
+//            currentRoute = .onboarding
         }
     }
 }
@@ -79,6 +89,6 @@ extension RootViewModel {
     }
 }
 
-private extension RootViewModel {
+extension RootViewModel {
     static let onboardingKey = "kOnboardingKey"
 }

@@ -19,11 +19,14 @@ final class DreamHistoryViewModel {
     @ObservationIgnored
     private var pagination: Pagination?
     
-    init() {
+    let coordinator: DreamerCoordinator
+    
+    init(coordinator: DreamerCoordinator) {
+        self.coordinator = coordinator
         load()
     }
     
-    func load() {
+    private func load() {
         Task {
             do {
                 await MainActor.run {
@@ -39,7 +42,9 @@ final class DreamHistoryViewModel {
                 }
             } catch {
                 await MainActor.run {
-                    screenState = .error
+                    screenState = .error { [weak self] in
+                        self?.load()
+                    }
                 }
             }
         }
@@ -58,14 +63,17 @@ final class DreamHistoryViewModel {
             }
         }
     }
+    
+    func showDetails(for id: String) {
+        coordinator.showDetails(using: .load(id: id))
+    }
 }
 
 extension DreamHistoryItem {
     init(_ item: DreamerHistoryResponse.Item) {
-        let formattedDate = Date(timeIntervalSince1970: TimeInterval(item.date)).formatted(date: .omitted, time: .shortened)
         self.init(
             id: item.id,
-            date: formattedDate,
+            date: SmartDateStyle().format(item.date),
             text: item.preview,
             image: item.image
         )

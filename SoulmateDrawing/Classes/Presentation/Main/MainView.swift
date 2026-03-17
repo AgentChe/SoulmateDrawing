@@ -57,24 +57,24 @@ struct MainView: View {
     
     var body: some View {
         TabView(selection: $router.selectedTab) {
-            ForEach(TabElement.allCases) { tab in
-                RootNavigationStack(router: router) {
-                    switch tab {
-                    case .home:
-                        HomeView()
-                    case .dreamer:
-                        DreamerMainScreen()
-                    case .bonds:
-                        BondsView()
-                    }
-                }
-                .toolbar(.hidden, for: .tabBar)
-                .onPreferenceChange(CustomTabBarVisiblePreferenceKey.self) { value in
-                    withAnimation {
-                        isVisible = value
-                    }
-                }
-            }
+//            ForEach(TabElement.allCases) { tab in
+//                RootNavigationStack(router: router) {
+//                    switch tab {
+//                    case .home:
+//                        HomeView()
+//                    case .dreamer:
+//                        DreamerMainScreen()
+//                    case .bonds:
+//                        BondsView()
+//                    }
+//                }
+//                .toolbar(.hidden, for: .tabBar)
+//                .onPreferenceChange(CustomTabBarVisiblePreferenceKey.self) { value in
+//                    withAnimation {
+//                        isVisible = value
+//                    }
+//                }
+//            }
         }
         .overlay(alignment: .bottom) {
             if isVisible {

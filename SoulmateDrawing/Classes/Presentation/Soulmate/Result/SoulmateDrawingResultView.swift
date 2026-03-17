@@ -9,13 +9,9 @@ import SwiftUI
 import NukeUI
 
 struct SoulmateDrawingResultView: View {
-    @Environment(\.navigation) private var navigation
-    @State private var viewModel: SoulmateDrawingResultViewModel
-    @State private var isShowPaygate = false
-    
-    init(soulmate: SoulmateModel) {
-        _viewModel = State(initialValue: .init(soulmate: soulmate))
-    }
+//    @Environment(\.navigation) private var navigation
+    @State var viewModel: SoulmateDrawingResultViewModel
+//    @State private var isShowPaygate = false
     
     var body: some View {
         ScrollView(.vertical) {
@@ -63,11 +59,13 @@ struct SoulmateDrawingResultView: View {
                         hasActiveSubscription: viewModel.hasActiveSubscription,
                         selected: {
                             if !$0.isLocked || viewModel.hasActiveSubscription {
-                                navigation.push(.exploreDetails($0))
+                                viewModel.openDetails(item: $0)
+//                                navigation.push(.exploreDetails($0))
                             }
                         },
                         unfoldAction: {
-                            isShowPaygate = true
+                            viewModel.showPaygate()
+//                            isShowPaygate = true
                         }
                     )
                 case .chart:
@@ -80,8 +78,9 @@ struct SoulmateDrawingResultView: View {
         .safeAreaInset(edge: .bottom) {
             Button(
                 action: {
-                    navigation.fullScreen(.soulmateCheckProfile)
-                    navigation.pop()
+                    viewModel.startOver()
+//                    navigation.fullScreen(.soulmateCheckProfile)
+//                    navigation.pop()
                 },
                 label: {
                     Text("Soulmate.Start".localized)
@@ -90,12 +89,13 @@ struct SoulmateDrawingResultView: View {
             .buttonStyle(.primary)
             .padding(.horizontal, 24.scale)
         }
+        .bluredNavigationBar()
         .appBackground()
-        .fullScreenCover(isPresented: $isShowPaygate) {
-            NavigationStack {
-                PaygateView()
-            }
-        }
+//        .fullScreenCover(isPresented: $isShowPaygate) {
+//            NavigationStack {
+//                PaygateView()
+//            }
+//        }
     }
 }
 

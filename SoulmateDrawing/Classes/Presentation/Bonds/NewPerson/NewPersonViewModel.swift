@@ -33,11 +33,11 @@ final class NewPersonViewModel {
     
     @ObservationIgnored
     private let bondsManager = BondsManager()
-    @ObservationIgnored
-    private let createdPerson: (PersonModel) -> Void
     
-    init(createdPerson: @escaping (PersonModel) -> Void) {
-        self.createdPerson = createdPerson
+    let coordinator: NewPersonCoordinator
+    
+    init(coordinator: NewPersonCoordinator) {
+        self.coordinator = coordinator
     }
     
     func save() {
@@ -69,14 +69,37 @@ final class NewPersonViewModel {
                 let response = try await bondsManager.createPerson(newPerson)
                 let model = PersonModel(from: response)
                 await MainActor.run {
-                    createdPerson(model)
+                    coordinator.didCreatedPerson(person: model)
                 }
             } catch {
                 await MainActor.run {
-                    screenState = .error
+                    screenState = .error { [weak self] in
+                        self?.save()
+                    }
                     isSaving = false
                 }
             }
+        }
+    }
+    
+    func openBornDate() {
+        coordinator.showChangeDate(date: dayOfBorn) { [weak self] in
+            self?.dayOfBorn = $0
+            self?.coordinator.dismiss()
+        }
+    }
+    
+    func openBornTime() {
+        coordinator.showChangeTime(date: timeOfBorn) { [weak self] in
+            self?.timeOfBorn = $0
+            self?.coordinator.dismiss()
+        }
+    }
+    
+    func openCity() {
+        coordinator.showChangeCity(city: city?.address ?? "") { [weak self] in
+            self?.city = $0
+            self?.coordinator.dismiss()
         }
     }
 }

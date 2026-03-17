@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct DreamerMainScreen: View {
-    @Environment(\.navigation) private var navigation
-    @State private var text: String = ""
+//    @Environment(\.navigation) private var navigation
+//    @State private var text: String = ""
+    @State var viewModel: DreamerMainViewModel
     
     @FocusState private var isFocused
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 24.scale) {
-                TextField("Dreamer.Placeholder".localized, text: $text, axis: .vertical)
+                TextField("Dreamer.Placeholder".localized, text: $viewModel.text, axis: .vertical)
                     .frame(height: 300.scale, alignment: .top)
                     .padding(24.scale)
                     .background(.bgMain400, in: RoundedRectangle(cornerRadius: 32.scale))
@@ -23,10 +24,11 @@ struct DreamerMainScreen: View {
                     .onTapGesture { isFocused = true }
                     .focused($isFocused)
                 
-                if !text.isEmpty {
+                if !viewModel.text.isEmpty {
                     Button(
                         action: {
-                            navigation.push(.dreamerDetails(type: .interpret(dream: text)))
+                            viewModel.showDetails()
+//                            navigation.push(.dreamerDetails(type: .interpret(dream: text)))
                         },
                         label: {
                             Text("Dreamer.Interpret".localized)
@@ -40,12 +42,15 @@ struct DreamerMainScreen: View {
             .padding(.horizontal, 24.scale)
             .frame(maxWidth: .infinity)
         }
+        .contentMargins(.top, 24.scale)
+        .bluredNavigationBar()
         .appBackground()
         .toolbar {
             ToolbarButton(placement: .topBarTrailing) {
                 Button(
                     action: {
-                        navigation.push(.dreamerHistory)
+                        viewModel.showHistory()
+//                        navigation.push(.dreamerHistory)
                     },
                     label: { Image(systemName: "line.3.horizontal") }
                 )
@@ -59,11 +64,5 @@ struct DreamerMainScreen: View {
             }
         }
         .scrollDismissesKeyboard(.immediately)
-    }
-}
-
-#Preview {
-    NavigationStack {
-        DreamerMainScreen()
     }
 }

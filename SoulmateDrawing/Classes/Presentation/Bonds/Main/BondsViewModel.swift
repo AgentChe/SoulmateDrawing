@@ -7,14 +7,6 @@
 
 import Foundation
 
-struct InsightModel: Identifiable, Hashable {
-    let id: String
-    let formattedDate: String
-    let text: String
-    let pairText: String
-    let connectionType: ConnectionType
-}
-
 @Observable
 final class BondsViewModel {
     
@@ -24,7 +16,6 @@ final class BondsViewModel {
     private(set) var screenState: ScreenState = .loading
     private(set) var insights: [InsightModel] = []
     private(set) var isDescovering = false
-    private(set) var isAvailablePagination = true
     private(set) var userSign: URL?
     var hasActiveSubscription: Bool {
         return sessionManager.hasActiveSubscriptions()
@@ -49,7 +40,14 @@ final class BondsViewModel {
     @ObservationIgnored
     private var paginationTask: Task<Void, Never>?
     
-    func load() {
+    let coordinator: BondsCoordinator
+    
+    init(coordinator: BondsCoordinator) {
+        self.coordinator = coordinator
+        load()
+    }
+    
+    private func load() {
         Task {
             do {
                 async let personListRequest = bondsManager.personList(page: nil)
@@ -59,7 +57,6 @@ final class BondsViewModel {
                 let (personList, history, discovery) = try await (personListRequest, historyRequest, discoveryRequest)
                 await MainActor.run {
                     pagination = history.pagination
-                    isAvailablePagination = history.pagination.current <  history.pagination.total
                     
                     userSign = discovery.sign
                     insights = history.items.map(InsightModel.init)
@@ -68,28 +65,15 @@ final class BondsViewModel {
                 }
             } catch {
                 await MainActor.run {
-                    screenState = .error
+                    screenState = .error { [weak self] in
+                        self?.load()
+                    }
                 }
             }
         }
     }
     
-    func getNextPage() {
-        guard (paginationTask?.isCancelled ?? true), let pagination, pagination.current < pagination.total else { return }
-        
-        paginationTask = Task {
-            do {
-                let history = try await chatManager.getHistory(page: pagination.next)
-                let newInsights = history.items.map(InsightModel.init)
-                
-                await MainActor.run {
-                    insights.append(contentsOf: newInsights)
-                }
-            } catch {
-                
-            }
-        }
-    }
+    
     
     func selectPerson(person: PersonModel) {
         self.person = person
@@ -112,7 +96,17 @@ final class BondsViewModel {
                 let result = try await chatManager.createThread(for: person.id, use: connectionType)
                 await MainActor.run {
                     isDescovering = false
-                    push = .chat(.start(threadID: result.threadID, insight: result.insight, tips: result.tips))
+                    let model = ChatModel(
+                        threadID: result.threadID,
+                        personName: person.name,
+                        personType: connectionType,
+                        tips: .init(
+                            insight: result.insight,
+                            tips: result.tips
+                        )
+                    )
+                    coordinator.openChat(using: model)
+//                    push = .chat(.start(threadID: result.threadID, insight: result.insight, tips: result.tips))
                 }
             } catch {
                 await MainActor.run {
@@ -121,40 +115,30 @@ final class BondsViewModel {
             }
         }
     }
-}
-
-
-extension InsightModel {
-    init(response: ChatHistoryResponse.Item) {
-        self.id = response.threadId
-        self.formattedDate = SmartDateStyle().format(response.createdDate)
-        self.text = response.message.content
-        self.pairText = "Bonds.You".localized + " & " + response.personName
-        self.connectionType = response.petsonType
-    }
-}
-
-struct SmartDateStyle: FormatStyle {
-    typealias FormatInput = Date
-    typealias FormatOutput = String
     
-    func format(_ value: Date) -> String {
-        let calendar = Calendar.current
-        
-        if calendar.isDateInToday(value) {
-            return "Сегодня"
+    func openPersonList() {
+        if persons.isEmpty {
+            coordinator.createPerson { [weak self] in
+                self?.selectPerson(person: $0)
+            }
+        } else {
+            coordinator.openPersonList(persons: persons) { [weak self] in
+                self?.selectPerson(person: $0)
+            }
         }
-        
-        if calendar.isDateInYesterday(value) {
-            return "Вчера"
+    }
+    
+    func openConnectionType() {
+        coordinator.connectionType { [weak self] in
+            self?.connectionType = $0
         }
-        
-        // Для остальных дат используем стандартный формат
-        let style = Date.FormatStyle()
-            .day(.defaultDigits)
-            .month(.abbreviated)
-            .locale(Locale(identifier: "ru_RU"))
-        
-        return style.format(value)
+    }
+    
+    func openInsightList() {
+        coordinator.insigtsList()
+    }
+    
+    func openChat(model: InsightModel) {
+        coordinator.openChat(using: ChatModel(model: model))
     }
 }

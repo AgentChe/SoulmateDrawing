@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct PaygateView: View {
-    @Environment(\.dismiss) private var dismiss
-    @State private var viewModel = PaygateViewModel()
+//    @Environment(\.dismiss) private var dismiss
+    @State var viewModel: PaygateViewModel
     
     var body: some View {
         VStack(spacing: ScreenSize.isIphoneXFamily ? 16.scale : 12.scale) {
@@ -54,7 +54,7 @@ struct PaygateView: View {
         .task {
             await viewModel.load()
         }
-        .closeButton(action: dismiss.callAsFunction)
+        .closeButton(action: viewModel.close)
     }
 }
 
@@ -231,11 +231,5 @@ private extension PaygateProduct {
         case .yearly:
             "Paygate.Yearly.Security".localized
         }
-    }
-}
-
-#Preview {
-    NavigationStack {
-        PaygateView()
     }
 }

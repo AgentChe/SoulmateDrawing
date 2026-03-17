@@ -18,23 +18,21 @@ enum ErrorScreenType: Identifiable {
 extension View {
     func screenState(
         _ state: ScreenState,
-        bottomOffset: CGFloat = .zero,
-        tryAgain: @escaping () -> Void
+        bottomOffset: CGFloat = .zero
     ) -> some View {
-        modifier(ScreenStateModifier(state: state, bottomOffset: bottomOffset, tryAgain: tryAgain))
+        modifier(ScreenStateModifier(state: state, bottomOffset: bottomOffset))
     }
 }
 
 enum ScreenState {
     case loading
     case loaded
-    case error
+    case error(() -> Void)
 }
 
 struct ScreenStateModifier: ViewModifier {
     let state: ScreenState
     let bottomOffset: CGFloat
-    let tryAgain: () -> Void
     
     func body(content: Content) -> some View {
         switch state {
@@ -47,7 +45,7 @@ struct ScreenStateModifier: ViewModifier {
             .appBackground()
         case .loaded:
             content
-        case .error:
+        case .error(let tryAgain):
             ErrorScreenView(errorType: .request, tryAgain: tryAgain)
                 .padding(.bottom, bottomOffset)
         }
@@ -140,4 +138,13 @@ private extension ErrorScreenType {
     }
 }
 
-extension ScreenState: Equatable {}
+extension ScreenState: Equatable {
+    static func ==(lhs: Self, rhs: Self) -> Bool {
+        switch (lhs, rhs) {
+        case (.loading, .loading), (.loaded, .loaded):
+            return true
+        default:
+            return false
+        }
+    }
+}

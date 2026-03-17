@@ -26,6 +26,7 @@ struct ExploreCardDetailView: View {
             .padding(.horizontal, 24.scale)
             .frame(maxWidth: .infinity)
         }
+        .bluredNavigationBar()
         .background(alignment: .top) {
             LazyImage(source: item.image) { state in
                 if let image = state.image {
@@ -48,17 +49,5 @@ struct ExploreCardDetailView: View {
         }
         .background(.bgMain100)
         .customBackButton()
-    }
-}
-
-#Preview {
-    NavigationStack {
-        ExploreCardDetailView(item: .init(
-            image: URL(string: "https://abrakadabra.fun/uploads/posts/2021-12/1639417325_8-abrakadabra-fun-p-krasivie-avi-zhivotnikh-8.jpg"),
-            title: "Emotional safety",
-            text: "Around him, you don’t feel the need to stay in control to feel secure. You’re naturally decisive and clear about what you want, and in many connections that turns into emotional responsibility — setting the tone, holding the balance, keeping things moving.",
-            isLocked: false,
-            unlockLabel: "Today"
-        ))
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var viewModel = SettingsViewModel()
+    @State var viewModel: SettingsViewModel
     @State private var sheetType: SettingsSheet?
     @State private var isShowPaygate = false
     
@@ -20,21 +20,21 @@ struct SettingsView: View {
                     Section {
                         ForEach(section.items) { item in
                             SettingsItemView(item: item) {
-//                                viewModel.open(item: item)
-                                switch item {
-                                case .date:
-                                    sheetType = .bornDate
-                                case .place:
-                                    sheetType = .city
-                                case .time:
-                                    sheetType = .bornTime
-                                case .privacyPolicy:
-                                    break
-                                case .termOfUse:
-                                    break
-                                case .contactUs:
-                                    break
-                                }
+                                viewModel.open(item: item)
+//                                switch item {
+//                                case .date:
+//                                    sheetType = .bornDate
+//                                case .place:
+//                                    sheetType = .city
+//                                case .time:
+//                                    sheetType = .bornTime
+//                                case .privacyPolicy:
+//                                    break
+//                                case .termOfUse:
+//                                    break
+//                                case .contactUs:
+//                                    break
+//                                }
                             }
                             .padding(.vertical, 24)
                             .overlay(alignment: .bottom) {
@@ -69,48 +69,42 @@ struct SettingsView: View {
             
             ToolbarButton(placement: .topBarLeading) {
                 Button(
-                    action: { dismiss() },
+                    action: viewModel.close,
                     label: { Image(systemName: "xmark") }
                 )
                 .foregroundStyle(.textMain200)
                 .buttonStyle(.navigation)
             }
         }
-        .screenState(viewModel.screenState, tryAgain: viewModel.load)
-        .sheet(item: $sheetType) { type in
-            Group {
-                switch type {
-                case .bornDate:
-                    OnboardingBornDate(bornDate: viewModel.profile?.bornDate) {
-                        viewModel.save(date: $0)
-                        sheetType = nil
-                    }
-                case .bornTime:
-                    OnboardingBornTime(bornTime: viewModel.profile?.bornDate) {
-                        viewModel.save(date: $0)
-                        sheetType = nil
-                    }
-                case .city:
-                    OnboardingCityView(city: viewModel.profile?.city) {
-                        viewModel.save(city: $0)
-                        sheetType = nil
-                    }
-                }
-            }
-            .appBackground()
-            .presentationDragIndicator(.visible)
-            .presentationCornerRadius(32.scale)
-        }
-        .fullScreenCover(isPresented: $isShowPaygate) {
-            NavigationStack {
-                PaygateView()
-            }
-        }
-    }
-}
-
-#Preview {
-    NavigationStack {
-        SettingsView()
+        .screenState(viewModel.screenState)
+//        .sheet(item: $sheetType) { type in
+//            Group {
+//                switch type {
+//                case .bornDate:
+//                    OnboardingBornDate(bornDate: viewModel.profile?.bornDate) {
+//                        viewModel.save(date: $0)
+//                        sheetType = nil
+//                    }
+//                case .bornTime:
+//                    OnboardingBornTime(bornTime: viewModel.profile?.bornDate) {
+//                        viewModel.save(date: $0)
+//                        sheetType = nil
+//                    }
+//                case .city:
+//                    OnboardingCityView(city: viewModel.profile?.city) {
+//                        viewModel.save(city: $0)
+//                        sheetType = nil
+//                    }
+//                }
+//            }
+//            .appBackground()
+//            .presentationDragIndicator(.visible)
+//            .presentationCornerRadius(32.scale)
+//        }
+//        .fullScreenCover(isPresented: $isShowPaygate) {
+//            NavigationStack {
+//                PaygateView()
+//            }
+//        }
     }
 }

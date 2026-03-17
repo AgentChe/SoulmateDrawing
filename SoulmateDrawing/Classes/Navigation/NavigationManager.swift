@@ -13,7 +13,7 @@ enum MainRoute: Hashable, Identifiable {
     case insightsList([InsightModel])
     case exploreDetails(ExploreItem)
     case soulmateResult(SoulmateModel)
-    case chat(ChatInitialModel)
+    case chat(ChatModel)
     case soulmateOnboarding
     case dreamerDetails(type: DreamerDetailsType)
     case dreamerHistory
@@ -94,23 +94,24 @@ struct RootNavigationStack<Content: View>: View {
     
     @ViewBuilder
     private func destination(for route: MainRoute) -> some View {
-        switch route {
-        case .soulmateCheckProfile:
-            SoulmateCheckProfile()
-        case let .insightsList(items):
-            InsightsListView(models: items)
-        case let .exploreDetails(item):
-            ExploreCardDetailView(item: item)
-        case let .soulmateResult(soulmate):
-            SoulmateDrawingResultView(soulmate: soulmate)
-        case .soulmateOnboarding:
-            SoulmateOnboarding()
-        case let .chat(model):
-            ChatViewScreen(model: model)
-        case let .dreamerDetails(type):
-            DreamerDetailsScreenView(type: type)
-        case .dreamerHistory:
-            DreamerHistoryScreenView()
-        }
+        Color.clear
+//        switch route {
+//        case .soulmateCheckProfile:
+//            SoulmateCheckProfile()
+//        case let .insightsList(items):
+//            InsightsListView(models: items)
+//        case let .exploreDetails(item):
+//            ExploreCardDetailView(item: item)
+//        case let .soulmateResult(soulmate):
+//            SoulmateDrawingResultView(soulmate: soulmate)
+//        case .soulmateOnboarding:
+//            SoulmateOnboarding()
+//        case let .chat(model):
+//            ChatViewScreen(model: model)
+//        case let .dreamerDetails(type):
+//            DreamerDetailsScreenView(type: type)
+//        case .dreamerHistory:
+//            DreamerHistoryScreenView()
+//        }
     }
 }

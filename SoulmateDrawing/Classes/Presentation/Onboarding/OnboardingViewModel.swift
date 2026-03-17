@@ -27,7 +27,10 @@ import SwiftUI
     @ObservationIgnored
     private let profileManager = ProfileManager()
     
-    init() {
+    let coordinator: OnboardinCoordinator
+    
+    init(coordinator: OnboardinCoordinator) {
+        self.coordinator = coordinator
         onboardings = OnboardingElement.allCases
         currentOnboarding = .name
         user = .init(name: "", bornDate: .init(), city: "")
@@ -61,12 +64,15 @@ import SwiftUI
                 ]
                 try await profileManager.saveAttributes(attrs: attrs)
                 _ = try? await profileManager.getProfile(forceUpdate: true)
+                UserDefaults.standard.set(true, forKey: RootViewModel.onboardingKey)
                 await MainActor.run {
-                    isFinish = true
+                    coordinator.showMain()
                 }
             } catch {
                 await MainActor.run {
-                    screenState = .error
+                    screenState = .error { [weak self] in
+                        self?.saveData()
+                    }
                 }
             }
         }

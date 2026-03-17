@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    @Environment(RootViewModel.self) private var rootManager
-    @State private var viewModel = OnboardingViewModel()
+    @State var viewModel: OnboardingViewModel
     
     @State private var isStart = true
     
@@ -64,12 +63,7 @@ struct OnboardingView: View {
         })
         .appBackground()
         .animation(.default, value: viewModel.currentOnboarding)
-        .screenState(viewModel.screenState, tryAgain: viewModel.saveData)
-        .onChange(of: viewModel.isFinish) { _, newValue in
-            if newValue {
-                rootManager.finishOnboarding()
-            }
-        }
+        .screenState(viewModel.screenState)
     }
 }
 

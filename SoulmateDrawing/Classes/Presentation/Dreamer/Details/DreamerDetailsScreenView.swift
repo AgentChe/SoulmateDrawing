@@ -9,12 +9,8 @@ import SwiftUI
 import NukeUI
 
 struct DreamerDetailsScreenView: View {
-    @Environment(\.navigation) private var navigation
-    @State private var viewModel: DreamerDetailsViewModel
-    
-    init(type: DreamerDetailsType) {
-        _viewModel = .init(initialValue: .init(type: type))
-    }
+//    @Environment(\.navigation) private var navigation
+    @State var viewModel: DreamerDetailsViewModel
     
     var body: some View {
         ZStack {
@@ -23,15 +19,15 @@ struct DreamerDetailsScreenView: View {
             if viewModel.isLoading {
                 DreamerDetailsLoading()
                     .navigationBarBackButtonHidden()
-                    .closeButton(action: navigation.pop)
+                    .closeButton(action: viewModel.close)
                     .transition(.opacity)
+                    .screenState(viewModel.screenState)
             } else if let model = viewModel.model {
                 content(for: model)
                     .transition(.opacity)
             }
         }
         .animation(.easeInOut, value: viewModel.isLoading)
-        .screenState(viewModel.screenState, tryAgain: viewModel.load)
     }
     
     @ViewBuilder
@@ -50,6 +46,7 @@ struct DreamerDetailsScreenView: View {
             }
             .foregroundStyle(.textMain200)
         }
+        .bluredNavigationBar()
         .background(alignment: .top) {
             LazyImage(source: model.image) { state in
                 if let image = state.image {
@@ -85,11 +82,5 @@ struct DreamerDetailsScreenView: View {
                 .buttonStyle(.navigation)
             }
         }
-    }
-}
-
-#Preview {
-    NavigationStack {
-        DreamerDetailsScreenView(type: .interpret(dream: ""))
     }
 }

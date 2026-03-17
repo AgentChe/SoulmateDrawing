@@ -59,12 +59,13 @@ final class SoulmateCheckProfileViewModel {
     private let profileManager = ProfileManager()
     @ObservationIgnored
     private let soulmateManager = SoulmateManager()
-    
-    init() {
+    let coordinator: SoulmateCheckProfileCoordinator
+    init(coordinator: SoulmateCheckProfileCoordinator) {
+        self.coordinator = coordinator
         load()
     }
     
-    func load() {
+    private func load() {
         Task {
             do {
                 await MainActor.run {
@@ -95,7 +96,9 @@ final class SoulmateCheckProfileViewModel {
                 }
             } catch {
                 await MainActor.run {
-                    screenState = .error
+                    screenState = .error { [weak self] in
+                        self?.load()
+                    }
                 }
             }
         }
@@ -103,7 +106,8 @@ final class SoulmateCheckProfileViewModel {
     
     @MainActor
     func openSettings() {
-        fullScreen = .settings
+        coordinator.openSettings()
+//        fullScreen = .settings
     }
     
     @MainActor
@@ -113,8 +117,11 @@ final class SoulmateCheckProfileViewModel {
             let genders = soulmatePreferences?.genders,
             !genders.isEmpty
         else { return }
-        
-        sheetType = .gender(genders)
+        coordinator.showPreferences(elements: genders) { [weak self] item in
+            self?.coordinator.dismiss()
+            self?.didSelect(gender: item)
+        }
+//        sheetType = .gender(genders)
     }
     
     @MainActor
@@ -130,8 +137,11 @@ final class SoulmateCheckProfileViewModel {
             let ethnicities = soulmatePreferences?.ethnicities,
             !ethnicities.isEmpty
         else { return }
-        
-        sheetType = .ethnicity(ethnicities)
+        coordinator.showPreferences(elements: ethnicities) { [weak self] item in
+            self?.coordinator.dismiss()
+            self?.didSelect(ethnicity: item)
+        }
+//        sheetType = .ethnicity(ethnicities)
     }
     
     func generateSoulmate() {
@@ -144,15 +154,22 @@ final class SoulmateCheckProfileViewModel {
                 let soulmateResponse = try await self?.soulmateManager.generateSoulmate(gender: selectedGender, ethnicity: selectedEthnicity)
                 guard let soulmate = soulmateResponse else { return }
                 await MainActor.run { [weak self] in
-                    self?.push = .soulmateResult(soulmate)
+//                    self?.push = .soulmateResult(soulmate)
+                    self?.coordinator.openResult(model: soulmate)
                 }
                 
             } catch {
                 await MainActor.run { [weak self] in
                     self?.isGenerateSoulmate = false
-                    self?.screenState = .error
+                    self?.screenState = .error { [weak self] in
+                        self?.generateSoulmate()
+                    }
                 }
             }
         }
+    }
+    
+    func close() {
+        coordinator.dismiss()
     }
 }

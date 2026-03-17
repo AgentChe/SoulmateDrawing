@@ -26,12 +26,27 @@ final class SoulmateDrawingResultViewModel {
     @ObservationIgnored
     private let sessionManager = SessionManager()
     
-    init(soulmate: SoulmateModel) {
+    let coordinator: HomeCoordinator
+    
+    init(coordinator: HomeCoordinator, soulmate: SoulmateModel) {
         self.soulmate = soulmate
+        self.coordinator = coordinator
         mainPoints = soulmate.mainPoints
         imageURL = soulmate.image
         charts = soulmate.explore.charts
         exploreTitle = soulmate.explore.tip
         exploreItems = soulmate.explore.items
+    }
+    
+    func startOver() {
+        coordinator.startOver()
+    }
+    
+    func showPaygate() {
+        coordinator.showPaygate()
+    }
+    
+    func openDetails(item: ExploreItem) {
+        coordinator.openExploreCard(item)
     }
 }

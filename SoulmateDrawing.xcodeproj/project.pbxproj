@@ -31,9 +31,11 @@
 		864C48AE2F63309100028B19 /* DreamerHistoryItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48AD2F63309100028B19 /* DreamerHistoryItemView.swift */; };
 		864C48B22F633CF100028B19 /* ProfileListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48B12F633CF100028B19 /* ProfileListResponse.swift */; };
 		864C48B42F659CD900028B19 /* SoulmateSegmentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48B32F659CD900028B19 /* SoulmateSegmentItem.swift */; };
-		864C48B62F65A61800028B19 /* ChatInitialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48B52F65A61800028B19 /* ChatInitialModel.swift */; };
+		864C48B62F65A61800028B19 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48B52F65A61800028B19 /* ChatModel.swift */; };
 		864C48B82F65C67A00028B19 /* ChatMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48B72F65C67A00028B19 /* ChatMessageView.swift */; };
 		864C48BA2F65CCA200028B19 /* ChatInputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48B92F65CCA200028B19 /* ChatInputFieldView.swift */; };
+		864C48BD2F670C6200028B19 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48BC2F670C6200028B19 /* CoordinatorProtocol.swift */; };
+		864C48C82F6733F700028B19 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48C72F6733F700028B19 /* SceneDelegate.swift */; };
 		865195D42F4650B9000D716F /* DreamerMainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865195D32F4650B9000D716F /* DreamerMainScreen.swift */; };
 		865626CE2F5A029500A6D7E0 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865626CD2F5A029500A6D7E0 /* View+Extensions.swift */; };
 		865626D12F5A02E800A6D7E0 /* DreamerDetailsScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865626D02F5A02E800A6D7E0 /* DreamerDetailsScreenView.swift */; };
@@ -140,6 +142,11 @@
 		86DA49222EF47E440030FE90 /* OnboardingElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DA49212EF47E440030FE90 /* OnboardingElement.swift */; };
 		86DA49242EF47E530030FE90 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DA49232EF47E530030FE90 /* ProfileModel.swift */; };
 		86DA49272EF480ED0030FE90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 86DA49252EF480ED0030FE90 /* Localizable.strings */; };
+		86DDC8B82F68776E00F3B4B8 /* InsightsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DDC8B72F68776E00F3B4B8 /* InsightsListViewModel.swift */; };
+		86DDC8BA2F68783200F3B4B8 /* SmartDateStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DDC8B92F68783200F3B4B8 /* SmartDateStyle.swift */; };
+		86DDC8BC2F6878E900F3B4B8 /* InsightModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DDC8BB2F6878E900F3B4B8 /* InsightModel.swift */; };
+		86DDC8BE2F688CEC00F3B4B8 /* BondsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DDC8BD2F688CEC00F3B4B8 /* BondsCoordinator.swift */; };
+		86DDC8C02F6961B600F3B4B8 /* HeaderBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DDC8BF2F6961B600F3B4B8 /* HeaderBlur.swift */; };
 		86EBD9372F4F4F61008B1E30 /* ChatCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EBD9362F4F4F61008B1E30 /* ChatCreateRequest.swift */; };
 		86EBD9392F4F5015008B1E30 /* ChatCreateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EBD9382F4F5015008B1E30 /* ChatCreateResponse.swift */; };
 		86EBD93B2F4F5936008B1E30 /* ChatSendMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EBD93A2F4F5936008B1E30 /* ChatSendMessageRequest.swift */; };
@@ -148,6 +155,8 @@
 		86EBD9452F4F6111008B1E30 /* ChatMessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EBD9442F4F6111008B1E30 /* ChatMessagesResponse.swift */; };
 		86EBD9472F4F6299008B1E30 /* ChatDeleteRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EBD9462F4F6299008B1E30 /* ChatDeleteRequest.swift */; };
 		86EBD94A2F4F75D4008B1E30 /* ChatViewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EBD9492F4F75D4008B1E30 /* ChatViewScreen.swift */; };
+		86F248562F675A470097E45A /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F248552F675A470097E45A /* AppCoordinator.swift */; };
+		86F248582F6810EC0097E45A /* DreamerMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F248572F6810EC0097E45A /* DreamerMainViewModel.swift */; };
 		86FAD1532EF56E99009E6F5A /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FAD1522EF56E99009E6F5A /* String+Extensions.swift */; };
 		86FAD1572EF57841009E6F5A /* Gambarino-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 86FAD1562EF57841009E6F5A /* Gambarino-Regular.otf */; };
 		86FAD15A2EF578FB009E6F5A /* ProgressView+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FAD1592EF578FB009E6F5A /* ProgressView+Styles.swift */; };
@@ -200,9 +209,11 @@
 		864C48AD2F63309100028B19 /* DreamerHistoryItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamerHistoryItemView.swift; sourceTree = "<group>"; };
 		864C48B12F633CF100028B19 /* ProfileListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileListResponse.swift; sourceTree = "<group>"; };
 		864C48B32F659CD900028B19 /* SoulmateSegmentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmateSegmentItem.swift; sourceTree = "<group>"; };
-		864C48B52F65A61800028B19 /* ChatInitialModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInitialModel.swift; sourceTree = "<group>"; };
+		864C48B52F65A61800028B19 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		864C48B72F65C67A00028B19 /* ChatMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageView.swift; sourceTree = "<group>"; };
 		864C48B92F65CCA200028B19 /* ChatInputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputFieldView.swift; sourceTree = "<group>"; };
+		864C48BC2F670C6200028B19 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
+		864C48C72F6733F700028B19 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		865195D32F4650B9000D716F /* DreamerMainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamerMainScreen.swift; sourceTree = "<group>"; };
 		865626CD2F5A029500A6D7E0 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		865626D02F5A02E800A6D7E0 /* DreamerDetailsScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamerDetailsScreenView.swift; sourceTree = "<group>"; };
@@ -309,6 +320,11 @@
 		86DA49212EF47E440030FE90 /* OnboardingElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingElement.swift; sourceTree = "<group>"; };
 		86DA49232EF47E530030FE90 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		86DA49262EF480ED0030FE90 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		86DDC8B72F68776E00F3B4B8 /* InsightsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsListViewModel.swift; sourceTree = "<group>"; };
+		86DDC8B92F68783200F3B4B8 /* SmartDateStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartDateStyle.swift; sourceTree = "<group>"; };
+		86DDC8BB2F6878E900F3B4B8 /* InsightModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightModel.swift; sourceTree = "<group>"; };
+		86DDC8BD2F688CEC00F3B4B8 /* BondsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BondsCoordinator.swift; sourceTree = "<group>"; };
+		86DDC8BF2F6961B600F3B4B8 /* HeaderBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderBlur.swift; sourceTree = "<group>"; };
 		86EBD9362F4F4F61008B1E30 /* ChatCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCreateRequest.swift; sourceTree = "<group>"; };
 		86EBD9382F4F5015008B1E30 /* ChatCreateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCreateResponse.swift; sourceTree = "<group>"; };
 		86EBD93A2F4F5936008B1E30 /* ChatSendMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSendMessageRequest.swift; sourceTree = "<group>"; };
@@ -317,6 +333,8 @@
 		86EBD9442F4F6111008B1E30 /* ChatMessagesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessagesResponse.swift; sourceTree = "<group>"; };
 		86EBD9462F4F6299008B1E30 /* ChatDeleteRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDeleteRequest.swift; sourceTree = "<group>"; };
 		86EBD9492F4F75D4008B1E30 /* ChatViewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewScreen.swift; sourceTree = "<group>"; };
+		86F248552F675A470097E45A /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		86F248572F6810EC0097E45A /* DreamerMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamerMainViewModel.swift; sourceTree = "<group>"; };
 		86FAD1522EF56E99009E6F5A /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		86FAD1562EF57841009E6F5A /* Gambarino-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gambarino-Regular.otf"; sourceTree = "<group>"; };
 		86FAD1582EF57873009E6F5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -411,6 +429,7 @@
 				86D4BFBE2F0ADD7A00F7A882 /* AppDelegate.swift */,
 				860E1F122EF31B7B0090C7B7 /* SoulmateDrawingApp.swift */,
 				86D4C00C2F0EAE3F00F7A882 /* PaygateTesting.storekit */,
+				864C48C72F6733F700028B19 /* SceneDelegate.swift */,
 			);
 			path = SoulmateDrawing;
 			sourceTree = "<group>";
@@ -465,6 +484,7 @@
 		860E1F1B2EF31BD50090C7B7 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				864C48BB2F670C1F00028B19 /* Coordinator */,
 				86D4BFA92F0AB46400F7A882 /* Network */,
 				86FAD18C2EF6D661009E6F5A /* Components */,
 				86DA48F42EF45F0B0030FE90 /* Styles */,
@@ -514,6 +534,7 @@
 				86D4C00F2F0ECE4C00F7A882 /* ScreenSize.swift */,
 				868C0CAD2F1FF2C500D8FEB2 /* UINavigationController+Extensions.swift */,
 				8698AD9F2F60408100740E8B /* Scalable.swift */,
+				86DDC8B92F68783200F3B4B8 /* SmartDateStyle.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -591,6 +612,16 @@
 				864C48AD2F63309100028B19 /* DreamerHistoryItemView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		864C48BB2F670C1F00028B19 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				864C48BC2F670C6200028B19 /* CoordinatorProtocol.swift */,
+				86F248552F675A470097E45A /* AppCoordinator.swift */,
+				86DDC8BD2F688CEC00F3B4B8 /* BondsCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		865195D22F4650A8000D716F /* Dreamer */ = {
@@ -681,6 +712,7 @@
 			isa = PBXGroup;
 			children = (
 				865195D32F4650B9000D716F /* DreamerMainScreen.swift */,
+				86F248572F6810EC0097E45A /* DreamerMainViewModel.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -792,6 +824,7 @@
 			isa = PBXGroup;
 			children = (
 				868C0CB02F1FF35000D8FEB2 /* BondsSheetType.swift */,
+				86DDC8BB2F6878E900F3B4B8 /* InsightModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -800,7 +833,7 @@
 			isa = PBXGroup;
 			children = (
 				868E73B32F543DE3002F391A /* ChatMessageModel.swift */,
-				864C48B52F65A61800028B19 /* ChatInitialModel.swift */,
+				864C48B52F65A61800028B19 /* ChatModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1144,6 +1177,7 @@
 			isa = PBXGroup;
 			children = (
 				86D4C05D2F12D89B00F7A882 /* InsightsListView.swift */,
+				86DDC8B72F68776E00F3B4B8 /* InsightsListViewModel.swift */,
 			);
 			path = InsightsList;
 			sourceTree = "<group>";
@@ -1210,6 +1244,7 @@
 			isa = PBXGroup;
 			children = (
 				86FAD18D2EF6D672009E6F5A /* SegmentView.swift */,
+				86DDC8BF2F6961B600F3B4B8 /* HeaderBlur.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1464,6 +1499,7 @@
 				865626D42F5A03BC00A6D7E0 /* DreamerDetailsViewModel.swift in Sources */,
 				86D4BFBD2F0ADBE600F7A882 /* HomeViewModel.swift in Sources */,
 				868C0C792F1EBF6300D8FEB2 /* DiscoverRequest.swift in Sources */,
+				86DDC8BE2F688CEC00F3B4B8 /* BondsCoordinator.swift in Sources */,
 				86D4BFD12F0ADDB600F7A882 /* IAPError.swift in Sources */,
 				86EBD9472F4F6299008B1E30 /* ChatDeleteRequest.swift in Sources */,
 				864C48AB2F61E77600028B19 /* CityModel.swift in Sources */,
@@ -1475,6 +1511,7 @@
 				86D4BFE62F0C038200F7A882 /* ExploreType.swift in Sources */,
 				86D4BFD42F0ADDB600F7A882 /* IAPErrorHelper.swift in Sources */,
 				865626D72F5A043800A6D7E0 /* DreamDetailsModel.swift in Sources */,
+				864C48BD2F670C6200028B19 /* CoordinatorProtocol.swift in Sources */,
 				86D4C0102F0ECE4C00F7A882 /* ScreenSize.swift in Sources */,
 				86D4BFD52F0ADDB600F7A882 /* PurchaseValidationObserver.swift in Sources */,
 				86D4BFD62F0ADDB600F7A882 /* IAPActionResult.swift in Sources */,
@@ -1483,6 +1520,7 @@
 				865626CE2F5A029500A6D7E0 /* View+Extensions.swift in Sources */,
 				8682FF732F58B2B500E9A0DA /* DreamerDetailsRequest.swift in Sources */,
 				86D4C05E2F12D89B00F7A882 /* InsightsListView.swift in Sources */,
+				86DDC8B82F68776E00F3B4B8 /* InsightsListViewModel.swift in Sources */,
 				860E1F212EF31D4C0090C7B7 /* Fonts.swift in Sources */,
 				868C0C732F1EAE4900D8FEB2 /* NewPersonModel.swift in Sources */,
 				864C48962F61DFE700028B19 /* OnboardingBornTime.swift in Sources */,
@@ -1493,6 +1531,7 @@
 				86D4BFB72F0AC08800F7A882 /* ProfileCreateRequest.swift in Sources */,
 				864C489A2F61E02100028B19 /* OnboardingNameView.swift in Sources */,
 				868BE09C2F40C3000078ABD3 /* SoulmatePreferencesView.swift in Sources */,
+				86F248582F6810EC0097E45A /* DreamerMainViewModel.swift in Sources */,
 				86D4BFB82F0AC08800F7A882 /* ProfileBindingRequest.swift in Sources */,
 				86D4BFEA2F0C04F200F7A882 /* ChartsView.swift in Sources */,
 				865626D12F5A02E800A6D7E0 /* DreamerDetailsScreenView.swift in Sources */,
@@ -1541,6 +1580,7 @@
 				866D95DD2F2BD3EF0090C6D9 /* SoulmateCheckProfileViewModel.swift in Sources */,
 				8682FF712F58B24000E9A0DA /* DreamerHistoryResponse.swift in Sources */,
 				86D4C0382F117D5C00F7A882 /* BondsView.swift in Sources */,
+				864C48C82F6733F700028B19 /* SceneDelegate.swift in Sources */,
 				86D4C0042F0C3DDD00F7A882 /* PaygateViewModel.swift in Sources */,
 				86D4C0472F1189F200F7A882 /* BondsViewModel.swift in Sources */,
 				86FD822A2F2E3C8400FA4950 /* SoulmateDrawingResultViewModel.swift in Sources */,
@@ -1559,6 +1599,7 @@
 				864C48BA2F65CCA200028B19 /* ChatInputFieldView.swift in Sources */,
 				86D4C01E2F114B0200F7A882 /* ProfileAttributesRequest.swift in Sources */,
 				86D4C03B2F11874B00F7A882 /* BondsManager.swift in Sources */,
+				86DDC8BC2F6878E900F3B4B8 /* InsightModel.swift in Sources */,
 				86EBD9452F4F6111008B1E30 /* ChatMessagesResponse.swift in Sources */,
 				863C720B2F608E0F00BEA3D2 /* ChatSkeleton.swift in Sources */,
 				86D4BFBB2F0ACE1200F7A882 /* SessionManager.swift in Sources */,
@@ -1573,17 +1614,20 @@
 				86FD82362F2E418700FA4950 /* SoulmatePreferencesModel.swift in Sources */,
 				8682FF6D2F58B1EA00E9A0DA /* DreamerRevealResponse.swift in Sources */,
 				86DA48F62EF45F180030FE90 /* Buttons+Styles.swift in Sources */,
+				86DDC8BA2F68783200F3B4B8 /* SmartDateStyle.swift in Sources */,
 				86D4BFAF2F0ABEAC00F7A882 /* GlobalDefinitions.swift in Sources */,
 				86D4C0612F13C22B00F7A882 /* NavigationManager.swift in Sources */,
 				8682FF672F58B13400E9A0DA /* DreamerManager.swift in Sources */,
 				86D4C04E2F126DAF00F7A882 /* ChatManager.swift in Sources */,
+				86F248562F675A470097E45A /* AppCoordinator.swift in Sources */,
 				868C0C762F1EBF2100D8FEB2 /* DiscoverManager.swift in Sources */,
 				8682FF762F58B49800E9A0DA /* DreamerHistoryScreenView.swift in Sources */,
 				86D4C0542F126E3B00F7A882 /* ChatHistoryResponse.swift in Sources */,
 				8682FF3B2F58A8F100E9A0DA /* DreamerDetailsLoading.swift in Sources */,
-				864C48B62F65A61800028B19 /* ChatInitialModel.swift in Sources */,
+				864C48B62F65A61800028B19 /* ChatModel.swift in Sources */,
 				868C0C382F1D4B3200D8FEB2 /* NewPersonInputView.swift in Sources */,
 				86D4C0572F12725400F7A882 /* PersonList.swift in Sources */,
+				86DDC8C02F6961B600F3B4B8 /* HeaderBlur.swift in Sources */,
 				86D4C0192F0FE76900F7A882 /* SplashReceiptValidationObserver.swift in Sources */,
 				86DA49242EF47E530030FE90 /* ProfileModel.swift in Sources */,
 				868C0C312F1D4AAA00D8FEB2 /* GenderModel.swift in Sources */,

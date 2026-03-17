@@ -25,36 +25,41 @@ struct HomeExploreView: View {
             .padding(.horizontal, 40.scale)
             
             GeometryReader { proxy in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 26.scale) {
-                        ForEach(exploreCards, id: \.self) { card in
-                            Button(
-                                action: { selected(card) },
-                                label: {
-                                    ExploreCardView(card: card)
+                ScrollViewReader { scrollProxy in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 26.scale) {
+                            ForEach(exploreCards, id: \.self) { card in
+                                Button(
+                                    action: { selected(card) },
+                                    label: {
+                                        ExploreCardView(card: card)
+                                    }
+                                )
+                                .buttonStyle(.card)
+                                .itemShadow()
+                                .visualEffect { content, proxy in
+                                    let progress = (proxy.bounds(of: .scrollView)?.minX ?? 0) / proxy.size.width
+                                    
+                                    let yOffset = progress < 0 ? progress * -50 : progress * 50
+                                    let angle = progress * -6
+                                    
+                                    return content
+                                        .offset(y: yOffset)
+                                        .rotationEffect(.degrees(angle))
                                 }
-                            )
-                            .buttonStyle(.card)
-                            .itemShadow()
-                            .visualEffect { content, proxy in
-                                let progress = (proxy.bounds(of: .scrollView)?.minX ?? 0) / proxy.size.width
-                                
-                                let yOffset = progress < 0 ? progress * -50 : progress * 50
-                                let angle = progress * -6
-                                
-                                return content
-                                    .offset(y: yOffset)
-                                    .rotationEffect(.degrees(angle))
                             }
                         }
+                        .frame(height: proxy.size.height)
+                        .offset(y: -35)
+                        .scrollTargetLayout()
                     }
+                    .scrollTargetBehavior(.viewAligned)
+                    .safeAreaPadding(.horizontal, (proxy.size.width - 200) / 2)
                     .frame(height: proxy.size.height)
-                    .offset(y: -35)
-                    .scrollTargetLayout()
+                    .onAppear {
+                        scrollProxy.scrollTo(ExploreType.dream)
+                    }
                 }
-                .scrollTargetBehavior(.viewAligned)
-                .safeAreaPadding(.horizontal, (proxy.size.width - 200) / 2)
-                .frame(height: proxy.size.height)
             }
             .frame(height: 320)
             .scrollClipDisabled()

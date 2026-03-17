@@ -9,6 +9,8 @@
 "House" = "House";
 "Save" = "Save";
 "Next" = "Next";
+"Today" = "Today";
+"Yesterday" = "Yesterday";
 
 
 // MARK: Onboarding

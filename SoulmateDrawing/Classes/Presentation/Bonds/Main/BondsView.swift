@@ -9,8 +9,8 @@ import SwiftUI
 import NukeUI
 
 struct BondsView: View {
-    @Environment(\.navigation) private var navigation
-    @State private var viewModel = BondsViewModel()
+//    @Environment(\.navigation) private var navigation
+    @State var viewModel: BondsViewModel
     @State private var sheetType: BondsSheetType?
     @State private var isShowPaygate = false
     
@@ -66,7 +66,7 @@ struct BondsView: View {
                     
                     Button(
                         action: {
-                            sheetType = viewModel.persons.isEmpty ? .createPerson : .persons
+                            viewModel.openPersonList()
                         },
                         label: {
                             Text(viewModel.person?.name ?? "Bonds.Person".localized)
@@ -84,7 +84,8 @@ struct BondsView: View {
                 
                 Button(
                     action: {
-                        sheetType = .connectionType
+                        viewModel.openConnectionType()
+//                        sheetType = .connectionType
                     },
                     label: {
                         Text(viewModel.connectionType?.title ?? "Bonds.ConnectionType".localized).frame(maxWidth: .infinity)
@@ -125,7 +126,8 @@ struct BondsView: View {
                         
                         Button(
                             action: {
-                                navigation.push(.insightsList(viewModel.insights))
+                                viewModel.openInsightList()
+//                                navigation.push(.insightsList(viewModel.insights))
                             },
                             label: {
                                 Text("Bonds.SeeAll".localized)
@@ -145,7 +147,7 @@ struct BondsView: View {
                             ForEach(viewModel.insights) { model in
                                 Button(
                                     action: {
-                                        navigation.push(.chat(.open(threadID: model.id)))
+                                        viewModel.openChat(model: model)
                                     },
                                     label: {
                                         BondsInsightCard(model: model)
@@ -153,14 +155,6 @@ struct BondsView: View {
                                 )
                                 .frame(width: 322.scale)
                                 .buttonStyle(.card)
-                            }
-                            
-                            if viewModel.isAvailablePagination {
-                                ProgressView()
-                                    .progressViewStyle(.spinner)
-                                    .onAppear {
-                                        viewModel.getNextPage()
-                                    }
                             }
                         }
                     }
@@ -175,44 +169,39 @@ struct BondsView: View {
         .appBackground()
         .frame(maxWidth: .infinity)
         .sheet(item: $sheetType) { type in
-            switch type {
-            case .persons:
-                NavigationStack {
-                    PersonList(persons: viewModel.persons) {
-                        viewModel.selectPerson(person: $0)
-                        sheetType = nil
-                    }
-                }
-            case .connectionType:
-                ConnectionTypeView {
-                    viewModel.selectConnectionType($0)
-                    sheetType = nil
-                }
-            case .createPerson:
-                NavigationStack {
-                    NewPersonView {
-                        viewModel.selectPerson(person: $0)
-                        sheetType = nil
-                    }
-                }
-            }
+//            switch type {
+//            case .persons:
+//                NavigationStack {
+//                    PersonList(persons: viewModel.persons) {
+//                        viewModel.selectPerson(person: $0)
+//                        sheetType = nil
+//                    }
+//                }
+//            case .connectionType:
+//                ConnectionTypeView {
+//                    viewModel.selectConnectionType($0)
+//                    sheetType = nil
+//                }
+//            case .createPerson:
+//                NavigationStack {
+//                    NewPersonView {
+//                        viewModel.selectPerson(person: $0)
+//                        sheetType = nil
+//                    }
+//                }
+//            }
         }
-        .fullScreenCover(isPresented: $isShowPaygate) {
-            NavigationStack {
-                PaygateView()
-            }
-        }
-        .onChange(of: viewModel.push, { _, newValue in
-            guard let newValue else { return }
-            navigation.push(newValue)
-            viewModel.push = nil
-        })
-        .screenState(viewModel.screenState) {
-            viewModel.load()
-        }
-        .task {
-            viewModel.load()
-        }
+//        .fullScreenCover(isPresented: $isShowPaygate) {
+//            NavigationStack {
+//                PaygateView()
+//            }
+//        }
+//        .onChange(of: viewModel.push, { _, newValue in
+//            guard let newValue else { return }
+//            navigation.push(newValue)
+//            viewModel.push = nil
+//        })
+        .screenState(viewModel.screenState)
     }
 }
 

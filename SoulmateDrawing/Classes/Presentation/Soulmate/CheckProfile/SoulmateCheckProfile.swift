@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SoulmateProfileView: View {
-    @Environment(\.navigation) private var navigation
+//    @Environment(\.navigation) private var navigation
     
     @Bindable var viewModel: SoulmateCheckProfileViewModel
     var body: some View {
@@ -56,9 +56,7 @@ struct SoulmateProfileView: View {
             .padding(.top, 16.scale)
         }
         .frame(maxWidth: .infinity)
-        .screenState(viewModel.screenState) {
-            viewModel.load()
-        }
+        .screenState(viewModel.screenState)
     }
 }
 
@@ -95,17 +93,15 @@ struct SoulmateGenerateView: View {
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 32.scale))
         }
-        .screenState(viewModel.screenState) {
-            viewModel.generateSoulmate()
-        }
+        .screenState(viewModel.screenState)
     }
 }
 
 struct SoulmateCheckProfile: View {
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.navigation) private var navigation
+//    @Environment(\.dismiss) private var dismiss
+//    @Environment(\.navigation) private var navigation
     
-    @State private var viewModel = SoulmateCheckProfileViewModel()
+    @State var viewModel: SoulmateCheckProfileViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -120,58 +116,39 @@ struct SoulmateCheckProfile: View {
         .padding(.horizontal, 24.scale)
         .frame(maxWidth: .infinity)
         .appBackground()
-        .closeButton(action: dismiss.callAsFunction)
-        .sheet(item: $viewModel.sheetType) { type in
-            switch type {
-            case .ethnicity(let items):
-                SoulmatePreferencesView(elements: items) {
-                    viewModel.didSelect(ethnicity: $0)
-                }
-                .presentationDragIndicator(.visible)
-                .presentationCornerRadius(32.scale)
-            case .gender(let items):
-                SoulmatePreferencesView(elements: items) {
-                    viewModel.didSelect(gender: $0)
-                }
-                .presentationDragIndicator(.visible)
-                .presentationCornerRadius(32.scale)
-            }
-        }
-        .fullScreenCover(item: $viewModel.fullScreen) { item in
-            switch item {
-            case .settings:
-                NavigationStack {
-                    SettingsView()
-                }
-            }
-        }
-        .onChange(of: viewModel.push) { _, newValue in
-            guard let newValue else { return }
-            switch newValue {
-            case let .soulmateResult(model):
-                dismiss()
-                navigation.push(.soulmateResult(model))
-            }
-            
-        }
-    }
-}
-
-#Preview {
-    NavigationStack {
-        SoulmateCheckProfile()
-    }
-//    @Previewable @State var isShow = false
-//    NavigationStack {
-//        Color.red
-//            .overlay {
-//                Button(action: { isShow = true }, label: { Text("TAP ME ")})
+        .closeButton(action: viewModel.close)
+//        .sheet(item: $viewModel.sheetType) { type in
+//            switch type {
+//            case .ethnicity(let items):
+//                SoulmatePreferencesView(elements: items) {
+//                    viewModel.didSelect(ethnicity: $0)
+//                }
+//                .presentationDragIndicator(.visible)
+//                .presentationCornerRadius(32.scale)
+//            case .gender(let items):
+//                SoulmatePreferencesView(elements: items) {
+//                    viewModel.didSelect(gender: $0)
+//                }
+//                .presentationDragIndicator(.visible)
+//                .presentationCornerRadius(32.scale)
 //            }
-//        
-//    }
-//    .fullScreenCover(isPresented: $isShow) {
-//        NavigationStack {
-//            SoulmateCheckProfile()
 //        }
-//    }
+//        .fullScreenCover(item: $viewModel.fullScreen) { item in
+//            switch item {
+//            case .settings:
+//                NavigationStack {
+//                    SettingsView()
+//                }
+//            }
+//        }
+//        .onChange(of: viewModel.push) { _, newValue in
+//            guard let newValue else { return }
+//            switch newValue {
+//            case let .soulmateResult(model):
+//                dismiss()
+//                navigation.push(.soulmateResult(model))
+//            }
+//            
+//        }
+    }
 }

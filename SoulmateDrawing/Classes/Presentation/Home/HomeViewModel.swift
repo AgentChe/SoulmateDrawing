@@ -47,7 +47,14 @@ final class HomeViewModel {
     @ObservationIgnored
     private var soulmate: SoulmateModel?
     
-    func load() {
+    private let coordinator: HomeCoordinator
+    
+    init(coordinator: HomeCoordinator) {
+        self.coordinator = coordinator
+        load()
+    }
+    
+    private func load() {
         Task {
             do {
                 await MainActor.run {
@@ -70,7 +77,9 @@ final class HomeViewModel {
                 }
             } catch {
                 await MainActor.run {
-                    screenState = .error
+                    screenState = .error { [weak self] in
+                        self?.load()
+                    }
                 }
             }
         }
@@ -82,22 +91,28 @@ final class HomeViewModel {
         switch item {
         case .soulmate:
             if let soulmate {
-                push = .soulmateResult(soulmate)
+                coordinator.openSoulmate(model: soulmate)
+//                push = .soulmateResult(soulmate)
             } else {
-                fullScreen = .soulmateOnboarding
+                coordinator.openOnboarding()
+//                fullScreen = .soulmateOnboarding
             }
         case .dream:
-            switchTab = .dreamer
+//            switchTab = .dreamer
+            coordinator.showDreamer()
         case .relationship:
-            switchTab = .bonds
+//            switchTab = .bonds
+            coordinator.showBonds()
         }
     }
 //    
     func showPaygate() {
-        fullScreen = .paygate
+        coordinator.showPaygate()
+//        fullScreen = .paygate
     }
     
     func showSettings() {
-        fullScreen = .settings
+        coordinator.showSettings()
+//        fullScreen = .settings
     }
 }

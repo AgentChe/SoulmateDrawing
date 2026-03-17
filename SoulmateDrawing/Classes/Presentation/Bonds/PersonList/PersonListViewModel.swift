@@ -15,7 +15,20 @@ final class PersonListViewModel {
     @ObservationIgnored
     private let bondsManager = BondsManager()
     
-    init(persons: [PersonModel]) {
+    let coordinator: BondsCoordinator
+    private let didSelect: (PersonModel) -> Void
+    
+    init(coordinator: BondsCoordinator, persons: [PersonModel], selected: @escaping (PersonModel) -> Void) {
+        self.coordinator = coordinator
+        self.didSelect = selected
         self.persons = persons
+    }
+    
+    func select(person: PersonModel) {
+        didSelect(person)
+    }
+    
+    func createNew() {
+        coordinator.createPerson(createdPerson: didSelect)
     }
 }

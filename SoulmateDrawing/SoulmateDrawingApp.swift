@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-@main
-struct SoulmateDrawingApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
-    var body: some Scene {
-        WindowGroup {
-            RootView()
-        }
-    }
-}
+
+//struct SoulmateDrawingApp: App {
+////    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+//    
+//    var body: some Scene {
+//        WindowGroup {
+//            EmptyView()
+////            RootView()
+//        }
+//    }
+//}

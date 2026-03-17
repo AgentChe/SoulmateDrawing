@@ -14,7 +14,7 @@ struct DreamerHistoryResponse: Decodable {
     struct Item: Decodable {
         let id: String
         let preview: String
-        let date: Int
+        let date: Date
         let image: URL
     }
 }

@@ -9,15 +9,9 @@ import SwiftUI
 import NukeUI
 
 struct PersonList: View {
-    @State private var viewModel: PersonListViewModel
-    private let selected: (PersonModel) -> Void
+    @State var viewModel: PersonListViewModel
     
     @State var showSheet = false
-    
-    init(persons: [PersonModel], selected: @escaping (PersonModel) -> Void) {
-        _viewModel = State(initialValue: .init(persons: persons))
-        self.selected = selected
-    }
     
     var body: some View {
         VStack(spacing: 32.scale) {
@@ -29,6 +23,7 @@ struct PersonList: View {
             
             Button(
                 action: {
+                    viewModel.createNew()
                     showSheet = true
                 },
                 label: {
@@ -43,7 +38,7 @@ struct PersonList: View {
                     ForEach(viewModel.persons) { person in
                         Button(
                             action: {
-                                selected(person)
+                                viewModel.select(person: person)
                             },
                             label: {
                                 HStack(spacing: 12.scale) {
@@ -74,10 +69,10 @@ struct PersonList: View {
         .appBackground()
         .presentationDragIndicator(.visible)
         .presentationCornerRadius(32.scale)
-        .sheet(isPresented: $showSheet) {
-            NavigationStack {
-                NewPersonView(createdPerson: selected)
-            }
-        }
+//        .sheet(isPresented: $showSheet) {
+//            NavigationStack {
+//                NewPersonView(createdPerson: selected)
+//            }
+//        }
     }
 }

@@ -23,12 +23,15 @@ final class DreamerDetailsViewModel {
     @ObservationIgnored
     private let dreamManager = DreamerManager()
     
-    init(type: DreamerDetailsType) {
+    private let coordinator: DreamerCoordinator
+    
+    init(coordinator: DreamerCoordinator, type: DreamerDetailsType) {
+        self.coordinator = coordinator
         self.type = type
         load()
     }
     
-    func load() {
+    private func load() {
         Task {
             await MainActor.run {
                 isLoading = true
@@ -51,10 +54,16 @@ final class DreamerDetailsViewModel {
             } catch {
                 await MainActor.run {
                     isLoading = false
-                    screenState = .error
+                    screenState = .error { [weak self] in
+                        self?.load()
+                    }
                 }
             }
         }
+    }
+    
+    func close() {
+        coordinator.pop()
     }
     
     private func loadDreamDetails(for id: String) async throws -> DreamDetailsModel {

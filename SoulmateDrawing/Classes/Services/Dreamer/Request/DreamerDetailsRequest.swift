@@ -13,7 +13,7 @@ struct DreamerDetailsRequest: APIRequestBody {
     let dreamID: String
     
     var url: String {
-        GlobalDefinitions.domain + "/api/v1/dreamer/reveal"
+        GlobalDefinitions.domain + "/api/v1/dreamer/details"
     }
     
     var method: HTTPMethod {
