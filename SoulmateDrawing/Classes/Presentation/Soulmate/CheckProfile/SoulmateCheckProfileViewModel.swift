@@ -48,15 +48,8 @@ final class SoulmateCheckProfileViewModel {
                 async let soulmatePreferencesRequest = soulmateManager.preferences(forceUpdate: false)
                 
                 let (discovery, profile, soulmatePreferences) = try await (discoveryRequest, profileRequest, soulmatePreferencesRequest)
-                let bornDate = profile.bornDate?.formatted(date: .long, time: .omitted) ?? ""
-                let location = profile.city
-                let time = profile.bornDate?.formatted(date: .omitted, time: .shortened) ?? ""
                 
-                let info: [SoulmateProfileInfo] = [
-                    .date(bornDate),
-                    .place(location),
-                    .time(time)
-                ]
+                let info = configureProfileInfo(profile: profile)
                 
                 await MainActor.run {
                     self.soulmatePreferences = soulmatePreferences
@@ -98,6 +91,32 @@ final class SoulmateCheckProfileViewModel {
                 }
             }
         }
+    }
+    
+    func updateProfile() {
+        Task {
+            let profile = try? await profileManager.getProfile(forceUpdate: false)
+            
+            guard let profile else { return }
+            
+            let info = configureProfileInfo(profile: profile)
+            
+            await MainActor.run {
+                profileInfo = info
+            }
+        }
+    }
+    
+    private func configureProfileInfo(profile: ProfileModel) -> [SoulmateProfileInfo] {
+        let bornDate = profile.bornDate?.formatted(date: .long, time: .omitted) ?? ""
+        let location = profile.city
+        let time = profile.bornDate?.formatted(date: .omitted, time: .shortened) ?? ""
+        
+        return [
+            .date(bornDate),
+            .place(location),
+            .time(time)
+        ]
     }
 }
 

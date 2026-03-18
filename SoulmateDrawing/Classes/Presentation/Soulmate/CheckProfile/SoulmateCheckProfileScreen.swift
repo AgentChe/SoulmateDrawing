@@ -24,5 +24,6 @@ struct SoulmateCheckProfileScreen: View {
         .frame(maxWidth: .infinity)
         .appBackground()
         .closeButton(action: viewModel.close)
+        .onAppear(perform: viewModel.updateProfile)
     }
 }

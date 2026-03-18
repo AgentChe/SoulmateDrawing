@@ -62,8 +62,12 @@ final class SettingsViewModel {
             }
             do {
                 try await profileManager.saveAttributes(attrs: attrs)
+                let profile = try? await profileManager.getProfile(forceUpdate: true)
                 
                 await MainActor.run {
+                    if let profile {
+                        self.profile = profile
+                    }
                     configureDataSource()
                     screenState = .loaded
                 }
