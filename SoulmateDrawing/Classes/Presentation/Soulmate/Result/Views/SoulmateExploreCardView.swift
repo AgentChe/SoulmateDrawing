@@ -1,0 +1,74 @@
+//
+//  SoulmateExploreCardView.swift
+//  SoulmateDrawing
+//
+//  Created by Vitaliy Zagorodnov on 31.01.2026.
+//
+
+import SwiftUI
+
+
+struct SoulmateExploreCardView: View {
+    let item: ExploreItem
+    let hasActiveSubscription: Bool
+    let unfoldAction: () -> Void
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            if item.isLocked, let unlockLabel = item.unlockLabel, !hasActiveSubscription {
+                HStack(spacing: 4.scale) {
+                    Text(unlockLabel)
+                        .font(Font.SFPro.font(size: 17.scale, weight: .w400))
+                        .foregroundStyle(.textMain200.opacity(0.8))
+                    
+                    Image("lock")
+                        .resizable()
+                        .frame(width: 20.scale, height: 20)
+                }
+                .padding(.bottom, 4.scale)
+            }
+            Text(item.title)
+                .font(Font.Gambarino.font(size: 22.scale, weight: .w400))
+                .foregroundStyle(.textMain200)
+                .lineLimit(1)
+                .padding(.bottom, 12.scale)
+            
+            Text(item.text)
+                .font(Font.SFPro.font(size: 17.scale, weight: .w400))
+                .foregroundStyle(.textMain200)
+                .lineLimit(2)
+                .overlay(alignment: .leading) {
+                    if item.isLocked, !hasActiveSubscription {
+                        let color = Color(red: 1, green: 251/255, blue: 245/255)
+                        LinearGradient(
+                            stops: [
+                                .init(color: color.opacity(0), location: 0.02),
+                                .init(color: color.opacity(0.6), location: 0.12),
+                                .init(color: color, location: 0.33)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    }
+                }
+            
+            if item.isLocked, !hasActiveSubscription {
+                Button(
+                    action: unfoldAction,
+                    label: {
+                        Text("Soulmate.Unfold".localized)
+                            .padding(.vertical, 10.scale)
+                            .padding(.horizontal, 12.scale)
+                    }
+                )
+                .background(.bgMain300)
+                .clipShape(Capsule())
+                .foregroundStyle(.textMain200)
+                .padding(.top, 12.scale)
+            }
+        }
+        .padding(24.scale)
+        .background(.bgMain200, in: RoundedRectangle(cornerRadius: 32.scale))
+        .compositingGroup()
+    }
+}

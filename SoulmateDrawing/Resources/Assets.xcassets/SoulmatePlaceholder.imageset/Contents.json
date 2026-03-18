@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "SoulmatePlaceholder.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
