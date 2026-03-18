@@ -17,11 +17,6 @@ final class BondsViewModel {
     private(set) var insights: [InsightModel] = []
     private(set) var isDescovering = false
     private(set) var userSign: URL?
-    var hasActiveSubscription: Bool {
-        return sessionManager.hasActiveSubscriptions()
-    }
-    
-    var push: MainRoute?
     
     var actionIsEnabled: Bool {
         person != nil && connectionType != nil
@@ -40,7 +35,7 @@ final class BondsViewModel {
     @ObservationIgnored
     private var paginationTask: Task<Void, Never>?
     
-    let coordinator: BondsCoordinator
+    private let coordinator: BondsCoordinator
     
     init(coordinator: BondsCoordinator) {
         self.coordinator = coordinator
@@ -88,6 +83,14 @@ final class BondsViewModel {
     
     func tapDiscover() {
         guard let person, let connectionType else { return }
+        if sessionManager.hasActiveSubscriptions() {
+            createThread(person: person, connectionType: connectionType)
+        } else {
+            coordinator.showPaygate()
+        }
+    }
+    
+    private func createThread(person: PersonModel, connectionType: ConnectionType) {
         Task {
             do {
                 await MainActor.run {
@@ -106,7 +109,6 @@ final class BondsViewModel {
                         )
                     )
                     coordinator.openChat(using: model)
-//                    push = .chat(.start(threadID: result.threadID, insight: result.insight, tips: result.tips))
                 }
             } catch {
                 await MainActor.run {
@@ -115,14 +117,17 @@ final class BondsViewModel {
             }
         }
     }
-    
+}
+
+@MainActor
+extension BondsViewModel {
     func openPersonList() {
         if persons.isEmpty {
             coordinator.createPerson { [weak self] in
                 self?.selectPerson(person: $0)
             }
         } else {
-            coordinator.openPersonList(persons: persons) { [weak self] in
+            coordinator.openPersonList { [weak self] in
                 self?.selectPerson(person: $0)
             }
         }

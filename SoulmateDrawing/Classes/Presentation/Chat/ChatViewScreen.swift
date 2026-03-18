@@ -127,6 +127,7 @@ struct ChatViewScreen: View {
                 .listRowSeparator(.hidden)
                 .listRowInsets(.init())
             }
+            .listStyle(.plain)
             .listRowSpacing(16.scale)
             .contentMargins(24.scale, for: .scrollContent)
             .scrollContentBackground(.hidden)
@@ -143,45 +144,6 @@ struct ChatViewScreen: View {
         }
     }
     
-//    @ViewBuilder
-//    private var content: some View {
-//        ScrollView(.vertical, showsIndicators: false) {
-//            LazyVStack(spacing: 16.scale) {
-//                if viewModel.isShowRetry {
-//                    ChatRetryView(action: viewModel.retryMessageAction)
-//                    .padding(.top, 40.scale)
-//                    .rotationEffect(.degrees(180))
-//                }
-//                
-//                if viewModel.isThinking {
-//                    ThinkingView()
-//                        .transition(.opacity)
-//                }
-//                
-//                ForEach(viewModel.dataSource.reversed()) { message in
-//                    ChatMessageView(model: message)
-//                        .onAppear {
-//                            if viewModel.dataSource.last == message {
-//                                viewModel.loadNext()
-//                            }
-//                        }
-//                }
-//                .font(Font.system(size: 17.scale))
-//                .foregroundStyle(.textMain200)
-//                .multilineTextAlignment(.leading)
-//                .rotationEffect(.degrees(180))
-//                
-//                if viewModel.isMessagesLoading {
-//                    ProgressView()
-//                        .progressViewStyle(.spinner)
-//                        .transition(.opacity)
-//                }
-//            }
-//        }
-//        .rotationEffect(.degrees(180))
-//        .contentMargins(24.scale, for: .scrollContent)
-//    }
-    
     @ViewBuilder
     private func tipsContent(for source: ChatTipsSource) -> some View {
         VStack(spacing: 0) {
@@ -195,19 +157,3 @@ struct ChatViewScreen: View {
         .padding(.horizontal, 24)
     }
 }
-
-struct ChatFieldAlignmentID: AlignmentID {
-    static func defaultValue(in context: ViewDimensions) -> CGFloat {
-        context[VerticalAlignment.center]
-    }
-}
-
-extension VerticalAlignment {
-    static let chatField = VerticalAlignment(ChatFieldAlignmentID.self)
-}
-//
-//#Preview {
-//    NavigationStack {
-//        ChatViewScreen(model: .open(threadID: ""))
-//    }
-//}

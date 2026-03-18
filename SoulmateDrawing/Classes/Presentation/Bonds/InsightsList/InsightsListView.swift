@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct InsightsListView: View {
-//    @Environment(\.navigation) private var router
     @State var viewModel: InsightsListViewModel
     
     var body: some View {
@@ -19,7 +18,6 @@ struct InsightsListView: View {
                         Button(
                             action: {
                                 viewModel.openChat(for: model)
-        //                            router.push(.chat(.open(threadID: model.id)))
                             },
                             label: {
                                 BondsInsightCard(model: model)
@@ -27,7 +25,9 @@ struct InsightsListView: View {
                         )
                         .buttonStyle(.card)
                         .onAppear {
-                            viewModel.loadNext()
+                            if viewModel.items.last == model {
+                                viewModel.loadNext()
+                            }
                         }
                     }
                 },
@@ -44,24 +44,12 @@ struct InsightsListView: View {
             .listRowInsets(.init())
         }
         .bluredNavigationBar()
-        .listRowSpacing(16)
+        .listRowSpacing(16.scale)
         .scrollContentBackground(.hidden)
         .contentMargins(24.scale, for: .scrollContent)
         .appBackground()
         .screenState(viewModel.screenState)
         .customBackButton()
-        .toolbar {
-            ToolbarButton(placement: .topBarTrailing) {
-                Button(
-                    action: {},
-                    label: {
-                        Image(systemName: "ellipsis")
-                    }
-                )
-                .buttonStyle(.navigation)
-            }
-        }
-        .customTabBarVisible(false)
         .listStyle(.plain)
     }
 }

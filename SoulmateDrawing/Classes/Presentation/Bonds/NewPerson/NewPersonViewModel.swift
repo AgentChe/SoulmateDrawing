@@ -81,7 +81,10 @@ final class NewPersonViewModel {
             }
         }
     }
-    
+}
+
+@MainActor
+extension NewPersonViewModel {
     func openBornDate() {
         coordinator.showChangeDate(date: dayOfBorn) { [weak self] in
             self?.dayOfBorn = $0

@@ -80,11 +80,6 @@ private extension PaygateViewModel {
             GlobalDefinitions.Paygate.yearly,
             GlobalDefinitions.Paygate.weekly
         ])
-//        try? await Task.sleep(for: .seconds(3))
-//        let test1 = ProductPrice(id: GlobalDefinitions.Paygate.yearly, priceLocalized: "$", priceValue: 39.99, priceLocale: .current, currency: "$")
-//        let test2 = ProductPrice(id: GlobalDefinitions.Paygate.weekly, priceLocalized: "$", priceValue: 6.99, priceLocale: .current, currency: "$")
-//        
-//        return (test1, test2)
         
         guard
             let yearly = prices.first(where: { $0.id == GlobalDefinitions.Paygate.yearly }),

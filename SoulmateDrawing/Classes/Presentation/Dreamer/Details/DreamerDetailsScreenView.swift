@@ -9,10 +9,8 @@ import SwiftUI
 import NukeUI
 
 struct DreamerDetailsScreenView: View {
-//    @Environment(\.navigation) private var navigation
     @State var viewModel: DreamerDetailsViewModel
-    @State private var headerHeight: CGFloat = 0
-        @State private var topOffset: CGFloat = 0
+    
     var body: some View {
         ZStack {
             Color.bgMain100
@@ -65,7 +63,7 @@ struct DreamerDetailsScreenView: View {
         .toolbar {
             ToolbarButton(placement: .topBarTrailing) {
                 Button(
-                    action: {},
+                    action: viewModel.share,
                     label: {
                         Image("share")
                     }

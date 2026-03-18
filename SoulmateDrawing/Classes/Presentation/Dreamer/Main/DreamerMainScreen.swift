@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct DreamerMainScreen: View {
-//    @Environment(\.navigation) private var navigation
-//    @State private var text: String = ""
     @State var viewModel: DreamerMainViewModel
-    
     @FocusState private var isFocused
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 24.scale) {
@@ -26,10 +24,7 @@ struct DreamerMainScreen: View {
                 
                 if !viewModel.text.isEmpty {
                     Button(
-                        action: {
-                            viewModel.showDetails()
-//                            navigation.push(.dreamerDetails(type: .interpret(dream: text)))
-                        },
+                        action: viewModel.showDetails,
                         label: {
                             Text("Dreamer.Interpret".localized)
                         }
@@ -48,10 +43,7 @@ struct DreamerMainScreen: View {
         .toolbar {
             ToolbarButton(placement: .topBarTrailing) {
                 Button(
-                    action: {
-                        viewModel.showHistory()
-//                        navigation.push(.dreamerHistory)
-                    },
+                    action: viewModel.showHistory,
                     label: { Image(systemName: "line.3.horizontal") }
                 )
                 .buttonStyle(.navigation)

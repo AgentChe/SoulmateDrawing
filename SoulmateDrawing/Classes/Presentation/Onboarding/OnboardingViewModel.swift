@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-@Observable final class OnboardingViewModel {
+@Observable
+final class OnboardingViewModel {
     var userName: String = ""
     var bornDate: Date = .init()
     var bornTime: Date = .init()
@@ -76,7 +77,7 @@ import SwiftUI
                 ]
                 try await profileManager.saveAttributes(attrs: attrs)
                 _ = try? await profileManager.getProfile(forceUpdate: true)
-                UserDefaults.standard.set(true, forKey: RootViewModel.onboardingKey)
+                UserDefaults.standard.set(true, forKey: SplashViewModel.onboardingKey)
                 await MainActor.run {
                     coordinator.showMain()
                 }

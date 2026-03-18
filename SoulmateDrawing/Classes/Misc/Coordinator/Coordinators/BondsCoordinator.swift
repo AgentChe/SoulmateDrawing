@@ -43,8 +43,8 @@ final class BondsCoordinator: CoordinatorBaseProtocol {
         navigationController?.present(controller, animated: true)
     }
     
-    func openPersonList(persons: [PersonModel], didSelected: @escaping (PersonModel) -> Void) {
-        let viewModel = PersonListViewModel(coordinator: self, persons: persons) { [weak self] in
+    func openPersonList(didSelected: @escaping (PersonModel) -> Void) {
+        let viewModel = PersonListViewModel(coordinator: self) { [weak self] in
             didSelected($0)
             self?.navigationController?.dismiss(animated: true)
         }
@@ -89,10 +89,21 @@ final class BondsCoordinator: CoordinatorBaseProtocol {
         if let sheet = controller.sheetPresentationController {
             sheet.preferredCornerRadius = 32.scale
             sheet.prefersGrabberVisible = true
+            sheet.detents = [.custom(resolver: { context in
+                return 112.scale
+            })]
         }
         
         controller.sizingOptions = .intrinsicContentSize
         navigationController?.present(controller, animated: true)
+    }
+    
+    func showPaygate() {
+        let coordinator = PaygateCoordinator(parent: self)
+        
+        childCoordinator.append(coordinator)
+        
+        navigationController?.present(coordinator.start(), animated: true)
     }
     
     func showDeleteAlert(action: @escaping () -> Void) {

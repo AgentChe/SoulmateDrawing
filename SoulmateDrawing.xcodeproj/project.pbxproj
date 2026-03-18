@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		289905A58EEF77CCC5419C4A /* Pods_SoulmateDrawing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C422E8EDC7BE82EAC9A8B4 /* Pods_SoulmateDrawing.framework */; };
 		860E1F142EF31B7B0090C7B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 860E1F0F2EF31B7B0090C7B7 /* Assets.xcassets */; };
-		860E1F152EF31B7B0090C7B7 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860E1F102EF31B7B0090C7B7 /* RootView.swift */; };
 		860E1F162EF31B7B0090C7B7 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860E1F112EF31B7B0090C7B7 /* SplashView.swift */; };
 		860E1F172EF31B7B0090C7B7 /* SoulmateDrawingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860E1F122EF31B7B0090C7B7 /* SoulmateDrawingApp.swift */; };
 		860E1F212EF31D4C0090C7B7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860E1F202EF31D4C0090C7B7 /* Fonts.swift */; };
@@ -60,7 +59,7 @@
 		8682FF762F58B49800E9A0DA /* DreamerHistoryScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8682FF752F58B49800E9A0DA /* DreamerHistoryScreenView.swift */; };
 		8682FF782F58B4A400E9A0DA /* DreamHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8682FF772F58B4A400E9A0DA /* DreamHistoryViewModel.swift */; };
 		8682FF7B2F58B4CC00E9A0DA /* DreamHistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8682FF7A2F58B4CC00E9A0DA /* DreamHistoryItem.swift */; };
-		8685C5982F2A99F8001DE47C /* SoulmateCheckProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8685C5972F2A99F8001DE47C /* SoulmateCheckProfile.swift */; };
+		8685C5982F2A99F8001DE47C /* SoulmateCheckProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8685C5972F2A99F8001DE47C /* SoulmateCheckProfileScreen.swift */; };
 		8685C59A2F2A9E38001DE47C /* ProfileGetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8685C5992F2A9E38001DE47C /* ProfileGetRequest.swift */; };
 		8685C59C2F2A9EAE001DE47C /* ProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8685C59B2F2A9EAE001DE47C /* ProfileResponse.swift */; };
 		868BE09C2F40C3000078ABD3 /* SoulmatePreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868BE09B2F40C3000078ABD3 /* SoulmatePreferencesView.swift */; };
@@ -81,6 +80,25 @@
 		8698ADA02F60408100740E8B /* Scalable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8698AD9F2F60408100740E8B /* Scalable.swift */; };
 		86A779A72F228ACA0029C758 /* drawing.riv in Resources */ = {isa = PBXBuildFile; fileRef = 86A779A62F228ACA0029C758 /* drawing.riv */; };
 		86A779AB2F228F7E0029C758 /* SoulmateOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A779AA2F228F7E0029C758 /* SoulmateOnboarding.swift */; };
+		86C908672F6B3E500033E258 /* DreamerDetailsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C908662F6B3E500033E258 /* DreamerDetailsType.swift */; };
+		86C908692F6B51BA0033E258 /* SoulmateShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C908682F6B51BA0033E258 /* SoulmateShareView.swift */; };
+		86C9086B2F6B51F10033E258 /* SoulmateExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C9086A2F6B51F10033E258 /* SoulmateExploreView.swift */; };
+		86C9086D2F6B521D0033E258 /* SoulmateSnapshotContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C9086C2F6B521D0033E258 /* SoulmateSnapshotContent.swift */; };
+		86C9086F2F6B529A0033E258 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C9086E2F6B529A0033E258 /* TabBarCoordinator.swift */; };
+		86C908712F6B52C20033E258 /* SplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C908702F6B52C20033E258 /* SplashCoordinator.swift */; };
+		86C908732F6B53000033E258 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C908722F6B53000033E258 /* HomeCoordinator.swift */; };
+		86C908752F6B531F0033E258 /* DreamerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C908742F6B531F0033E258 /* DreamerCoordinator.swift */; };
+		86C908772F6B53390033E258 /* PaygateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C908762F6B53390033E258 /* PaygateCoordinator.swift */; };
+		86C908792F6B534F0033E258 /* NewPersonCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C908782F6B534F0033E258 /* NewPersonCoordinator.swift */; };
+		86C9087B2F6B53670033E258 /* SoulmateCheckProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C9087A2F6B53670033E258 /* SoulmateCheckProfileCoordinator.swift */; };
+		86C9087D2F6B53770033E258 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C9087C2F6B53770033E258 /* SettingsCoordinator.swift */; };
+		86C9087F2F6B538B0033E258 /* OnboardinCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C9087E2F6B538B0033E258 /* OnboardinCoordinator.swift */; };
+		86C908822F6B56240033E258 /* SoulmateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C908812F6B56240033E258 /* SoulmateProfileView.swift */; };
+		86C908842F6B56360033E258 /* SoulmateGenerateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C908832F6B56360033E258 /* SoulmateGenerateView.swift */; };
+		86C908872F6B5A6A0033E258 /* PersonListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C908862F6B5A6A0033E258 /* PersonListItem.swift */; };
+		86C908892F6B5D3D0033E258 /* BondsInsightCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C908882F6B5D3D0033E258 /* BondsInsightCard.swift */; };
+		86C9088B2F6B5DED0033E258 /* MainPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C9088A2F6B5DED0033E258 /* MainPointsView.swift */; };
+		86C9088E2F6B5E740033E258 /* ActivitySourceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C9088D2F6B5E740033E258 /* ActivitySourceItem.swift */; };
 		86D4BFAB2F0AB49200F7A882 /* RestAPITransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4BFAA2F0AB49200F7A882 /* RestAPITransport.swift */; };
 		86D4BFAD2F0ABA3D00F7A882 /* APIRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4BFAC2F0ABA3D00F7A882 /* APIRequestBody.swift */; };
 		86D4BFAF2F0ABEAC00F7A882 /* GlobalDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4BFAE2F0ABEAC00F7A882 /* GlobalDefinitions.swift */; };
@@ -90,9 +108,6 @@
 		86D4BFBB2F0ACE1200F7A882 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4BFBA2F0ACE1200F7A882 /* SessionManager.swift */; };
 		86D4BFBD2F0ADBE600F7A882 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4BFBC2F0ADBE600F7A882 /* HomeViewModel.swift */; };
 		86D4BFBF2F0ADD7A00F7A882 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4BFBE2F0ADD7A00F7A882 /* AppDelegate.swift */; };
-		86D4BFC42F0ADD9A00F7A882 /* FacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4BFC12F0ADD9A00F7A882 /* FacebookManager.swift */; };
-		86D4BFC52F0ADD9A00F7A882 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4BFC22F0ADD9A00F7A882 /* FirebaseManager.swift */; };
-		86D4BFC62F0ADD9A00F7A882 /* AmplitudeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4BFC02F0ADD9A00F7A882 /* AmplitudeManager.swift */; };
 		86D4BFD12F0ADDB600F7A882 /* IAPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4BFC72F0ADDB600F7A882 /* IAPError.swift */; };
 		86D4BFD22F0ADDB600F7A882 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4BFCE2F0ADDB600F7A882 /* IAPManager.swift */; };
 		86D4BFD32F0ADDB600F7A882 /* IAPProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4BFCB2F0ADDB600F7A882 /* IAPProduct.swift */; };
@@ -112,10 +127,9 @@
 		86D4C0042F0C3DDD00F7A882 /* PaygateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4C0032F0C3DDD00F7A882 /* PaygateViewModel.swift */; };
 		86D4C0072F0C3DF600F7A882 /* PaygateProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4C0052F0C3DF600F7A882 /* PaygateProduct.swift */; };
 		86D4C0092F0D004C00F7A882 /* PaygateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4C0082F0D004C00F7A882 /* PaygateView.swift */; };
-		86D4C00D2F0EAE3F00F7A882 /* PaygateTesting.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 86D4C00C2F0EAE3F00F7A882 /* PaygateTesting.storekit */; };
 		86D4C0102F0ECE4C00F7A882 /* ScreenSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4C00F2F0ECE4C00F7A882 /* ScreenSize.swift */; };
 		86D4C0132F0ED11700F7A882 /* Toggle+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4C0122F0ED11700F7A882 /* Toggle+Styles.swift */; };
-		86D4C0162F0FE66000F7A882 /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4C0152F0FE66000F7A882 /* RootViewModel.swift */; };
+		86D4C0162F0FE66000F7A882 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4C0152F0FE66000F7A882 /* SplashViewModel.swift */; };
 		86D4C0192F0FE76900F7A882 /* SplashReceiptValidationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4C0172F0FE76900F7A882 /* SplashReceiptValidationObserver.swift */; };
 		86D4C01C2F112BC900F7A882 /* ErrorScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4C01A2F112BC900F7A882 /* ErrorScreenView.swift */; };
 		86D4C01E2F114B0200F7A882 /* ProfileAttributesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4C01D2F114B0200F7A882 /* ProfileAttributesRequest.swift */; };
@@ -135,7 +149,6 @@
 		86D4C0572F12725400F7A882 /* PersonList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4C0562F12725400F7A882 /* PersonList.swift */; };
 		86D4C05B2F12729A00F7A882 /* ConnectionTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4C05A2F12729A00F7A882 /* ConnectionTypeView.swift */; };
 		86D4C05E2F12D89B00F7A882 /* InsightsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4C05D2F12D89B00F7A882 /* InsightsListView.swift */; };
-		86D4C0612F13C22B00F7A882 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D4C0602F13C22B00F7A882 /* NavigationManager.swift */; };
 		86DA48F32EF45DD40030FE90 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DA48F22EF45DD40030FE90 /* OnboardingView.swift */; };
 		86DA48F62EF45F180030FE90 /* Buttons+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DA48F52EF45F180030FE90 /* Buttons+Styles.swift */; };
 		86DA491F2EF47E160030FE90 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DA491E2EF47E150030FE90 /* OnboardingViewModel.swift */; };
@@ -162,7 +175,6 @@
 		86FAD15A2EF578FB009E6F5A /* ProgressView+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FAD1592EF578FB009E6F5A /* ProgressView+Styles.swift */; };
 		86FAD15C2EF57972009E6F5A /* SFProText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 86FAD15B2EF57972009E6F5A /* SFProText-Regular.ttf */; };
 		86FAD15E2EF5797B009E6F5A /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 86FAD15D2EF5797B009E6F5A /* SFProText-Medium.ttf */; };
-		86FAD1612EF57BCB009E6F5A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FAD1602EF57BCB009E6F5A /* MainView.swift */; };
 		86FAD18B2EF6D5F8009E6F5A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FAD18A2EF6D5F8009E6F5A /* HomeView.swift */; };
 		86FAD18E2EF6D672009E6F5A /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FAD18D2EF6D672009E6F5A /* SegmentView.swift */; };
 		86FAD1912EF6E0D8009E6F5A /* HomeSegmentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FAD1902EF6E0D8009E6F5A /* HomeSegmentItem.swift */; };
@@ -187,7 +199,6 @@
 		51B457684FD4E9ADCAA85405 /* Pods-SoulmateDrawing.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoulmateDrawing.debug.xcconfig"; path = "Target Support Files/Pods-SoulmateDrawing/Pods-SoulmateDrawing.debug.xcconfig"; sourceTree = "<group>"; };
 		860E1EEC2EF2F7AF0090C7B7 /* SoulmateDrawing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoulmateDrawing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		860E1F0F2EF31B7B0090C7B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		860E1F102EF31B7B0090C7B7 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		860E1F112EF31B7B0090C7B7 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		860E1F122EF31B7B0090C7B7 /* SoulmateDrawingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmateDrawingApp.swift; sourceTree = "<group>"; };
 		860E1F202EF31D4C0090C7B7 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
@@ -238,7 +249,7 @@
 		8682FF752F58B49800E9A0DA /* DreamerHistoryScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamerHistoryScreenView.swift; sourceTree = "<group>"; };
 		8682FF772F58B4A400E9A0DA /* DreamHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamHistoryViewModel.swift; sourceTree = "<group>"; };
 		8682FF7A2F58B4CC00E9A0DA /* DreamHistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamHistoryItem.swift; sourceTree = "<group>"; };
-		8685C5972F2A99F8001DE47C /* SoulmateCheckProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmateCheckProfile.swift; sourceTree = "<group>"; };
+		8685C5972F2A99F8001DE47C /* SoulmateCheckProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmateCheckProfileScreen.swift; sourceTree = "<group>"; };
 		8685C5992F2A9E38001DE47C /* ProfileGetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileGetRequest.swift; sourceTree = "<group>"; };
 		8685C59B2F2A9EAE001DE47C /* ProfileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponse.swift; sourceTree = "<group>"; };
 		868BE09B2F40C3000078ABD3 /* SoulmatePreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmatePreferencesView.swift; sourceTree = "<group>"; };
@@ -259,6 +270,25 @@
 		8698AD9F2F60408100740E8B /* Scalable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scalable.swift; sourceTree = "<group>"; };
 		86A779A62F228ACA0029C758 /* drawing.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = drawing.riv; sourceTree = "<group>"; };
 		86A779AA2F228F7E0029C758 /* SoulmateOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmateOnboarding.swift; sourceTree = "<group>"; };
+		86C908662F6B3E500033E258 /* DreamerDetailsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamerDetailsType.swift; sourceTree = "<group>"; };
+		86C908682F6B51BA0033E258 /* SoulmateShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmateShareView.swift; sourceTree = "<group>"; };
+		86C9086A2F6B51F10033E258 /* SoulmateExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmateExploreView.swift; sourceTree = "<group>"; };
+		86C9086C2F6B521D0033E258 /* SoulmateSnapshotContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmateSnapshotContent.swift; sourceTree = "<group>"; };
+		86C9086E2F6B529A0033E258 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
+		86C908702F6B52C20033E258 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
+		86C908722F6B53000033E258 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
+		86C908742F6B531F0033E258 /* DreamerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamerCoordinator.swift; sourceTree = "<group>"; };
+		86C908762F6B53390033E258 /* PaygateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaygateCoordinator.swift; sourceTree = "<group>"; };
+		86C908782F6B534F0033E258 /* NewPersonCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPersonCoordinator.swift; sourceTree = "<group>"; };
+		86C9087A2F6B53670033E258 /* SoulmateCheckProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmateCheckProfileCoordinator.swift; sourceTree = "<group>"; };
+		86C9087C2F6B53770033E258 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
+		86C9087E2F6B538B0033E258 /* OnboardinCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardinCoordinator.swift; sourceTree = "<group>"; };
+		86C908812F6B56240033E258 /* SoulmateProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmateProfileView.swift; sourceTree = "<group>"; };
+		86C908832F6B56360033E258 /* SoulmateGenerateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmateGenerateView.swift; sourceTree = "<group>"; };
+		86C908862F6B5A6A0033E258 /* PersonListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonListItem.swift; sourceTree = "<group>"; };
+		86C908882F6B5D3D0033E258 /* BondsInsightCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BondsInsightCard.swift; sourceTree = "<group>"; };
+		86C9088A2F6B5DED0033E258 /* MainPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPointsView.swift; sourceTree = "<group>"; };
+		86C9088D2F6B5E740033E258 /* ActivitySourceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySourceItem.swift; sourceTree = "<group>"; };
 		86D4BFAA2F0AB49200F7A882 /* RestAPITransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestAPITransport.swift; sourceTree = "<group>"; };
 		86D4BFAC2F0ABA3D00F7A882 /* APIRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestBody.swift; sourceTree = "<group>"; };
 		86D4BFAE2F0ABEAC00F7A882 /* GlobalDefinitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDefinitions.swift; sourceTree = "<group>"; };
@@ -268,9 +298,6 @@
 		86D4BFBA2F0ACE1200F7A882 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		86D4BFBC2F0ADBE600F7A882 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		86D4BFBE2F0ADD7A00F7A882 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		86D4BFC02F0ADD9A00F7A882 /* AmplitudeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmplitudeManager.swift; sourceTree = "<group>"; };
-		86D4BFC12F0ADD9A00F7A882 /* FacebookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookManager.swift; sourceTree = "<group>"; };
-		86D4BFC22F0ADD9A00F7A882 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		86D4BFC72F0ADDB600F7A882 /* IAPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPError.swift; sourceTree = "<group>"; };
 		86D4BFC82F0ADDB600F7A882 /* IAPErrorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPErrorHelper.swift; sourceTree = "<group>"; };
 		86D4BFCA2F0ADDB600F7A882 /* IAPActionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPActionResult.swift; sourceTree = "<group>"; };
@@ -290,10 +317,9 @@
 		86D4C0032F0C3DDD00F7A882 /* PaygateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaygateViewModel.swift; sourceTree = "<group>"; };
 		86D4C0052F0C3DF600F7A882 /* PaygateProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaygateProduct.swift; sourceTree = "<group>"; };
 		86D4C0082F0D004C00F7A882 /* PaygateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaygateView.swift; sourceTree = "<group>"; };
-		86D4C00C2F0EAE3F00F7A882 /* PaygateTesting.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = PaygateTesting.storekit; sourceTree = "<group>"; };
 		86D4C00F2F0ECE4C00F7A882 /* ScreenSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenSize.swift; sourceTree = "<group>"; };
 		86D4C0122F0ED11700F7A882 /* Toggle+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Toggle+Styles.swift"; sourceTree = "<group>"; };
-		86D4C0152F0FE66000F7A882 /* RootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
+		86D4C0152F0FE66000F7A882 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		86D4C0172F0FE76900F7A882 /* SplashReceiptValidationObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashReceiptValidationObserver.swift; sourceTree = "<group>"; };
 		86D4C01A2F112BC900F7A882 /* ErrorScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorScreenView.swift; sourceTree = "<group>"; };
 		86D4C01D2F114B0200F7A882 /* ProfileAttributesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAttributesRequest.swift; sourceTree = "<group>"; };
@@ -313,7 +339,6 @@
 		86D4C0562F12725400F7A882 /* PersonList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonList.swift; sourceTree = "<group>"; };
 		86D4C05A2F12729A00F7A882 /* ConnectionTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionTypeView.swift; sourceTree = "<group>"; };
 		86D4C05D2F12D89B00F7A882 /* InsightsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsListView.swift; sourceTree = "<group>"; };
-		86D4C0602F13C22B00F7A882 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		86DA48F22EF45DD40030FE90 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		86DA48F52EF45F180030FE90 /* Buttons+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Buttons+Styles.swift"; sourceTree = "<group>"; };
 		86DA491E2EF47E150030FE90 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
@@ -341,7 +366,6 @@
 		86FAD1592EF578FB009E6F5A /* ProgressView+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProgressView+Styles.swift"; sourceTree = "<group>"; };
 		86FAD15B2EF57972009E6F5A /* SFProText-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Regular.ttf"; sourceTree = "<group>"; };
 		86FAD15D2EF5797B009E6F5A /* SFProText-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Medium.ttf"; sourceTree = "<group>"; };
-		86FAD1602EF57BCB009E6F5A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		86FAD18A2EF6D5F8009E6F5A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		86FAD18D2EF6D672009E6F5A /* SegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
 		86FAD1902EF6E0D8009E6F5A /* HomeSegmentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSegmentItem.swift; sourceTree = "<group>"; };
@@ -428,7 +452,6 @@
 				860E1F0E2EF31B7B0090C7B7 /* Resources */,
 				86D4BFBE2F0ADD7A00F7A882 /* AppDelegate.swift */,
 				860E1F122EF31B7B0090C7B7 /* SoulmateDrawingApp.swift */,
-				86D4C00C2F0EAE3F00F7A882 /* PaygateTesting.storekit */,
 				864C48C72F6733F700028B19 /* SceneDelegate.swift */,
 			);
 			path = SoulmateDrawing;
@@ -437,7 +460,6 @@
 		860E1F182EF31B840090C7B7 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				86D4C05F2F13C21C00F7A882 /* Navigation */,
 				860E1F1B2EF31BD50090C7B7 /* Misc */,
 				860E1F1A2EF31BCB0090C7B7 /* Services */,
 				860E1F192EF31BB50090C7B7 /* Presentation */,
@@ -453,10 +475,8 @@
 				866D95DE2F2BD9680090C6D9 /* Settings */,
 				86A779A82F228F660029C758 /* Soulmate */,
 				86D4C0362F117D4900F7A882 /* Bonds */,
-				86D4C0142F0FE65200F7A882 /* Root */,
 				86D4BFFD2F0C27AB00F7A882 /* Paygate */,
 				86FAD1892EF6D5E8009E6F5A /* Home */,
-				86FAD15F2EF57BB5009E6F5A /* Main */,
 				860E1F1D2EF31C030090C7B7 /* Splash */,
 				860E1F1C2EF31BF90090C7B7 /* Onboarding */,
 				86D4C01B2F112BC900F7A882 /* Error */,
@@ -489,7 +509,6 @@
 				86FAD18C2EF6D661009E6F5A /* Components */,
 				86DA48F42EF45F0B0030FE90 /* Styles */,
 				860E1F1F2EF31D3D0090C7B7 /* Utils */,
-				86D4BFC32F0ADD9A00F7A882 /* Analytics */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -511,6 +530,7 @@
 			children = (
 				86D4C0182F0FE76900F7A882 /* Utils */,
 				860E1F112EF31B7B0090C7B7 /* SplashView.swift */,
+				86D4C0152F0FE66000F7A882 /* SplashViewModel.swift */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -617,9 +637,9 @@
 		864C48BB2F670C1F00028B19 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				86C9088C2F6B5E650033E258 /* Source */,
+				86C908802F6B53970033E258 /* Coordinators */,
 				864C48BC2F670C6200028B19 /* CoordinatorProtocol.swift */,
-				86F248552F675A470097E45A /* AppCoordinator.swift */,
-				86DDC8BD2F688CEC00F3B4B8 /* BondsCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -657,6 +677,7 @@
 			isa = PBXGroup;
 			children = (
 				865626D62F5A043800A6D7E0 /* DreamDetailsModel.swift */,
+				86C908662F6B3E500033E258 /* DreamerDetailsType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -693,6 +714,8 @@
 			isa = PBXGroup;
 			children = (
 				866D95EA2F2BE1340090C6D9 /* SoulmateCheckProfileValueView.swift */,
+				86C908812F6B56240033E258 /* SoulmateProfileView.swift */,
+				86C908832F6B56360033E258 /* SoulmateGenerateView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -770,7 +793,7 @@
 			children = (
 				866D95E92F2BE1250090C6D9 /* Views */,
 				866D95E62F2BE0FC0090C6D9 /* Models */,
-				8685C5972F2A99F8001DE47C /* SoulmateCheckProfile.swift */,
+				8685C5972F2A99F8001DE47C /* SoulmateCheckProfileScreen.swift */,
 				866D95DC2F2BD3EF0090C6D9 /* SoulmateCheckProfileViewModel.swift */,
 			);
 			path = CheckProfile;
@@ -869,6 +892,40 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		86C908802F6B53970033E258 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				86C9086E2F6B529A0033E258 /* TabBarCoordinator.swift */,
+				86C908722F6B53000033E258 /* HomeCoordinator.swift */,
+				86F248552F675A470097E45A /* AppCoordinator.swift */,
+				86DDC8BD2F688CEC00F3B4B8 /* BondsCoordinator.swift */,
+				86C908782F6B534F0033E258 /* NewPersonCoordinator.swift */,
+				86C908762F6B53390033E258 /* PaygateCoordinator.swift */,
+				86C9087A2F6B53670033E258 /* SoulmateCheckProfileCoordinator.swift */,
+				86C9087C2F6B53770033E258 /* SettingsCoordinator.swift */,
+				86C9087E2F6B538B0033E258 /* OnboardinCoordinator.swift */,
+				86C908742F6B531F0033E258 /* DreamerCoordinator.swift */,
+				86C908702F6B52C20033E258 /* SplashCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		86C908852F6B5A580033E258 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				86C908862F6B5A6A0033E258 /* PersonListItem.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		86C9088C2F6B5E650033E258 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				86C9088D2F6B5E740033E258 /* ActivitySourceItem.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
 		86D4BFA92F0AB46400F7A882 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -916,16 +973,6 @@
 			path = Session;
 			sourceTree = "<group>";
 		};
-		86D4BFC32F0ADD9A00F7A882 /* Analytics */ = {
-			isa = PBXGroup;
-			children = (
-				86D4BFC02F0ADD9A00F7A882 /* AmplitudeManager.swift */,
-				86D4BFC12F0ADD9A00F7A882 /* FacebookManager.swift */,
-				86D4BFC22F0ADD9A00F7A882 /* FirebaseManager.swift */,
-			);
-			path = Analytics;
-			sourceTree = "<group>";
-		};
 		86D4BFC92F0ADDB600F7A882 /* Error */ = {
 			isa = PBXGroup;
 			children = (
@@ -962,6 +1009,7 @@
 				86D4BFEC2F0C051700F7A882 /* Explore */,
 				86D4BFEB2F0C050000F7A882 /* Chart */,
 				86D4BFDF2F0C02CE00F7A882 /* ProfileView.swift */,
+				86C9088A2F6B5DED0033E258 /* MainPointsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1010,15 +1058,6 @@
 				86D4C0052F0C3DF600F7A882 /* PaygateProduct.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		86D4C0142F0FE65200F7A882 /* Root */ = {
-			isa = PBXGroup;
-			children = (
-				860E1F102EF31B7B0090C7B7 /* RootView.swift */,
-				86D4C0152F0FE66000F7A882 /* RootViewModel.swift */,
-			);
-			path = Root;
 			sourceTree = "<group>";
 		};
 		86D4C0182F0FE76900F7A882 /* Utils */ = {
@@ -1149,6 +1188,7 @@
 			isa = PBXGroup;
 			children = (
 				86D4C05A2F12729A00F7A882 /* ConnectionTypeView.swift */,
+				86C908882F6B5D3D0033E258 /* BondsInsightCard.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1167,6 +1207,7 @@
 		86D4C0592F12727E00F7A882 /* PersonList */ = {
 			isa = PBXGroup;
 			children = (
+				86C908852F6B5A580033E258 /* Views */,
 				86D4C0562F12725400F7A882 /* PersonList.swift */,
 				86757AF82F1557B5002973C8 /* PersonListViewModel.swift */,
 			);
@@ -1180,14 +1221,6 @@
 				86DDC8B72F68776E00F3B4B8 /* InsightsListViewModel.swift */,
 			);
 			path = InsightsList;
-			sourceTree = "<group>";
-		};
-		86D4C05F2F13C21C00F7A882 /* Navigation */ = {
-			isa = PBXGroup;
-			children = (
-				86D4C0602F13C22B00F7A882 /* NavigationManager.swift */,
-			);
-			path = Navigation;
 			sourceTree = "<group>";
 		};
 		86DA48F42EF45F0B0030FE90 /* Styles */ = {
@@ -1219,14 +1252,6 @@
 				868E73B52F54411D002F391A /* ChatScreenViewModel.swift */,
 			);
 			path = Chat;
-			sourceTree = "<group>";
-		};
-		86FAD15F2EF57BB5009E6F5A /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				86FAD1602EF57BCB009E6F5A /* MainView.swift */,
-			);
-			path = Main;
 			sourceTree = "<group>";
 		};
 		86FAD1892EF6D5E8009E6F5A /* Home */ = {
@@ -1313,6 +1338,7 @@
 				86FD82352F2E418700FA4950 /* SoulmatePreferencesModel.swift */,
 				86FD823B2F2E446F00FA4950 /* SoulmateModel.swift */,
 				864C48B32F659CD900028B19 /* SoulmateSegmentItem.swift */,
+				86C9086C2F6B521D0033E258 /* SoulmateSnapshotContent.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1329,6 +1355,8 @@
 			isa = PBXGroup;
 			children = (
 				86FD82432F2E67DB00FA4950 /* SoulmateExploreCardView.swift */,
+				86C908682F6B51BA0033E258 /* SoulmateShareView.swift */,
+				86C9086A2F6B51F10033E258 /* SoulmateExploreView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1398,7 +1426,6 @@
 				86A779A72F228ACA0029C758 /* drawing.riv in Resources */,
 				860E1F142EF31B7B0090C7B7 /* Assets.xcassets in Resources */,
 				8682FF372F58A8AD00E9A0DA /* dreamer.riv in Resources */,
-				86D4C00D2F0EAE3F00F7A882 /* PaygateTesting.storekit in Resources */,
 				86DA49272EF480ED0030FE90 /* Localizable.strings in Resources */,
 				86FAD1572EF57841009E6F5A /* Gambarino-Regular.otf in Resources */,
 				86FAD15C2EF57972009E6F5A /* SFProText-Regular.ttf in Resources */,
@@ -1485,10 +1512,10 @@
 				868C0C332F1D4AC900D8FEB2 /* NewPersonSheet.swift in Sources */,
 				86FAD1532EF56E99009E6F5A /* String+Extensions.swift in Sources */,
 				86D4C0412F11884200F7A882 /* PersonResponse.swift in Sources */,
-				86FAD1612EF57BCB009E6F5A /* MainView.swift in Sources */,
 				8698ADA02F60408100740E8B /* Scalable.swift in Sources */,
 				868E73B82F544462002F391A /* MessageResponse.swift in Sources */,
-				86D4C0162F0FE66000F7A882 /* RootViewModel.swift in Sources */,
+				86D4C0162F0FE66000F7A882 /* SplashViewModel.swift in Sources */,
+				86C908752F6B531F0033E258 /* DreamerCoordinator.swift in Sources */,
 				86D4C0242F11516200F7A882 /* LocationRequest.swift in Sources */,
 				868E73B62F54411D002F391A /* ChatScreenViewModel.swift in Sources */,
 				86757AF92F1557B5002973C8 /* PersonListViewModel.swift in Sources */,
@@ -1509,6 +1536,7 @@
 				86D4BFD32F0ADDB600F7A882 /* IAPProduct.swift in Sources */,
 				861D68692F5F0B45002CA938 /* ChatRetryView.swift in Sources */,
 				86D4BFE62F0C038200F7A882 /* ExploreType.swift in Sources */,
+				86C908822F6B56240033E258 /* SoulmateProfileView.swift in Sources */,
 				86D4BFD42F0ADDB600F7A882 /* IAPErrorHelper.swift in Sources */,
 				865626D72F5A043800A6D7E0 /* DreamDetailsModel.swift in Sources */,
 				864C48BD2F670C6200028B19 /* CoordinatorProtocol.swift in Sources */,
@@ -1537,39 +1565,41 @@
 				865626D12F5A02E800A6D7E0 /* DreamerDetailsScreenView.swift in Sources */,
 				8682FF782F58B4A400E9A0DA /* DreamHistoryViewModel.swift in Sources */,
 				86FD82442F2E67DB00FA4950 /* SoulmateExploreCardView.swift in Sources */,
-				86D4BFC42F0ADD9A00F7A882 /* FacebookManager.swift in Sources */,
 				86EBD93D2F4F5A8C008B1E30 /* ChatSendMessageResponse.swift in Sources */,
+				86C9087F2F6B538B0033E258 /* OnboardinCoordinator.swift in Sources */,
 				864C48982F61E00800028B19 /* OnboardingBornDate.swift in Sources */,
 				864C48AE2F63309100028B19 /* DreamerHistoryItemView.swift in Sources */,
 				86D4BFE02F0C02CE00F7A882 /* ProfileView.swift in Sources */,
 				864C48B82F65C67A00028B19 /* ChatMessageView.swift in Sources */,
-				86D4BFC52F0ADD9A00F7A882 /* FirebaseManager.swift in Sources */,
-				86D4BFC62F0ADD9A00F7A882 /* AmplitudeManager.swift in Sources */,
 				868C0CB12F1FF35000D8FEB2 /* BondsSheetType.swift in Sources */,
 				86FAD18E2EF6D672009E6F5A /* SegmentView.swift in Sources */,
 				8682FF6F2F58B21700E9A0DA /* DreamerHistoryRequest.swift in Sources */,
 				86D4C03F2F11878B00F7A882 /* BondsCreatePersonRequest.swift in Sources */,
 				864C48A82F61E61A00028B19 /* SupportLocationResponse.swift in Sources */,
-				8685C5982F2A99F8001DE47C /* SoulmateCheckProfile.swift in Sources */,
+				8685C5982F2A99F8001DE47C /* SoulmateCheckProfileScreen.swift in Sources */,
+				86C908892F6B5D3D0033E258 /* BondsInsightCard.swift in Sources */,
 				86FD822D2F2E401A00FA4950 /* SoulmateManager.swift in Sources */,
 				8682FF6B2F58B17E00E9A0DA /* DreamerRevealRequest.swift in Sources */,
+				86C908842F6B56360033E258 /* SoulmateGenerateView.swift in Sources */,
 				86D4C0092F0D004C00F7A882 /* PaygateView.swift in Sources */,
+				86C9087D2F6B53770033E258 /* SettingsCoordinator.swift in Sources */,
 				86FD82382F2E42D200FA4950 /* SoulmateGetRequest.swift in Sources */,
 				868C0CAE2F1FF2C500D8FEB2 /* UINavigationController+Extensions.swift in Sources */,
 				864C489F2F61E56500028B19 /* OnboardingCityViewModel.swift in Sources */,
 				86D4BFBF2F0ADD7A00F7A882 /* AppDelegate.swift in Sources */,
 				86FAD1912EF6E0D8009E6F5A /* HomeSegmentItem.swift in Sources */,
 				86EBD9432F4F5FFA008B1E30 /* ChatMessagesRequest.swift in Sources */,
+				86C9087B2F6B53670033E258 /* SoulmateCheckProfileCoordinator.swift in Sources */,
 				86FD823A2F2E42FA00FA4950 /* SoulmateResponse.swift in Sources */,
 				86D4BFAB2F0AB49200F7A882 /* RestAPITransport.swift in Sources */,
 				864C48A62F61E5C400028B19 /* SupportLocationRequest.swift in Sources */,
+				86C908712F6B52C20033E258 /* SplashCoordinator.swift in Sources */,
 				86D4C0072F0C3DF600F7A882 /* PaygateProduct.swift in Sources */,
 				86D4C0132F0ED11700F7A882 /* Toggle+Styles.swift in Sources */,
 				86A779AB2F228F7E0029C758 /* SoulmateOnboarding.swift in Sources */,
 				866D95EB2F2BE1340090C6D9 /* SoulmateCheckProfileValueView.swift in Sources */,
 				86FD82282F2E3C7300FA4950 /* SoulmateDrawingResultView.swift in Sources */,
 				868C0C362F1D4AE300D8FEB2 /* NewPersonTextField.swift in Sources */,
-				860E1F152EF31B7B0090C7B7 /* RootView.swift in Sources */,
 				8685C59A2F2A9E38001DE47C /* ProfileGetRequest.swift in Sources */,
 				86D4C0522F126DE500F7A882 /* ChatHistoryRequest.swift in Sources */,
 				864C48942F61DFCD00028B19 /* OnboardingCityView.swift in Sources */,
@@ -1579,6 +1609,7 @@
 				86EBD9392F4F5015008B1E30 /* ChatCreateResponse.swift in Sources */,
 				866D95DD2F2BD3EF0090C6D9 /* SoulmateCheckProfileViewModel.swift in Sources */,
 				8682FF712F58B24000E9A0DA /* DreamerHistoryResponse.swift in Sources */,
+				86C908672F6B3E500033E258 /* DreamerDetailsType.swift in Sources */,
 				86D4C0382F117D5C00F7A882 /* BondsView.swift in Sources */,
 				864C48C82F6733F700028B19 /* SceneDelegate.swift in Sources */,
 				86D4C0042F0C3DDD00F7A882 /* PaygateViewModel.swift in Sources */,
@@ -1589,6 +1620,7 @@
 				868E73B42F543DE3002F391A /* ChatMessageModel.swift in Sources */,
 				86FD82412F2E61DB00FA4950 /* ExploreCardDetailView.swift in Sources */,
 				864C48B42F659CD900028B19 /* SoulmateSegmentItem.swift in Sources */,
+				86C9086F2F6B529A0033E258 /* TabBarCoordinator.swift in Sources */,
 				86FD823C2F2E446F00FA4950 /* SoulmateModel.swift in Sources */,
 				866D95E02F2BD9730090C6D9 /* SettingsView.swift in Sources */,
 				86DA48F32EF45DD40030FE90 /* OnboardingView.swift in Sources */,
@@ -1598,13 +1630,19 @@
 				860E1F172EF31B7B0090C7B7 /* SoulmateDrawingApp.swift in Sources */,
 				864C48BA2F65CCA200028B19 /* ChatInputFieldView.swift in Sources */,
 				86D4C01E2F114B0200F7A882 /* ProfileAttributesRequest.swift in Sources */,
+				86C9086D2F6B521D0033E258 /* SoulmateSnapshotContent.swift in Sources */,
 				86D4C03B2F11874B00F7A882 /* BondsManager.swift in Sources */,
+				86C908792F6B534F0033E258 /* NewPersonCoordinator.swift in Sources */,
 				86DDC8BC2F6878E900F3B4B8 /* InsightModel.swift in Sources */,
+				86C908772F6B53390033E258 /* PaygateCoordinator.swift in Sources */,
 				86EBD9452F4F6111008B1E30 /* ChatMessagesResponse.swift in Sources */,
 				863C720B2F608E0F00BEA3D2 /* ChatSkeleton.swift in Sources */,
 				86D4BFBB2F0ACE1200F7A882 /* SessionManager.swift in Sources */,
+				86C908732F6B53000033E258 /* HomeCoordinator.swift in Sources */,
 				866D95E22F2BDE830090C6D9 /* SettingsViewModel.swift in Sources */,
+				86C908872F6B5A6A0033E258 /* PersonListItem.swift in Sources */,
 				86D4BFE22F0C031300F7A882 /* ChartCardView.swift in Sources */,
+				86C9088E2F6B5E740033E258 /* ActivitySourceItem.swift in Sources */,
 				86EBD94A2F4F75D4008B1E30 /* ChatViewScreen.swift in Sources */,
 				864C489C2F61E03300028B19 /* OnboardingWelcomeScreen.swift in Sources */,
 				866D95E52F2BE0E70090C6D9 /* ProfileSection.swift in Sources */,
@@ -1613,10 +1651,10 @@
 				86DA491F2EF47E160030FE90 /* OnboardingViewModel.swift in Sources */,
 				86FD82362F2E418700FA4950 /* SoulmatePreferencesModel.swift in Sources */,
 				8682FF6D2F58B1EA00E9A0DA /* DreamerRevealResponse.swift in Sources */,
+				86C9088B2F6B5DED0033E258 /* MainPointsView.swift in Sources */,
 				86DA48F62EF45F180030FE90 /* Buttons+Styles.swift in Sources */,
 				86DDC8BA2F68783200F3B4B8 /* SmartDateStyle.swift in Sources */,
 				86D4BFAF2F0ABEAC00F7A882 /* GlobalDefinitions.swift in Sources */,
-				86D4C0612F13C22B00F7A882 /* NavigationManager.swift in Sources */,
 				8682FF672F58B13400E9A0DA /* DreamerManager.swift in Sources */,
 				86D4C04E2F126DAF00F7A882 /* ChatManager.swift in Sources */,
 				86F248562F675A470097E45A /* AppCoordinator.swift in Sources */,
@@ -1625,12 +1663,14 @@
 				86D4C0542F126E3B00F7A882 /* ChatHistoryResponse.swift in Sources */,
 				8682FF3B2F58A8F100E9A0DA /* DreamerDetailsLoading.swift in Sources */,
 				864C48B62F65A61800028B19 /* ChatModel.swift in Sources */,
+				86C9086B2F6B51F10033E258 /* SoulmateExploreView.swift in Sources */,
 				868C0C382F1D4B3200D8FEB2 /* NewPersonInputView.swift in Sources */,
 				86D4C0572F12725400F7A882 /* PersonList.swift in Sources */,
 				86DDC8C02F6961B600F3B4B8 /* HeaderBlur.swift in Sources */,
 				86D4C0192F0FE76900F7A882 /* SplashReceiptValidationObserver.swift in Sources */,
 				86DA49242EF47E530030FE90 /* ProfileModel.swift in Sources */,
 				868C0C312F1D4AAA00D8FEB2 /* GenderModel.swift in Sources */,
+				86C908692F6B51BA0033E258 /* SoulmateShareView.swift in Sources */,
 				86D4C05B2F12729A00F7A882 /* ConnectionTypeView.swift in Sources */,
 				86D4C0272F11521400F7A882 /* LocationResponse.swift in Sources */,
 				86FD82332F2E40A200FA4950 /* SoulmatePreferencesResponse.swift in Sources */,

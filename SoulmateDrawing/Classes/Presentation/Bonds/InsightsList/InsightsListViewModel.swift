@@ -77,8 +77,10 @@ final class InsightsListViewModel {
             }
         }
     }
-    
-    @MainActor
+}
+
+@MainActor
+extension InsightsListViewModel {
     func openChat(for model: InsightModel) {
         coordinator.openChat(using: ChatModel(model: model))
     }

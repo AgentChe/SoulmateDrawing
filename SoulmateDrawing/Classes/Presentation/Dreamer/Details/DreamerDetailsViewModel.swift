@@ -7,11 +7,6 @@
 
 import Foundation
 
-enum DreamerDetailsType: Hashable {
-    case load(id: String)
-    case interpret(dream: String)
-}
-
 @Observable
 final class DreamerDetailsViewModel {
     private(set) var screenState: ScreenState = .loaded
@@ -62,10 +57,6 @@ final class DreamerDetailsViewModel {
         }
     }
     
-    func close() {
-        coordinator.pop()
-    }
-    
     private func loadDreamDetails(for id: String) async throws -> DreamDetailsModel {
         let response = try await dreamManager.dreamDetails(dreamID: id)
         
@@ -76,5 +67,17 @@ final class DreamerDetailsViewModel {
         let response = try await dreamManager.interpretation(dream: text)
         
         return DreamDetailsModel(image: response.image, text: response.text)
+    }
+}
+
+@MainActor
+extension DreamerDetailsViewModel {
+    func close() {
+        coordinator.pop()
+    }
+    
+    func share() {
+        guard let text = model?.text else { return }
+        coordinator.shareDream(text: text)
     }
 }

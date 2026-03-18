@@ -1,5 +1,5 @@
 //
-//  RootViewModel.swift
+//  SplashViewModel.swift
 //  SoulmateDrawing
 //
 //  Created by Vitaliy Zagorodnov on 08.01.2026.
@@ -8,8 +8,7 @@
 import Foundation
 
 @Observable
-final class RootViewModel {
-    private(set) var currentRoute: Router = .splash
+final class SplashViewModel {
     private(set) var screenState: ScreenState = .loaded
     
     @ObservationIgnored
@@ -51,10 +50,8 @@ final class RootViewModel {
                 } else {
                     try await profileManager.binding()
                 }
-//                async let discoverRequest = discoverManager.discover(forceUpdate: true)
-                async let profileRequest = profileManager.getProfile(forceUpdate: true)
                 
-                let (/*_,*/ _) = try await (/*discoverRequest, */ profileRequest)
+                let _ = try await profileManager.getProfile(forceUpdate: true)
                 makeStartRoute()
             } catch {
                 await MainActor.run {
@@ -66,29 +63,15 @@ final class RootViewModel {
         }
     }
     
-    func finishOnboarding() {
-//        currentRoute = .main
-    }
-    
     func makeStartRoute() {
         if UserDefaults.standard.bool(forKey: Self.onboardingKey) {
             coordinator.showMain()
-//            currentRoute = .main
         } else {
             coordinator.showOnboarding()
-//            currentRoute = .onboarding
         }
     }
 }
 
-extension RootViewModel {
-    enum Router {
-        case splash
-        case onboarding
-        case main
-    }
-}
-
-extension RootViewModel {
+extension SplashViewModel {
     static let onboardingKey = "kOnboardingKey"
 }

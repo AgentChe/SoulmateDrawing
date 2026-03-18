@@ -12,14 +12,13 @@ final class DreamHistoryViewModel {
     private(set) var screenState: ScreenState = .loading
     private(set) var items: [DreamHistoryItem] = []
     
-    
     @ObservationIgnored
     private let dreamerManager = DreamerManager()
     
     @ObservationIgnored
     private var pagination: Pagination?
     
-    let coordinator: DreamerCoordinator
+    private let coordinator: DreamerCoordinator
     
     init(coordinator: DreamerCoordinator) {
         self.coordinator = coordinator
@@ -63,13 +62,16 @@ final class DreamHistoryViewModel {
             }
         }
     }
-    
+}
+
+@MainActor
+extension DreamHistoryViewModel {
     func showDetails(for id: String) {
         coordinator.showDetails(using: .load(id: id))
     }
 }
 
-extension DreamHistoryItem {
+private extension DreamHistoryItem {
     init(_ item: DreamerHistoryResponse.Item) {
         self.init(
             id: item.id,

@@ -7,18 +7,6 @@
 
 import Foundation
 
-extension HomeViewModel {
-    enum Route: Identifiable {
-        case settings
-        case paygate
-        case soulmateOnboarding
-        case soulmateCheckProfile
-        
-        var id: Self { self }
-    }
-    
-}
-
 @Observable
 final class HomeViewModel {
     private(set) var screenState: ScreenState = .loaded
@@ -27,13 +15,7 @@ final class HomeViewModel {
     private(set) var charts: [Chart] = []
     private(set) var sign: URL?
     var selectionSegment: HomeSegmentItem = .explore
-    var hasActiveSubscription: Bool {
-        return sessionManager.hasActiveSubscriptions()
-    }
-    
-    var fullScreen: Route?
-    var push: MainRoute?
-    var switchTab: TabElement?
+    private(set) var hasActiveSubscription: Bool
     
     @ObservationIgnored
     private let discoverManager = DiscoverManager()
@@ -51,6 +33,7 @@ final class HomeViewModel {
     
     init(coordinator: HomeCoordinator) {
         self.coordinator = coordinator
+        hasActiveSubscription = sessionManager.hasActiveSubscriptions()
         load()
     }
     
@@ -84,35 +67,34 @@ final class HomeViewModel {
             }
         }
     }
-    
-    
-    @MainActor
+}
+
+@MainActor
+extension HomeViewModel {
     func selectedExplore(_ item: ExploreType) {
         switch item {
         case .soulmate:
             if let soulmate {
                 coordinator.openSoulmate(model: soulmate)
-//                push = .soulmateResult(soulmate)
             } else {
                 coordinator.openOnboarding()
-//                fullScreen = .soulmateOnboarding
             }
         case .dream:
-//            switchTab = .dreamer
             coordinator.showDreamer()
         case .relationship:
-//            switchTab = .bonds
             coordinator.showBonds()
         }
     }
-//    
+    
     func showPaygate() {
         coordinator.showPaygate()
-//        fullScreen = .paygate
     }
     
     func showSettings() {
         coordinator.showSettings()
-//        fullScreen = .settings
+    }
+    
+    func checkActiveSubscription() {
+        hasActiveSubscription = sessionManager.hasActiveSubscriptions()
     }
 }

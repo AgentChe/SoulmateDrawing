@@ -25,6 +25,7 @@ struct OnboardingCityView: View {
                 .foregroundStyle(.textMain200)
                 .multilineTextAlignment(.center)
                 .padding(.top, 74.scale)
+                .padding(.horizontal, 24.scale)
             
             TextField(text: $viewModel.cityText) {
                 Text("Onboarding.City.Placeholder".localized)
@@ -36,9 +37,10 @@ struct OnboardingCityView: View {
             .multilineTextAlignment(.center)
             .focused($isFocused)
             .keyboardType(.alphabet)
+            .padding(.horizontal, 24.scale)
             
             if isFocused, !viewModel.cityList.isEmpty {
-                cityListView
+                tabel
                     .transition(.opacity)
                     .padding(.top, 40)
             } else {
@@ -60,38 +62,55 @@ struct OnboardingCityView: View {
                 .disabled(viewModel.city == nil)
             }
         }
-        .padding(.horizontal, 24.scale)
         .frame(maxWidth: .infinity, alignment: .center)
+        .animation(.easeInOut, value: isFocused)
         .appBackground()
     }
     
     @ViewBuilder
-    private var cityListView: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            LazyVStack(spacing: 11) {
+    private var tabel: some View {
+        List {
+            Section {
                 ForEach(viewModel.cityList) { model in
-                    Button(
-                        action: {
-                            viewModel.didSelectCity(model)
-                            isFocused = false
-                        },
-                        label: {
-                            Text(model.address)
-                                .font(Font.SFPro.font(size: 17.scale, weight: .w510))
-                                .foregroundStyle(.textMain200)
-                        }
-                    )
+                    Text(model.address)
+                        .font(Font.SFPro.font(size: 17.scale, weight: .w510))
+                        .foregroundStyle(.textMain200)
+                        .padding(.vertical, 8)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .multilineTextAlignment(.center)
+                    .onTapGesture {
+                        viewModel.didSelectCity(model)
+                        isFocused = false
+                    }
                     .onAppear {
                         if viewModel.cityList.last?.id == model.id {
                             viewModel.loadNext()
                         }
                     }
                 }
+            } footer: {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .progressViewStyle(.spinner)
+                        .transition(.opacity)
+                }
             }
-            .padding(.horizontal, 24)
-            .padding(.top, 16)
+            .listRowInsets(.init())
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
+            .listRowSpacing(0)
         }
-        .background(.bgMain300, in: UnevenRoundedRectangle(topLeadingRadius: 32.scale, topTrailingRadius: 32.scale))
+        .scrollContentBackground(.hidden)
+        .scrollDismissesKeyboard(.never)
+        .listStyle(.plain)
+        .padding(.top, 16)
+        .contentMargins(24.scale, for: .scrollContent)
+        .background {
+            UnevenRoundedRectangle(topLeadingRadius: 32.scale, topTrailingRadius: 32.scale)
+                .fill(.bgMain300)
+                .ignoresSafeArea()
+        }
     }
 }
 

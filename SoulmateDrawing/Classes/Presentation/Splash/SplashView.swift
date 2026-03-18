@@ -9,7 +9,7 @@ import SwiftUI
 import RiveRuntime
 
 struct SplashView: View {
-    @State var viewModel: RootViewModel
+    @State var viewModel: SplashViewModel
     private let model = RiveViewModel(fileName: "splash_screen", autoPlay: true)
     
     var body: some View {

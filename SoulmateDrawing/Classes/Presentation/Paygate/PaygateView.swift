@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PaygateView: View {
-//    @Environment(\.dismiss) private var dismiss
     @State var viewModel: PaygateViewModel
     
     var body: some View {

@@ -12,12 +12,15 @@ final class DreamerMainViewModel {
     
     var text: String = ""
     
-    let coordinator: DreamerCoordinator
+    private let coordinator: DreamerCoordinator
     
     init(coordinator: DreamerCoordinator) {
         self.coordinator = coordinator
     }
-    
+}
+
+@MainActor
+extension DreamerMainViewModel {
     func showDetails() {
         coordinator.showDetails(using: .interpret(dream: text))
     }

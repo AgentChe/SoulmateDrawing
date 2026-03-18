@@ -9,9 +9,6 @@ import SwiftUI
 import RiveRuntime
 
 struct SoulmateOnboarding: View {
-//    @Environment(\.dismiss) private var dismiss
-//    @Environment(\.navigation) private var navigation
-    
     let didTapBegin: () -> Void
     let close: () -> Void
     

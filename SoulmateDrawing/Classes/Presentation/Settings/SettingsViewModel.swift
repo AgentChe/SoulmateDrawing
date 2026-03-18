@@ -11,9 +11,7 @@ import Foundation
 final class SettingsViewModel {
     private(set) var screenState: ScreenState = .loaded
     private(set) var sections: [ProfileSection] = []
-    var hasActiveSubscription: Bool {
-        return sessionManager.hasActiveSubscriptions()
-    }
+    private(set) var hasActiveSubscription: Bool
     
     private(set) var profile: ProfileModel?
     @ObservationIgnored
@@ -24,6 +22,7 @@ final class SettingsViewModel {
     
     init(coordinator: SettingsCoordinator) {
         self.coordinator = coordinator
+        self.hasActiveSubscription = sessionManager.hasActiveSubscriptions()
         load()
     }
     
@@ -82,7 +81,10 @@ final class SettingsViewModel {
         profile?.city = city.address
         updateProfile(attrs: ["birth_location": city.id] )
     }
-    
+}
+
+@MainActor
+extension SettingsViewModel {
     func open(item: ProfileSection.Model) {
         switch item {
         case .date:
@@ -101,16 +103,24 @@ final class SettingsViewModel {
                 self?.coordinator.dismiss()
             }
         case .privacyPolicy:
-            break
+            coordinator.open(url: GlobalDefinitions.privacyPolicy)
         case .termOfUse:
-            break
+            coordinator.open(url: GlobalDefinitions.termsOfUse)
         case .contactUs:
-            break
+            coordinator.open(url: GlobalDefinitions.support)
         }
     }
     
     func close() {
         coordinator.dismiss()
+    }
+    
+    func showPaygate() {
+        coordinator.showPaygate()
+    }
+    
+    func checkActiveSubscription() {
+        hasActiveSubscription = sessionManager.hasActiveSubscriptions()
     }
 }
 

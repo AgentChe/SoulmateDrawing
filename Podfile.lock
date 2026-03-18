@@ -122,7 +122,7 @@ PODS:
   - NukeUI (0.8.0):
     - Gifu (~> 3.0)
     - Nuke (~> 10.5)
-  - OtterScaleiOS (1.26)
+  - OtterScaleiOS (1.27)
   - PromisesObjC (2.4.0)
   - RiveRuntime (6.17.0)
   - SwiftyStoreKit (0.16.1)
@@ -169,7 +169,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   OtterScaleiOS:
-    :commit: 12663a39c90d42b7ff6e6ad87a6dccea26ff763b
+    :commit: 98d30e7a20021e83234d318b99089e4d375361f2
     :git: https://github.com/AgentChe/OtterScaleiOS.git
 
 SPEC CHECKSUMS:
@@ -192,7 +192,7 @@ SPEC CHECKSUMS:
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   Nuke: 279f17a599fd1c83cf51de5e0e1f2db143a287b0
   NukeUI: 6e99837a8d066c93baa4262692d9ea9ffbc863ba
-  OtterScaleiOS: 7797bb943c69572cd25a6118939ddb7c4684f03c
+  OtterScaleiOS: 341aacbd2ec68dd1b909ffa8fb00f6a0ae99d9b5
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RiveRuntime: 1c18823e5fd2b88f09666cf7c7ba14da7b8d52a4
   SwiftyStoreKit: 6b9c08810269f030586dac1fae8e75871a82e84a

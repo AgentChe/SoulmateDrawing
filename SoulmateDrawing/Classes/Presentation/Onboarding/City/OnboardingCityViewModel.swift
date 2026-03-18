@@ -19,6 +19,8 @@ final class OnboardingCityViewModel {
     @MainActor
     private(set) var cityList: [CityModel] = []
     
+    private(set) var isLoading = false
+    
     @ObservationIgnored
     private let supportManager = SupportManager()
     @ObservationIgnored
@@ -61,13 +63,21 @@ final class OnboardingCityViewModel {
     func loadNext() {
         Task {
             guard let pagination, pagination.next > pagination.current else { return }
-            let result = try await supportManager.getLocations(for: cityText, page: pagination.next)
-            guard !Task.isCancelled else { return }
-            
-            let items = result.items.map(CityModel.init)
-            self.pagination = result.pagination
             await MainActor.run {
-                cityList.append(contentsOf: items)
+                isLoading = true
+            }
+            do {
+                let result = try await supportManager.getLocations(for: cityText, page: pagination.next)
+                guard !Task.isCancelled else { return }
+                
+                let items = result.items.map(CityModel.init)
+                self.pagination = result.pagination
+                await MainActor.run {
+                    isLoading = false
+                    cityList.append(contentsOf: items)
+                }
+            } catch {
+                isLoading = false
             }
             
         }

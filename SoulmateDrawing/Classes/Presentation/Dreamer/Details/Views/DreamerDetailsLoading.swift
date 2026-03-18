@@ -10,6 +10,7 @@ import RiveRuntime
 
 struct DreamerDetailsLoading: View {
     private let model = RiveViewModel(fileName: "dreamer", autoPlay: false)
+    
     var body: some View {
         VStack(spacing: 12.scale) {
             Spacer()

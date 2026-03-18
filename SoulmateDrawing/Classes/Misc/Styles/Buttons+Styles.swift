@@ -72,6 +72,18 @@ struct NavigationButtonStyle: ButtonStyle {
     }
 }
 
+struct CardButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.97 : 1)
+            .opacity(configuration.isPressed ? 0.75 : 1)
+            .animation(.spring(), value: configuration.isPressed)
+    }
+}
+
+extension ButtonStyle where Self == CardButtonStyle {
+    static var card: Self { .init() }
+}
 
 extension ButtonStyle where Self == PrimaryButtonStyle {
     static var primary: Self { PrimaryButtonStyle() }
@@ -117,33 +129,4 @@ struct ProButton: View {
 
 extension ButtonStyle where Self == ProButtonStyle {
     static var pro: Self { ProButtonStyle() }
-}
-
-#Preview {
-    VStack {
-        Button(action: {}) {
-            Text("Main")
-        }
-        .buttonStyle(.primary)
-        
-        Button(action: {}) {
-            Text("Main")
-        }
-        .buttonStyle(.primary)
-        .loading(true)
-        
-        Button(action: {}) {
-            HStack(spacing: 0) {
-                Image("prostar")
-                Text("PRO")
-                    .font(Font.Gambarino.font(size: 16, weight: .w400))
-                    .foregroundStyle(.textMain100)
-            }
-            .padding(EdgeInsets(top: 7, leading: 7, bottom: 7, trailing: 12))
-        }
-        .buttonStyle(.pro)
-    }
-    .padding()
-    .frame(maxWidth: .infinity)
-    .appBackground()
 }

@@ -8,10 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Environment(\.dismiss) private var dismiss
     @State var viewModel: SettingsViewModel
-    @State private var sheetType: SettingsSheet?
-    @State private var isShowPaygate = false
     
     var body: some View {
         ScrollView(.vertical) {
@@ -21,20 +18,6 @@ struct SettingsView: View {
                         ForEach(section.items) { item in
                             SettingsItemView(item: item) {
                                 viewModel.open(item: item)
-//                                switch item {
-//                                case .date:
-//                                    sheetType = .bornDate
-//                                case .place:
-//                                    sheetType = .city
-//                                case .time:
-//                                    sheetType = .bornTime
-//                                case .privacyPolicy:
-//                                    break
-//                                case .termOfUse:
-//                                    break
-//                                case .contactUs:
-//                                    break
-//                                }
                             }
                             .padding(.vertical, 24)
                             .overlay(alignment: .bottom) {
@@ -61,9 +44,7 @@ struct SettingsView: View {
         .toolbar {
             if !viewModel.hasActiveSubscription {
                 ToolbarButton(placement: .topBarTrailing) {
-                    ProButton {
-                        isShowPaygate = true
-                    }
+                    ProButton(action: viewModel.showPaygate)
                 }
             }
             
@@ -77,34 +58,6 @@ struct SettingsView: View {
             }
         }
         .screenState(viewModel.screenState)
-//        .sheet(item: $sheetType) { type in
-//            Group {
-//                switch type {
-//                case .bornDate:
-//                    OnboardingBornDate(bornDate: viewModel.profile?.bornDate) {
-//                        viewModel.save(date: $0)
-//                        sheetType = nil
-//                    }
-//                case .bornTime:
-//                    OnboardingBornTime(bornTime: viewModel.profile?.bornDate) {
-//                        viewModel.save(date: $0)
-//                        sheetType = nil
-//                    }
-//                case .city:
-//                    OnboardingCityView(city: viewModel.profile?.city) {
-//                        viewModel.save(city: $0)
-//                        sheetType = nil
-//                    }
-//                }
-//            }
-//            .appBackground()
-//            .presentationDragIndicator(.visible)
-//            .presentationCornerRadius(32.scale)
-//        }
-//        .fullScreenCover(isPresented: $isShowPaygate) {
-//            NavigationStack {
-//                PaygateView()
-//            }
-//        }
+        .onAppear(perform: viewModel.checkActiveSubscription)
     }
 }

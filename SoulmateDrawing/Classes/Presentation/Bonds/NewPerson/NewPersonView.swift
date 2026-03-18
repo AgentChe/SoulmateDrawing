@@ -9,7 +9,6 @@ import SwiftUI
 
 struct NewPersonView: View {
     @State var viewModel: NewPersonViewModel
-//    @State private var sheetType: NewPersonSheet?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -98,33 +97,7 @@ struct NewPersonView: View {
         .frame(maxWidth: .infinity)
         .appBackground()
         .ignoresSafeArea(.keyboard)
-        .presentationDragIndicator(.visible)
-        .presentationCornerRadius(32.scale)
         .screenState(viewModel.screenState)
-//        .sheet(item: $sheetType) { type in
-//            Group {
-//                switch type {
-//                case .bornDate:
-//                    OnboardingBornDate(bornDate: viewModel.dayOfBorn) {
-//                        viewModel.dayOfBorn = $0
-//                        sheetType = nil
-//                    }
-//                case .bornTime:
-//                    OnboardingBornTime(bornTime: viewModel.timeOfBorn) {
-//                        viewModel.timeOfBorn = $0
-//                        sheetType = nil
-//                    }
-//                case .city:
-//                    OnboardingCityView(city: viewModel.city?.address) {
-//                        viewModel.city = $0
-//                        sheetType = nil
-//                    }
-//                }
-//            }
-//            .appBackground()
-//            .presentationDragIndicator(.visible)
-//            .presentationCornerRadius(32.scale)
-//        }
     }
 }
 

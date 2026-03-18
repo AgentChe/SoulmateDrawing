@@ -7,32 +7,6 @@
 
 import Foundation
 
-extension SoulmateCheckProfileViewModel {
-    enum SheetType: Identifiable {
-        case ethnicity([String])
-        case gender([String])
-        
-        var id: String {
-            switch self {
-            case .ethnicity(let array):
-                array.joined(separator: "_")
-            case .gender(let array):
-                array.joined(separator: "_")
-            }
-        }
-    }
-    
-    enum FullScreen: Identifiable {
-        case settings
-        
-        var id: Self { self }
-    }
-    
-    enum Push: Equatable {
-        case soulmateResult(SoulmateModel)
-    }
-}
-
 @Observable
 final class SoulmateCheckProfileViewModel {
     private(set) var screenState: ScreenState = .loaded
@@ -43,10 +17,6 @@ final class SoulmateCheckProfileViewModel {
     
     private(set) var soulmatePreferences: SoulmatePreferencesModel?
     private(set) var isGenerateSoulmate = false
-    
-    var sheetType: SheetType?
-    var fullScreen: FullScreen?
-    var push: Push?
     
     @ObservationIgnored
     private var selectedEthnicity: String?
@@ -59,7 +29,9 @@ final class SoulmateCheckProfileViewModel {
     private let profileManager = ProfileManager()
     @ObservationIgnored
     private let soulmateManager = SoulmateManager()
-    let coordinator: SoulmateCheckProfileCoordinator
+    
+    private let coordinator: SoulmateCheckProfileCoordinator
+    
     init(coordinator: SoulmateCheckProfileCoordinator) {
         self.coordinator = coordinator
         load()
@@ -104,46 +76,6 @@ final class SoulmateCheckProfileViewModel {
         }
     }
     
-    @MainActor
-    func openSettings() {
-        coordinator.openSettings()
-//        fullScreen = .settings
-    }
-    
-    @MainActor
-    func didSelect(ethnicity: String) {
-        selectedEthnicity = ethnicity
-        guard
-            let genders = soulmatePreferences?.genders,
-            !genders.isEmpty
-        else { return }
-        coordinator.showPreferences(elements: genders) { [weak self] item in
-            self?.coordinator.dismiss()
-            self?.didSelect(gender: item)
-        }
-//        sheetType = .gender(genders)
-    }
-    
-    @MainActor
-    func didSelect(gender: String) {
-        selectedGender = gender
-        sheetType = nil
-        generateSoulmate()
-    }
-    
-    @MainActor
-    func didTapContinue() {
-        guard
-            let ethnicities = soulmatePreferences?.ethnicities,
-            !ethnicities.isEmpty
-        else { return }
-        coordinator.showPreferences(elements: ethnicities) { [weak self] item in
-            self?.coordinator.dismiss()
-            self?.didSelect(ethnicity: item)
-        }
-//        sheetType = .ethnicity(ethnicities)
-    }
-    
     func generateSoulmate() {
         guard let selectedGender, let selectedEthnicity else { return }
         Task.detached { [weak self] in
@@ -154,7 +86,6 @@ final class SoulmateCheckProfileViewModel {
                 let soulmateResponse = try await self?.soulmateManager.generateSoulmate(gender: selectedGender, ethnicity: selectedEthnicity)
                 guard let soulmate = soulmateResponse else { return }
                 await MainActor.run { [weak self] in
-//                    self?.push = .soulmateResult(soulmate)
                     self?.coordinator.openResult(model: soulmate)
                 }
                 
@@ -166,6 +97,41 @@ final class SoulmateCheckProfileViewModel {
                     }
                 }
             }
+        }
+    }
+}
+
+@MainActor
+extension SoulmateCheckProfileViewModel {
+    func openSettings() {
+        coordinator.openSettings()
+    }
+    
+    func didSelect(ethnicity: String) {
+        selectedEthnicity = ethnicity
+        guard
+            let genders = soulmatePreferences?.genders,
+            !genders.isEmpty
+        else { return }
+        coordinator.showPreferences(elements: genders) { [weak self] item in
+            self?.coordinator.dismiss()
+            self?.didSelect(gender: item)
+        }
+    }
+    
+    func didSelect(gender: String) {
+        selectedGender = gender
+        generateSoulmate()
+    }
+    
+    func didTapContinue() {
+        guard
+            let ethnicities = soulmatePreferences?.ethnicities,
+            !ethnicities.isEmpty
+        else { return }
+        coordinator.showPreferences(elements: ethnicities) { [weak self] item in
+            self?.coordinator.dismiss()
+            self?.didSelect(ethnicity: item)
         }
     }
     

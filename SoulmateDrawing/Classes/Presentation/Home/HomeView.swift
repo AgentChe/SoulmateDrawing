@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HomeView: View {
-//    @Environment(\.navigation) private var navigation
     @State var viewModel: HomeViewModel
     
     var body: some View {
@@ -51,9 +50,7 @@ struct HomeView: View {
         .toolbar {
             ToolbarButton(placement: .topBarLeading) {
                 Button(
-                    action: {
-                        viewModel.showSettings()
-                    },
+                    action: viewModel.showSettings,
                     label: { Image("settings") }
                 )
                 .buttonStyle(.navigation)
@@ -68,5 +65,6 @@ struct HomeView: View {
         }
         .bluredNavigationBar()
         .appBackground()
+        .onAppear(perform: viewModel.checkActiveSubscription)
     }
 }

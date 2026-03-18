@@ -32,7 +32,7 @@ struct WaveLoader: View {
                     .animation(
                         Animation.easeInOut(duration: 0.5)
                             .repeatForever()
-                            .delay(Double(index) * 0.3), // Staggered delay for wave effect
+                            .delay(Double(index) * 0.3),
                         value: animating
                     )
             }
