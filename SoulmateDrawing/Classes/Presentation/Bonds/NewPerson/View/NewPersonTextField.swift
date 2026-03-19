@@ -20,7 +20,7 @@ extension VerticalAlignment {
 struct NewPersonTextField: View {
     let placeholder: String
     @Binding var text: String
-    @FocusState private var isFocused: Bool
+    var isFocused: FocusState<Bool>.Binding
     
     @State var paddingContent: EdgeInsets = .init(top: 16.scale, leading: 16.scale, bottom: 16.scale, trailing: 16.scale)
     
@@ -34,7 +34,7 @@ struct NewPersonTextField: View {
             .font(Font.SFPro.font(size: 17.scale, weight: .w400))
             .tint(.textMain200)
             .foregroundStyle(.textMain200)
-            .focused($isFocused)
+            .focused(isFocused)
             .padding(paddingContent)
             .background(.bgMain300, in: RoundedRectangle(cornerRadius: 16.scale))
             .overlay(alignment: .init(horizontal: .leading, vertical: .inputGuide)) {
@@ -50,10 +50,10 @@ struct NewPersonTextField: View {
             .onChange(of: text.isEmpty) { oldValue, newValue in
                 guard oldValue != newValue else { return }
                 withAnimation {
-                    isAvailableContent = newValue || isFocused
+                    isAvailableContent = newValue || isFocused.wrappedValue
                 }
             }
-            .onChange(of: isFocused) { oldValue, newValue in
+            .onChange(of: isFocused.wrappedValue) { oldValue, newValue in
                 guard oldValue != newValue else { return }
                 withAnimation {
                     isAvailableContent = newValue || !text.isEmpty

@@ -108,6 +108,7 @@ struct ChatViewScreen: View {
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .progressViewStyle(.spinner)
                                 .transition(.opacity)
+                                .background(.clear)
                         }
                     },
                     footer: {
@@ -115,6 +116,7 @@ struct ChatViewScreen: View {
                             ChatRetryView(action: viewModel.retryMessageAction)
                                 .frame(maxWidth: .infinity)
                                 .padding(.top, 40.scale)
+                                .background(.clear)
                         }
                         
                         if viewModel.isThinking {
@@ -135,7 +137,12 @@ struct ChatViewScreen: View {
                 proxy.scrollTo(viewModel.dataSource.last?.id, anchor: .bottom)
             }
             .animation(.easeInOut, value: viewModel.dataSource)
-            .scrollPosition(id: $viewModel.scrollPosition, anchor: .bottom)
+            .scrollPosition(id: $viewModel.scrollPosition)
+            .onChange(of: viewModel.savedScrollID, { _, newValue in
+                if let newValue {
+                    proxy.scrollTo(newValue)
+                }
+            })
             .onChange(of: viewModel.scrollToSendedMessage) { _, newValue in
                 if let newValue {
                     proxy.scrollTo(newValue, anchor: .bottom)

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NewPersonView: View {
     @State var viewModel: NewPersonViewModel
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         VStack(spacing: 0) {
@@ -33,11 +34,15 @@ struct NewPersonView: View {
                 VStack(spacing: 12.scale) {
                     NewPersonTextField(
                         placeholder: "NewPerson.Placeholder.FirstName".localized,
-                        text: $viewModel.name
+                        text: $viewModel.name,
+                        isFocused: $isFocused
                     )
                     
                     Button(
-                        action: viewModel.openCity,
+                        action:  {
+                            isFocused = false
+                            viewModel.openCity()
+                        },
                         label: {
                             NewPersonInputView(
                                 text: viewModel.city?.address ?? "",
@@ -47,7 +52,10 @@ struct NewPersonView: View {
                     )
                     
                     Button(
-                        action: viewModel.openBornDate,
+                        action:  {
+                            isFocused = false
+                            viewModel.openBornDate()
+                        },
                         label: {
                             NewPersonInputView(
                                 text: viewModel.dayOfBorn?.formatted(date: .long, time: .omitted) ?? "",
@@ -57,7 +65,10 @@ struct NewPersonView: View {
                     )
                     
                     Button(
-                        action: viewModel.openBornTime,
+                        action:  {
+                            isFocused = false
+                            viewModel.openBornTime()
+                        },
                         label: {
                             NewPersonInputView(
                                 text: viewModel.timeOfBorn?.formatted(date: .omitted, time: .shortened) ?? "",

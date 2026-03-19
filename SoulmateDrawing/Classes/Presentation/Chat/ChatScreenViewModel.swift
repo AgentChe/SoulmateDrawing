@@ -21,6 +21,7 @@ final class ChatScreenViewModel {
     private(set) var isShowSkeleton = false
     private(set) var isMessagesLoading = false
     private(set) var scrollToSendedMessage: String?
+    private(set) var savedScrollID: String?
     var scrollPosition: String?
     
     let personName: String
@@ -114,15 +115,16 @@ final class ChatScreenViewModel {
         Task {
             await MainActor.run {
                 isMessagesLoading = true
+                scrollPosition = nil
             }
             do {
                 let messages = try await chatManager.getMessages(for: threadID, page: page.next)
                 let newMessages = messages.items.reversed().map(ChatMessageModel.init)
                 
                 await MainActor.run {
-                    self.page = messages.pagination
                     self.dataSource = newMessages + dataSource
-                    scrollPosition = currentPosition
+                    self.page = messages.pagination
+                    savedScrollID = currentPosition
                     isMessagesLoading = false
                 }
             } catch {
