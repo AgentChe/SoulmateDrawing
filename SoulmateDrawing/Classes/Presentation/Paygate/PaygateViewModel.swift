@@ -106,7 +106,11 @@ private extension PaygateViewModel {
             for await result in purchaseResult {
                 await MainActor.run {
                     isLoading = false
-                    isShowError = !result
+                    if result {
+                        coordinator.dismiss()
+                    } else {
+                        isShowError = true
+                    }
                 }
             }
         }

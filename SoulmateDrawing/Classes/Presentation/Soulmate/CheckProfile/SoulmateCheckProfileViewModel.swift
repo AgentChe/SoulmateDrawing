@@ -35,6 +35,7 @@ final class SoulmateCheckProfileViewModel {
     init(coordinator: SoulmateCheckProfileCoordinator) {
         self.coordinator = coordinator
         load()
+        settingsObservation()
     }
     
     private func load() {
@@ -65,6 +66,14 @@ final class SoulmateCheckProfileViewModel {
                         self?.load()
                     }
                 }
+            }
+        }
+    }
+    
+    private func settingsObservation() {
+        Task(priority: .userInitiated) {
+            for await _ in ObservationManager.shared.settingsUpdated {
+                load()
             }
         }
     }

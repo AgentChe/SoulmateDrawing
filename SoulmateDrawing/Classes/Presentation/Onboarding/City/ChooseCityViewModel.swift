@@ -1,5 +1,5 @@
 //
-//  OnboardingCityViewModel.swift
+//  ChooseCityViewModel.swift
 //  SoulmateDrawing
 //
 //  Created by Vitaliy Zagorodnov on 11.03.2026.
@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 @Observable
-final class OnboardingCityViewModel {
+final class ChooseCityViewModel {
     var cityText: String {
         willSet {
             publisher.send(cityText)

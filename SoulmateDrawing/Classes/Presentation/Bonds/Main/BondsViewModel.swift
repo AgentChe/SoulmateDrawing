@@ -23,8 +23,6 @@ final class BondsViewModel {
     }
     
     @ObservationIgnored
-    private var pagination: Pagination?
-    @ObservationIgnored
     private let bondsManager = BondsManager()
     @ObservationIgnored
     private let chatManager = ChatManager()
@@ -32,14 +30,13 @@ final class BondsViewModel {
     private let sessionManager = SessionManager()
     @ObservationIgnored
     private let discoverManager = DiscoverManager()
-    @ObservationIgnored
-    private var paginationTask: Task<Void, Never>?
     
     private let coordinator: BondsCoordinator
     
     init(coordinator: BondsCoordinator) {
         self.coordinator = coordinator
         load()
+        chatObservation()
     }
     
     private func load() {
@@ -50,12 +47,13 @@ final class BondsViewModel {
                 async let discoveryRequest = discoverManager.discover(forceUpdate: true)
                 
                 let (personList, history, discovery) = try await (personListRequest, historyRequest, discoveryRequest)
+                let insightsItems = history.items.map(InsightModel.init)
+                let personsItems = personList.items.map(PersonModel.init)
+                
                 await MainActor.run {
-                    pagination = history.pagination
-                    
                     userSign = discovery.sign
-                    insights = history.items.map(InsightModel.init)
-                    persons = personList.items.map(PersonModel.init)
+                    insights = insightsItems
+                    persons = personsItems
                     screenState = .loaded
                 }
             } catch {
@@ -68,7 +66,20 @@ final class BondsViewModel {
         }
     }
     
-    
+    private func chatObservation() {
+        Task(priority: .userInitiated) {
+            for await _ in ObservationManager.shared.chatsUpdated {
+                let history = try? await chatManager.getHistory(page: nil)
+                guard let history else { return }
+                
+                let insightsItems = history.items.map(InsightModel.init)
+                
+                await MainActor.run {
+                    insights = insightsItems
+                }
+            }
+        }
+    }
     
     func selectPerson(person: PersonModel) {
         self.person = person

@@ -23,6 +23,7 @@ final class InsightsListViewModel {
     init(coordinator: BondsCoordinator) {
         self.coordinator = coordinator
         load()
+        chatObservation()
     }
     
     private func load() {
@@ -52,6 +53,26 @@ final class InsightsListViewModel {
         
         pagination = response.pagination
         return response.items.map(InsightModel.init)
+    }
+    
+    private func chatObservation() {
+        Task(priority: .userInitiated) {
+            for await _ in ObservationManager.shared.chatsUpdated {
+                await MainActor.run {
+                    pagination = nil
+                }
+                
+                let history = try? await chatManager.getHistory(page: nil)
+                guard let history else { return }
+                
+                let insightsItems = history.items.map(InsightModel.init)
+                
+                await MainActor.run {
+                    items = insightsItems
+                    pagination = history.pagination
+                }
+            }
+        }
     }
     
     func loadNext() {

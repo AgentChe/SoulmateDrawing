@@ -35,6 +35,7 @@ final class HomeViewModel {
         self.coordinator = coordinator
         hasActiveSubscription = sessionManager.hasActiveSubscriptions()
         load()
+        settingsObservation()
     }
     
     private func load() {
@@ -62,6 +63,35 @@ final class HomeViewModel {
                 await MainActor.run {
                     screenState = .error { [weak self] in
                         self?.load()
+                    }
+                }
+            }
+        }
+    }
+    
+    private func settingsObservation() {
+        Task(priority: .userInitiated) {
+            for await _ in ObservationManager.shared.settingsUpdated {
+                do {
+                    async let profileRequest = profileManager.getProfile(forceUpdate: false)
+                    async let discoveryRequest = discoverManager.discover(forceUpdate: true)
+                    async let soulmateRequest = soulmateManager.soulmate()
+                    let (discovery, profile, soulmate) = try await (discoveryRequest, profileRequest, soulmateRequest)
+                    
+                    self.soulmate = soulmate
+                    
+                    await MainActor.run {
+                        mainPoints = discovery.mainPoints
+                        charts = discovery.charts
+                        sign = discovery.sign
+                        profileName = profile.name
+                        screenState = .loaded
+                    }
+                } catch {
+                    await MainActor.run {
+                        screenState = .error { [weak self] in
+                            self?.load()
+                        }
                     }
                 }
             }

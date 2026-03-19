@@ -1,5 +1,5 @@
 //
-//  OnboardingBornDate.swift
+//  ChooseBornDateView.swift
 //  SoulmateDrawing
 //
 //  Created by Vitaliy Zagorodnov on 11.03.2026.
@@ -7,12 +7,14 @@
 
 import SwiftUI
 
-struct OnboardingBornDate: View {
+struct ChooseBornDateView: View {
     @State private var bornDate: Date
-    var didTapContinue: (Date) -> Void
+    private let isOnboarding: Bool
+    private var didTapContinue: (Date) -> Void
     
-    init(bornDate: Date?, didTapContinue: @escaping (Date) -> Void) {
+    init(bornDate: Date?, isOnboarding: Bool, didTapContinue: @escaping (Date) -> Void) {
         self._bornDate = State(initialValue: bornDate ?? .init())
+        self.isOnboarding = isOnboarding
         self.didTapContinue = didTapContinue
     }
     
@@ -27,7 +29,7 @@ struct OnboardingBornDate: View {
             }
             .foregroundStyle(.textMain200)
             .multilineTextAlignment(.center)
-            .padding(.top, 74.scale)
+            .padding(.top, isOnboarding ? 32.scale : 60.scale)
             
             DatePicker("", selection: $bornDate, in: ...Date(), displayedComponents: .date)
                 .datePickerStyle(.wheel)
@@ -53,5 +55,5 @@ struct OnboardingBornDate: View {
 }
 
 #Preview {
-    OnboardingBornDate(bornDate: nil, didTapContinue: { _ in })
+    ChooseBornDateView(bornDate: nil, didTapContinue: { _ in })
 }

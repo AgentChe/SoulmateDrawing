@@ -9,7 +9,7 @@ import SwiftUI
 import RiveRuntime
 
 struct OnboardingWelcomeScreen: View {
-    private let model = RiveViewModel(fileName: "welcome_soulmate_drawing", autoPlay: true)
+    private let model = RiveViewModel(fileName: "welcome_soulmate_drawing")
     
     var didTapContinue: () -> Void
     
@@ -33,7 +33,6 @@ struct OnboardingWelcomeScreen: View {
                 label: { Text("Continue") }
             )
             .buttonStyle(.primary)
-            .padding(.horizontal, 24.scale)
         }
         .padding(.horizontal, 24.scale)
         .frame(maxWidth: .infinity)
@@ -42,6 +41,9 @@ struct OnboardingWelcomeScreen: View {
                 .ignoresSafeArea()
         }
         .appBackground()
+        .onAppear {
+            model.play()
+        }
     }
 }
 

@@ -71,6 +71,10 @@ final class ChatScreenViewModel {
         }
     }
     
+    deinit {
+        ObservationManager.shared.chatListDidUpdated()
+    }
+    
     private func load() {
         Task {
             do {

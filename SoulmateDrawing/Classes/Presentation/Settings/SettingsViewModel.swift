@@ -63,6 +63,7 @@ final class SettingsViewModel {
             do {
                 try await profileManager.saveAttributes(attrs: attrs)
                 let profile = try? await profileManager.getProfile(forceUpdate: true)
+                ObservationManager.shared.settingsDidUpdated()
                 
                 await MainActor.run {
                     if let profile {

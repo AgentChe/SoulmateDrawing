@@ -31,7 +31,7 @@ final class NewPersonCoordinator: CoordinatorModalProtocol {
     }
     
     func showChangeDate(date: Date?, didTapContinue: @escaping (Date) -> Void) {
-        let view = OnboardingBornDate(bornDate: date, didTapContinue: didTapContinue)
+        let view = ChooseBornDateView(bornDate: date, isOnboarding: false, didTapContinue: didTapContinue)
         let controller = UIHostingController(rootView: view)
         
         if let sheet = controller.sheetPresentationController {
@@ -43,7 +43,7 @@ final class NewPersonCoordinator: CoordinatorModalProtocol {
     }
     
     func showChangeTime(date: Date?, didTapContinue: @escaping (Date) -> Void) {
-        let view = OnboardingBornTime(bornTime: date, didTapContinue: didTapContinue)
+        let view = ChooseBornTimeView(bornTime: date, isOnboarding: false, didTapContinue: didTapContinue)
         let controller = UIHostingController(rootView: view)
         
         if let sheet = controller.sheetPresentationController {
@@ -55,7 +55,7 @@ final class NewPersonCoordinator: CoordinatorModalProtocol {
     }
     
     func showChangeCity(city: String, didTapContinue: @escaping (CityModel) -> Void) {
-        let view = OnboardingCityView(city: city, didTapContinue: didTapContinue)
+        let view = ChooseCityView(city: city, isOnboarding: false, didTapContinue: didTapContinue)
         let controller = UIHostingController(rootView: view)
         
         if let sheet = controller.sheetPresentationController {

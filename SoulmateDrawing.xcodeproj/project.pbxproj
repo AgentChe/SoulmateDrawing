@@ -17,12 +17,12 @@
 		861D68692F5F0B45002CA938 /* ChatRetryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861D68682F5F0B45002CA938 /* ChatRetryView.swift */; };
 		861D686B2F5F0B93002CA938 /* ThinkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861D686A2F5F0B93002CA938 /* ThinkingView.swift */; };
 		863C720B2F608E0F00BEA3D2 /* ChatSkeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863C720A2F608E0F00BEA3D2 /* ChatSkeleton.swift */; };
-		864C48942F61DFCD00028B19 /* OnboardingCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48932F61DFCD00028B19 /* OnboardingCityView.swift */; };
-		864C48962F61DFE700028B19 /* OnboardingBornTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48952F61DFE700028B19 /* OnboardingBornTime.swift */; };
-		864C48982F61E00800028B19 /* OnboardingBornDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48972F61E00800028B19 /* OnboardingBornDate.swift */; };
+		864C48942F61DFCD00028B19 /* ChooseCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48932F61DFCD00028B19 /* ChooseCityView.swift */; };
+		864C48962F61DFE700028B19 /* ChooseBornTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48952F61DFE700028B19 /* ChooseBornTimeView.swift */; };
+		864C48982F61E00800028B19 /* ChooseBornDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48972F61E00800028B19 /* ChooseBornDateView.swift */; };
 		864C489A2F61E02100028B19 /* OnboardingNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48992F61E02100028B19 /* OnboardingNameView.swift */; };
 		864C489C2F61E03300028B19 /* OnboardingWelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C489B2F61E03300028B19 /* OnboardingWelcomeScreen.swift */; };
-		864C489F2F61E56500028B19 /* OnboardingCityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C489E2F61E56500028B19 /* OnboardingCityViewModel.swift */; };
+		864C489F2F61E56500028B19 /* ChooseCityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C489E2F61E56500028B19 /* ChooseCityViewModel.swift */; };
 		864C48A22F61E5A300028B19 /* SupportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48A12F61E5A300028B19 /* SupportManager.swift */; };
 		864C48A62F61E5C400028B19 /* SupportLocationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48A52F61E5C400028B19 /* SupportLocationRequest.swift */; };
 		864C48A82F61E61A00028B19 /* SupportLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864C48A72F61E61A00028B19 /* SupportLocationResponse.swift */; };
@@ -59,6 +59,7 @@
 		8682FF762F58B49800E9A0DA /* DreamerHistoryScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8682FF752F58B49800E9A0DA /* DreamerHistoryScreenView.swift */; };
 		8682FF782F58B4A400E9A0DA /* DreamHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8682FF772F58B4A400E9A0DA /* DreamHistoryViewModel.swift */; };
 		8682FF7B2F58B4CC00E9A0DA /* DreamHistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8682FF7A2F58B4CC00E9A0DA /* DreamHistoryItem.swift */; };
+		868309E22F6C53BC00A45415 /* ObservationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868309E12F6C53BC00A45415 /* ObservationManager.swift */; };
 		8685C5982F2A99F8001DE47C /* SoulmateCheckProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8685C5972F2A99F8001DE47C /* SoulmateCheckProfileScreen.swift */; };
 		8685C59A2F2A9E38001DE47C /* ProfileGetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8685C5992F2A9E38001DE47C /* ProfileGetRequest.swift */; };
 		8685C59C2F2A9EAE001DE47C /* ProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8685C59B2F2A9EAE001DE47C /* ProfileResponse.swift */; };
@@ -207,12 +208,12 @@
 		861D68682F5F0B45002CA938 /* ChatRetryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRetryView.swift; sourceTree = "<group>"; };
 		861D686A2F5F0B93002CA938 /* ThinkingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingView.swift; sourceTree = "<group>"; };
 		863C720A2F608E0F00BEA3D2 /* ChatSkeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSkeleton.swift; sourceTree = "<group>"; };
-		864C48932F61DFCD00028B19 /* OnboardingCityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCityView.swift; sourceTree = "<group>"; };
-		864C48952F61DFE700028B19 /* OnboardingBornTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBornTime.swift; sourceTree = "<group>"; };
-		864C48972F61E00800028B19 /* OnboardingBornDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBornDate.swift; sourceTree = "<group>"; };
+		864C48932F61DFCD00028B19 /* ChooseCityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCityView.swift; sourceTree = "<group>"; };
+		864C48952F61DFE700028B19 /* ChooseBornTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseBornTimeView.swift; sourceTree = "<group>"; };
+		864C48972F61E00800028B19 /* ChooseBornDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseBornDateView.swift; sourceTree = "<group>"; };
 		864C48992F61E02100028B19 /* OnboardingNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingNameView.swift; sourceTree = "<group>"; };
 		864C489B2F61E03300028B19 /* OnboardingWelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeScreen.swift; sourceTree = "<group>"; };
-		864C489E2F61E56500028B19 /* OnboardingCityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCityViewModel.swift; sourceTree = "<group>"; };
+		864C489E2F61E56500028B19 /* ChooseCityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCityViewModel.swift; sourceTree = "<group>"; };
 		864C48A12F61E5A300028B19 /* SupportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportManager.swift; sourceTree = "<group>"; };
 		864C48A52F61E5C400028B19 /* SupportLocationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportLocationRequest.swift; sourceTree = "<group>"; };
 		864C48A72F61E61A00028B19 /* SupportLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportLocationResponse.swift; sourceTree = "<group>"; };
@@ -249,6 +250,7 @@
 		8682FF752F58B49800E9A0DA /* DreamerHistoryScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamerHistoryScreenView.swift; sourceTree = "<group>"; };
 		8682FF772F58B4A400E9A0DA /* DreamHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamHistoryViewModel.swift; sourceTree = "<group>"; };
 		8682FF7A2F58B4CC00E9A0DA /* DreamHistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamHistoryItem.swift; sourceTree = "<group>"; };
+		868309E12F6C53BC00A45415 /* ObservationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationManager.swift; sourceTree = "<group>"; };
 		8685C5972F2A99F8001DE47C /* SoulmateCheckProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulmateCheckProfileScreen.swift; sourceTree = "<group>"; };
 		8685C5992F2A9E38001DE47C /* ProfileGetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileGetRequest.swift; sourceTree = "<group>"; };
 		8685C59B2F2A9EAE001DE47C /* ProfileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponse.swift; sourceTree = "<group>"; };
@@ -487,6 +489,7 @@
 		860E1F1A2EF31BCB0090C7B7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				868309E02F6C53B000A45415 /* Observation */,
 				864C48A02F61E59900028B19 /* Support */,
 				8682FF652F58B12000E9A0DA /* Dreamer */,
 				86FD822B2F2E400400FA4950 /* SoulmateDrawing */,
@@ -574,8 +577,8 @@
 		864C48922F61DFC600028B19 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				864C48952F61DFE700028B19 /* OnboardingBornTime.swift */,
-				864C48972F61E00800028B19 /* OnboardingBornDate.swift */,
+				864C48952F61DFE700028B19 /* ChooseBornTimeView.swift */,
+				864C48972F61E00800028B19 /* ChooseBornDateView.swift */,
 				864C48992F61E02100028B19 /* OnboardingNameView.swift */,
 				864C489B2F61E03300028B19 /* OnboardingWelcomeScreen.swift */,
 			);
@@ -586,8 +589,8 @@
 			isa = PBXGroup;
 			children = (
 				864C48A92F61E76C00028B19 /* Model */,
-				864C48932F61DFCD00028B19 /* OnboardingCityView.swift */,
-				864C489E2F61E56500028B19 /* OnboardingCityViewModel.swift */,
+				864C48932F61DFCD00028B19 /* ChooseCityView.swift */,
+				864C489E2F61E56500028B19 /* ChooseCityViewModel.swift */,
 			);
 			path = City;
 			sourceTree = "<group>";
@@ -786,6 +789,14 @@
 				8682FF7A2F58B4CC00E9A0DA /* DreamHistoryItem.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		868309E02F6C53B000A45415 /* Observation */ = {
+			isa = PBXGroup;
+			children = (
+				868309E12F6C53BC00A45415 /* ObservationManager.swift */,
+			);
+			path = Observation;
 			sourceTree = "<group>";
 		};
 		8685C5962F2A99C7001DE47C /* CheckProfile */ = {
@@ -1446,9 +1457,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SoulmateDrawing/Pods-SoulmateDrawing-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SoulmateDrawing/Pods-SoulmateDrawing-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1463,9 +1478,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SoulmateDrawing/Pods-SoulmateDrawing-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SoulmateDrawing/Pods-SoulmateDrawing-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1511,6 +1530,7 @@
 				86D4C0242F11516200F7A882 /* LocationRequest.swift in Sources */,
 				868E73B62F54411D002F391A /* ChatScreenViewModel.swift in Sources */,
 				86757AF92F1557B5002973C8 /* PersonListViewModel.swift in Sources */,
+				868309E22F6C53BC00A45415 /* ObservationManager.swift in Sources */,
 				86FAD18B2EF6D5F8009E6F5A /* HomeView.swift in Sources */,
 				868C0C2E2F1D061A00D8FEB2 /* NewPersonViewModel.swift in Sources */,
 				861D686B2F5F0B93002CA938 /* ThinkingView.swift in Sources */,
@@ -1543,7 +1563,7 @@
 				86DDC8B82F68776E00F3B4B8 /* InsightsListViewModel.swift in Sources */,
 				860E1F212EF31D4C0090C7B7 /* Fonts.swift in Sources */,
 				868C0C732F1EAE4900D8FEB2 /* NewPersonModel.swift in Sources */,
-				864C48962F61DFE700028B19 /* OnboardingBornTime.swift in Sources */,
+				864C48962F61DFE700028B19 /* ChooseBornTimeView.swift in Sources */,
 				86EBD93B2F4F5936008B1E30 /* ChatSendMessageRequest.swift in Sources */,
 				86FD82222F2D33FD00FA4950 /* SettingsSheet.swift in Sources */,
 				86D4C0012F0C27C700F7A882 /* Currency.swift in Sources */,
@@ -1559,7 +1579,7 @@
 				86FD82442F2E67DB00FA4950 /* SoulmateExploreCardView.swift in Sources */,
 				86EBD93D2F4F5A8C008B1E30 /* ChatSendMessageResponse.swift in Sources */,
 				86C9087F2F6B538B0033E258 /* OnboardinCoordinator.swift in Sources */,
-				864C48982F61E00800028B19 /* OnboardingBornDate.swift in Sources */,
+				864C48982F61E00800028B19 /* ChooseBornDateView.swift in Sources */,
 				864C48AE2F63309100028B19 /* DreamerHistoryItemView.swift in Sources */,
 				86D4BFE02F0C02CE00F7A882 /* ProfileView.swift in Sources */,
 				864C48B82F65C67A00028B19 /* ChatMessageView.swift in Sources */,
@@ -1577,7 +1597,7 @@
 				86C9087D2F6B53770033E258 /* SettingsCoordinator.swift in Sources */,
 				86FD82382F2E42D200FA4950 /* SoulmateGetRequest.swift in Sources */,
 				868C0CAE2F1FF2C500D8FEB2 /* UINavigationController+Extensions.swift in Sources */,
-				864C489F2F61E56500028B19 /* OnboardingCityViewModel.swift in Sources */,
+				864C489F2F61E56500028B19 /* ChooseCityViewModel.swift in Sources */,
 				86D4BFBF2F0ADD7A00F7A882 /* AppDelegate.swift in Sources */,
 				86FAD1912EF6E0D8009E6F5A /* HomeSegmentItem.swift in Sources */,
 				86EBD9432F4F5FFA008B1E30 /* ChatMessagesRequest.swift in Sources */,
@@ -1594,7 +1614,7 @@
 				868C0C362F1D4AE300D8FEB2 /* NewPersonTextField.swift in Sources */,
 				8685C59A2F2A9E38001DE47C /* ProfileGetRequest.swift in Sources */,
 				86D4C0522F126DE500F7A882 /* ChatHistoryRequest.swift in Sources */,
-				864C48942F61DFCD00028B19 /* OnboardingCityView.swift in Sources */,
+				864C48942F61DFCD00028B19 /* ChooseCityView.swift in Sources */,
 				860E1F162EF31B7B0090C7B7 /* SplashView.swift in Sources */,
 				8685C59C2F2A9EAE001DE47C /* ProfileResponse.swift in Sources */,
 				865195D42F4650B9000D716F /* DreamerMainScreen.swift in Sources */,

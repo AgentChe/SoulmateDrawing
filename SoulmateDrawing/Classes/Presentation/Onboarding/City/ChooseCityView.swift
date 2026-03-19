@@ -1,5 +1,5 @@
 //
-//  OnboardingCityView.swift
+//  ChooseCityView.swift
 //  SoulmateDrawing
 //
 //  Created by Vitaliy Zagorodnov on 11.03.2026.
@@ -7,14 +7,16 @@
 
 import SwiftUI
 
-struct OnboardingCityView: View {
+struct ChooseCityView: View {
     @FocusState private var isFocused: Bool
-    @State private var viewModel: OnboardingCityViewModel
-    var didTapContinue: (CityModel) -> Void
+    @State private var viewModel: ChooseCityViewModel
+    private let isOnboarding: Bool
+    private var didTapContinue: (CityModel) -> Void
     
     
-    init(city: String?, didTapContinue: @escaping (CityModel) -> Void) {
+    init(city: String?, isOnboarding: Bool, didTapContinue: @escaping (CityModel) -> Void) {
         self._viewModel = .init(initialValue: .init(city: city ?? ""))
+        self.isOnboarding = isOnboarding
         self.didTapContinue = didTapContinue
     }
     
@@ -24,14 +26,14 @@ struct OnboardingCityView: View {
                 .font(Font.Gambarino.font(size: 32.scale, weight: .w400))
                 .foregroundStyle(.textMain200)
                 .multilineTextAlignment(.center)
-                .padding(.top, 74.scale)
+                .padding(.top, isOnboarding ? 32.scale : 60.scale)
                 .padding(.horizontal, 24.scale)
             
             TextField(text: $viewModel.cityText) {
                 Text("Onboarding.City.Placeholder".localized)
                     .font(.system(size: 23.scale, weight: .regular))
+                    .foregroundStyle(.textMain200.opacity(0.6))
             }
-            .tint(.textMain200)
             .foregroundStyle(.textMain200)
             .padding(.top, 118.scale)
             .multilineTextAlignment(.center)
@@ -45,7 +47,6 @@ struct OnboardingCityView: View {
                     .padding(.top, 40)
             } else {
                 Spacer()
-                
             }
             
             if !isFocused {
@@ -64,7 +65,47 @@ struct OnboardingCityView: View {
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .animation(.easeInOut, value: isFocused)
+        .animation(.easeInOut, value: viewModel.cityList.isEmpty)
         .appBackground()
+    }
+    
+    @ViewBuilder
+    private var stack: some View {
+        ScrollView(.vertical) {
+            Section {
+                ForEach(viewModel.cityList) { model in
+                    Text(model.address)
+                        .font(Font.SFPro.font(size: 17.scale, weight: .w510))
+                        .foregroundStyle(.textMain200)
+                        .padding(.vertical, 8)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .multilineTextAlignment(.center)
+                        .onTapGesture {
+                            viewModel.didSelectCity(model)
+                            isFocused = false
+                        }
+                        .onAppear {
+                            if viewModel.cityList.last?.id == model.id {
+                                viewModel.loadNext()
+                            }
+                        }
+                }
+            } footer: {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .progressViewStyle(.spinner)
+                        .transition(.opacity)
+                }
+            }
+        }
+        .padding(.top, 16)
+        .contentMargins(24.scale, for: .scrollContent)
+        .background {
+            UnevenRoundedRectangle(topLeadingRadius: 32.scale, topTrailingRadius: 32.scale)
+                .fill(.bgMain300)
+                .ignoresSafeArea()
+        }
     }
     
     @ViewBuilder
@@ -112,9 +153,4 @@ struct OnboardingCityView: View {
                 .ignoresSafeArea()
         }
     }
-}
-
-#Preview {
-    OnboardingCityView(city: "") { _ in }
-        .appBackground()
 }

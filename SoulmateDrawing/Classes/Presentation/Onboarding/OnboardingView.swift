@@ -19,22 +19,24 @@ struct OnboardingView: View {
                     ForEach(viewModel.onboardings, id: \.self) { element in
                         switch element {
                         case .name:
-                            OnboardingNameView(name: viewModel.userName) { saved in
-                                viewModel.userName = saved
-                                viewModel.didTapContinue()
+                            ZStack {
+                                OnboardingNameView(name: viewModel.userName, isOnboarding: true) { saved in
+                                    viewModel.userName = saved
+                                    viewModel.didTapContinue()
+                                }
                             }
                         case .bornDate:
-                            OnboardingBornDate(bornDate: viewModel.bornDate) {
+                            ChooseBornDateView(bornDate: viewModel.bornDate, isOnboarding: true) {
                                 viewModel.bornDate = $0
                                 viewModel.didTapContinue()
                             }
                         case .bornTime:
-                            OnboardingBornTime(bornTime: viewModel.bornTime) {
+                            ChooseBornTimeView(bornTime: viewModel.bornTime, isOnboarding: true) {
                                 viewModel.bornTime = $0
                                 viewModel.didTapContinue()
                             }
                         case .bornCity:
-                            OnboardingCityView(city: viewModel.city) {
+                            ChooseCityView(city: viewModel.city, isOnboarding: true) {
                                 viewModel.city = $0.id
                                 viewModel.didTapContinue()
                             }
@@ -43,7 +45,7 @@ struct OnboardingView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .transition(.move(edge: .trailing))
-                .ignoresSafeArea()
+                .ignoresSafeArea(viewModel.currentOnboarding == .bornCity ? [] : .keyboard)
             } else {
                 OnboardingWelcomeScreen(
                     didTapContinue: {
@@ -57,7 +59,6 @@ struct OnboardingView: View {
         .overlay(alignment: .top, content: {
             ProgressView(value: viewModel.progress)
                 .progressViewStyle(.onboarding)
-                .padding(.top, 32.scale)
                 .padding(.horizontal, 24.scale)
                 .opacity(isStart ? 0 : 1)
         })
